@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CancioneroReport" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2067ffbe-ece2-4eb6-bf76-34edf0777385">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[dHNvbmcgQVMgLDEwNiwxNzksYmFlODIzNDctOWM1Ny00N2JlLTg4OWEtMjFhNzU5YmQ1NTVkO3Rh
+cnRpc3QgQVMgLDM5LDUzLDZhNWJhZjY4LTQ1ZjMtNGNjMi1iNTlhLWFkM2UxZmQ1ZWY5MTt0YWxi
+dW0gQVMgLDE0NCwxOSwxMDZkMzY3OS0yZWU1LTRlYzUtOTk4NC05ZTU2NTFmMjE4OWU7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Cancionero"/>
+	<parameter name="songName" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT tartist.aalias,
+	talbum.dname,
+	tsong.cname,
+	tsong.cchords,
+	tsong.cbasechord,
+	tsong.cfavchord,
+	tsong.crhythm
+FROM tsong
+	INNER JOIN talbum ON 
+	 tsong.dID  = talbum.dID  
+	INNER JOIN tartist ON 
+	 talbum.aID  = tartist.aID WHERE tsong.cID = $P{songName}]]>
+	</queryString>
+	<field name="aalias" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="aalias"/>
+		<property name="com.jaspersoft.studio.field.label" value="aalias"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tartist"/>
+	</field>
+	<field name="dname" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="dname"/>
+		<property name="com.jaspersoft.studio.field.label" value="dname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="talbum"/>
+	</field>
+	<field name="cname" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="cname"/>
+		<property name="com.jaspersoft.studio.field.label" value="cname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tsong"/>
+	</field>
+	<field name="cchords" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="cchords"/>
+		<property name="com.jaspersoft.studio.field.label" value="cchords"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tsong"/>
+	</field>
+	<field name="cbasechord" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="cbasechord"/>
+		<property name="com.jaspersoft.studio.field.label" value="cbasechord"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tsong"/>
+	</field>
+	<field name="cfavchord" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="cfavchord"/>
+		<property name="com.jaspersoft.studio.field.label" value="cfavchord"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tsong"/>
+	</field>
+	<field name="crhythm" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="crhythm"/>
+		<property name="com.jaspersoft.studio.field.label" value="crhythm"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tsong"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="130" y="66" width="300" height="30" uuid="6f431013-162a-446c-a648-c3beca6e68fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Cantarell Extra Bold" size="12"/>
+				</textElement>
+				<text><![CDATA[Escuela de Canto y Musica Llanera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="400" height="90" uuid="b735614a-94c7-4c64-ac50-a3a7c01dcde5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Cantarell Extra Bold" size="60"/>
+				</textElement>
+				<text><![CDATA[Cimarron]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="92" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="0" width="290" height="30" uuid="7e5abde0-521b-4e0d-aa06-8dc5ef3ea8e3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="30" uuid="3b444d84-0c43-4cf7-a751-70b4679885a9">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tema:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="70" height="30" uuid="a20132ca-642c-4593-8df8-5ed3d936c957">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Artista: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="30" width="290" height="30" uuid="695e084a-5cef-46d0-8f3d-a9932b553eb1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aalias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="0" width="80" height="30" uuid="819e1073-1519-4f2e-9576-1c65c5928116">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tono Base:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="30" width="80" height="30" uuid="f8f874af-e90d-48e5-889a-ba882b084fe3">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tono Favorito:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="0" width="40" height="30" uuid="8d5cb2d0-08e6-4cf3-ab69-e1a01b693936"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cbasechord}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="30" width="40" height="30" uuid="044f652d-03ef-4121-a8bc-e4ffc1ccd0c6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cfavchord}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="70" height="30" uuid="0112f968-4767-4111-b26c-ef6d634ebcc4">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Album:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="60" width="290" height="30" uuid="89292002-a140-4774-98be-e801a763d19e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="60" width="80" height="30" uuid="6ae24553-4a1b-4585-ad25-7a558dff3743">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ritmo:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="460" y="60" width="101" height="30" uuid="1429aabe-d3dd-4f43-83a2-505d10a91271"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{crhythm}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="160" height="30" uuid="2b978933-a47f-4d36-834d-984f304720eb">
+					<property name="com.jaspersoft.studio.element.name" value="Artista:"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Letra y Acordes]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="133" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="50" y="0" width="460" height="133" uuid="4fd6c045-04e2-4958-8c2d-a58007224153">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
+					<font fontName="SansSerif" size="12" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cchords}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
