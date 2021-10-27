@@ -103,7 +103,7 @@ body{
 
 /* Dejar esto siempre de ultimo
  * Y mantener el orden. */
-@media screen and (max-width: 620px){
+@media (max-width: 620px){
 	.menuImg{
 		display: none;
 	}
@@ -135,7 +135,7 @@ body{
 }
 
 
-@media screen and (max-width: 300px){
+@media (max-width: 300px){
 	#menuName{
 		display: none;
 	}
