@@ -5,6 +5,7 @@ body{
 	width: 100%;
 	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
+	overflow-x: hidden;
 }
 
 .layer { 
@@ -125,6 +126,11 @@ body{
 		float: none;
 		width: 100%;
 		padding: 0px;
+	}
+
+	.abilityLayerTitle{
+		font-size: 3em;
+		text-align: left;
 	}
 }
 

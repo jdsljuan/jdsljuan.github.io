@@ -1,5 +1,6 @@
 
 function listenerSetBodyConfig(){
+	document.body.style.width = window.innerWidth+"px"
 	document.body.style.paddingTop = calculateMenuHeight()+"px"
 	document.getElementById("menuPanel").style.height = (window.innerHeight-calculateMenuHeight())+"px"
 	document.getElementById("menuPanel").style.top = calculateMenuHeight()+"px"
