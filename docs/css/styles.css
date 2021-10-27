@@ -1,0 +1,145 @@
+body{
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+}
+
+.layer { 
+	position: relative;
+	z-index: 0;
+	display: block;
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 30px;
+}
+
+#menuBar {
+	width: 100%;
+	position: fixed;
+	top: 0px;
+	background-color: black;
+	z-index: 1;
+	transition: top 300ms linear;
+	padding: 5px;
+}
+
+#menuName{
+	color: darkcyan;
+	vertical-align: middle;
+	text-align: left;
+	display: inline-block;
+	margin-left: 5px;
+	padding-left: 10px;
+	border-left: 2px solid darkcyan;
+	margin-right: 5px;
+	padding-right: 10px;
+	border-right: 2px solid darkcyan;
+}
+
+.menuImg{
+	vertical-align: middle;
+	display: inline-block;
+	margin: 5px;
+}
+
+#menuPanel{
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: black;
+	z-index: 1;
+	position: fixed;
+	transition: opacity 250ms linear;
+	overflow: auto;
+	width: 50%;
+}
+
+.menuPanelItem{
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	text-align: center;
+	color: white;
+	border-left: 2px solid darkcyan;
+}
+
+.menuPanelItem:hover{
+	color: black;
+	background-color: darkcyan;
+}
+
+/*-----------------------------------*/
+
+#abilityLayer {
+
+}
+
+.layerItem{
+	width: 100%;
+	text-align: justify;
+	margin-top: 20px;
+}
+
+.abilityLayerTitle{
+	font-size: 4em;
+	font-style: normal;
+	word-wrap: normal;
+	text-align: center;
+	border-bottom: 2px solid darkcyan;
+	clear: both;
+	color: darkcyan;
+}
+
+#abilityLayerImg{
+	width: 50%;
+	float: left;
+	padding: 10px;
+}
+
+
+/* Dejar esto siempre de ultimo
+ * Y mantener el orden. */
+@media screen and (max-width: 620px){
+	.menuImg{
+		display: none;
+	}
+
+	#menuBtn{
+		display: initial;
+	}
+
+	#menuPanel{
+		width: 100%;
+		padding: 0px;
+	}
+
+	.menuPanelItem{
+		border: none;
+	}
+
+	#abilityLayerImg{
+		display: block;
+		float: none;
+		width: 100%;
+		padding: 0px;
+	}
+}
+
+
+@media screen and (max-width: 300px){
+	#menuName{
+		display: none;
+	}
+
+	#menuBtn{
+		display: initial;
+	}
+
+	.abilityLayerTitle{
+		font-size: 1.5em;
+	}
+}
+/*--------------------------------*/
