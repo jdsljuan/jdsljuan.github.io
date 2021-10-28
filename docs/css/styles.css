@@ -9,6 +9,8 @@ body{
 	overflow-x: hidden;
 }
 
+/*-----------------------------------*/
+
 #menuBar {
 	width: 100%;
 	position: fixed;
@@ -30,7 +32,7 @@ body{
 	margin-right: 5px;
 	padding-right: 10px;
 	border-right: 2px solid darkcyan;
-	animation: 1500ms infinite linearGradient ;
+	animation: 1500ms infinite linearGradientText;
 }
 
 .menuImg{
@@ -67,6 +69,7 @@ body{
 }
 
 /*-----------------------------------*/
+
 .layer { 
 	position: relative;
 	z-index: 0;
@@ -99,8 +102,8 @@ body{
 	font-style: normal;
 	font-weight: bolder;
 	word-wrap: normal;
-	text-align: center;
-	border-bottom: 2px solid darkcyan;
+	text-align: left;
+	border-bottom: 1px solid darkcyan;
 	clear: both;
 	color: darkcyan;
 }
@@ -126,6 +129,8 @@ body{
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.05);
 }
+
+/*---------------------------------------------*/
 
 #homeLayer{
 	display: block;
@@ -153,6 +158,33 @@ body{
 }
 
 /*---------------------------------------------*/
+
+#twitterFeed{
+	border-color: darkcyan;
+	border: 0px 0px 0px 1;
+}
+
+#contactMeLayerInfoBox{
+	padding: 10px;
+	min-height: 530px;
+	background: linear-gradient(-20deg, white, lightcyan, darkcyan);
+	background-size: 300% 100%;
+	border-radius: 0px 0px 0px 0px;
+	animation: gradient 3s ease-in infinite alternate;
+	font-weight: bolder;
+	color: darkcyan;
+	text-align: center;
+}
+
+#contactMeLayerInfoBoxData{
+	text-align: center;
+	font-size: 1.2em;
+	top: 100px;
+	font-weight: bolder;
+	position: relative;
+}
+/*---------------------------------------------*/
+
 .boldText{
 	font-weight: bold;
 	text-align: left;
@@ -161,7 +193,25 @@ body{
 
 /*--------------- QUERY --------------------*/
 
-@keyframes linearGradient{
+@keyframes gradient{
+	0%{
+		background-position: 0% 0%;
+		border-radius: 40px;
+		color: black;
+	}
+	50% {
+		background-position: 50% 0%;
+		border-radius: 20px;
+		color: darkcyan;
+	}
+	100%{
+		background-position: 100% 0%;
+		border-radius: 0px;
+		color: darkcyan;
+	}
+}
+
+@keyframes linearGradientText{
 	0% {color: darkcyan;}
 
 	34% {color: lightcyan;}
@@ -197,12 +247,12 @@ body{
 	}
 
 	.layerTitle{
-		font-size: 4em;
-		text-align: left;
+		font-size: 2.85em;
+		text-align: center;
 	}
 
 	.layerSubTitle{
-		font-size: 3em;
+		font-size: 2em;
 	}
 
 	.layerSkill{
@@ -215,10 +265,15 @@ body{
 		width: 80vw;
 		height: 80vw;
 	}
+
+	#contactMeLayerInfoBoxData{
+		top: 0px;
+	}
+
 }
 
 
-@media (max-width: 321px){
+@media (max-width: 360px){
 	#menuName{
 		display: none;
 	}
@@ -232,7 +287,7 @@ body{
 	}
 
 	.layerSubTitle{
-		font-size: 1.7em;
+		font-size: 1.5em;
 	}
 
 	.layerSkill{
