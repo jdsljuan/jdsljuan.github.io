@@ -1,6 +1,5 @@
 
 function listenerSetBodyConfig(){
-	//document.body.style.width = window.innerWidth+"px"
 	document.body.style.paddingTop = calculateMenuHeight()+"px"
 	document.getElementById("menuPanel").style.height = (window.innerHeight-calculateMenuHeight())+"px"
 	document.getElementById("menuPanel").style.top = calculateMenuHeight()+"px"
@@ -35,7 +34,7 @@ function onLoad() {
 }
 
 
-function listenerManageMenuPanel(arg) {
+function listenerManageMenuPanel() {
 	var menuPanel = document.getElementById("menuPanel")
 	var menuPanelCS = window.getComputedStyle(menuPanel)
 	var menuPanelCSOpacity = menuPanelCS.opacity
@@ -49,10 +48,36 @@ function listenerManageMenuPanel(arg) {
 	}
 }
 
-
+function listenerShowLayer(layerName) {
+	console.log(layerName.target.id)
+	if (layerName.target.id == "menuPanelHomeBtn") {
+		document.getElementById("homeLayer").style.display = "block"
+		document.getElementById("aboutMeLayer").style.display = "none"
+		document.getElementById("contactMeLayer").style.display = "none"
+		listenerManageMenuPanel()
+	}else if(layerName.target.id == "menuPanelAboutMeBtn"){
+		document.getElementById("homeLayer").style.display = "none"
+		document.getElementById("aboutMeLayer").style.display = "block"
+		document.getElementById("contactMeLayer").style.display = "none"
+		listenerManageMenuPanel()
+	}else if(layerName.target.id == "menuPanelContactMeBtn"){
+		document.getElementById("homeLayer").style.display = "none"
+		document.getElementById("aboutMeLayer").style.display = "none"
+		document.getElementById("contactMeLayer").style.display = "block"
+		listenerManageMenuPanel()
+	}
+}
 
 //Eventos Propios
 var menuBtn = document.getElementById("menuBtn")
+var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
+var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
+var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
+
+menuPanelHomeBtn.addEventListener("click", listenerShowLayer, "home")
+menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer, "about")
+menuPanelContactMe.addEventListener("click", listenerShowLayer, "contact")
+
 menuBtn.addEventListener("click", listenerManageMenuPanel)
 //Eventos del Sistema
 window.addEventListener("scroll", listenerMenuPosition)
