@@ -49,21 +49,30 @@ function listenerManageMenuPanel() {
 }
 
 function listenerShowLayer(layerName) {
-	console.log(layerName.target.id)
+	document.getElementById("aboutMeLayerVideoADSI").pause()
 	if (layerName.target.id == "menuPanelHomeBtn") {
 		document.getElementById("homeLayer").style.display = "block"
 		document.getElementById("aboutMeLayer").style.display = "none"
 		document.getElementById("contactMeLayer").style.display = "none"
+		document.getElementById("studiesLayer").style.display = "none"
 		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelAboutMeBtn"){
 		document.getElementById("homeLayer").style.display = "none"
 		document.getElementById("aboutMeLayer").style.display = "block"
 		document.getElementById("contactMeLayer").style.display = "none"
+		document.getElementById("studiesLayer").style.display = "none"
 		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelContactMeBtn"){
 		document.getElementById("homeLayer").style.display = "none"
 		document.getElementById("aboutMeLayer").style.display = "none"
 		document.getElementById("contactMeLayer").style.display = "block"
+		document.getElementById("studiesLayer").style.display = "none"
+		listenerManageMenuPanel()
+	}else if(layerName.target.id == "menuPanelStudiesBtn"){
+		document.getElementById("homeLayer").style.display = "none"
+		document.getElementById("aboutMeLayer").style.display = "none"
+		document.getElementById("contactMeLayer").style.display = "none"
+		document.getElementById("studiesLayer").style.display = "block"
 		listenerManageMenuPanel()
 	}
 }
@@ -73,10 +82,12 @@ var menuBtn = document.getElementById("menuBtn")
 var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
 var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
 var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
+var menuPanelStudiesBtn = document.getElementById("menuPanelStudiesBtn")
 
-menuPanelHomeBtn.addEventListener("click", listenerShowLayer, "home")
-menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer, "about")
-menuPanelContactMe.addEventListener("click", listenerShowLayer, "contact")
+menuPanelHomeBtn.addEventListener("click", listenerShowLayer)
+menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer)
+menuPanelContactMe.addEventListener("click", listenerShowLayer)
+menuPanelStudiesBtn.addEventListener("click", listenerShowLayer)
 
 menuBtn.addEventListener("click", listenerManageMenuPanel)
 //Eventos del Sistema

@@ -18,7 +18,7 @@ body{
 	background-color: black;
 	z-index: 1;
 	transition: top 300ms linear;
-	padding: 5px;
+	padding: 10px;
 }
 
 #menuName{
@@ -44,7 +44,7 @@ body{
 #menuPanel{
 	padding-left: 20px;
 	padding-right: 20px;
-	background-color: black;
+	background: linear-gradient(-190deg,black, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.8), rgba(0,0,0,0.6), rgba(0,0,0,0.4), rgba(0,0,0,0.3));
 	z-index: 1;
 	position: fixed;
 	transition: opacity 250ms linear;
@@ -288,11 +288,6 @@ body{
 
 	.layerSubTitle{
 		font-size: 1.5em;
-	}
-
-	.layerSkill{
-		width: 75vw;
-		height: 75vw;
 	}
 }
 /*--------------------------------*/
