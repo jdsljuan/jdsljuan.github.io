@@ -31,6 +31,7 @@ function onLoad() {
 	window.scrollTo(0,0)
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
+	getDeviceData()
 }
 
 
@@ -51,30 +52,42 @@ function listenerManageMenuPanel() {
 function listenerShowLayer(layerName) {
 	document.getElementById("aboutMeLayerVideoADSI").pause()
 	if (layerName.target.id == "menuPanelHomeBtn") {
+		setLayersOff()
 		document.getElementById("homeLayer").style.display = "block"
-		document.getElementById("aboutMeLayer").style.display = "none"
-		document.getElementById("contactMeLayer").style.display = "none"
-		document.getElementById("studiesLayer").style.display = "none"
 		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelAboutMeBtn"){
-		document.getElementById("homeLayer").style.display = "none"
+		setLayersOff()
 		document.getElementById("aboutMeLayer").style.display = "block"
-		document.getElementById("contactMeLayer").style.display = "none"
-		document.getElementById("studiesLayer").style.display = "none"
 		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelContactMeBtn"){
-		document.getElementById("homeLayer").style.display = "none"
-		document.getElementById("aboutMeLayer").style.display = "none"
+		setLayersOff()
 		document.getElementById("contactMeLayer").style.display = "block"
-		document.getElementById("studiesLayer").style.display = "none"
 		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelStudiesBtn"){
-		document.getElementById("homeLayer").style.display = "none"
-		document.getElementById("aboutMeLayer").style.display = "none"
-		document.getElementById("contactMeLayer").style.display = "none"
+		setLayersOff()
 		document.getElementById("studiesLayer").style.display = "block"
 		listenerManageMenuPanel()
+	}else if(layerName.target.id == "menuPanelDeviceBtn"){
+		setLayersOff()
+		document.getElementById("deviceLayer").style.display = "block"
+		listenerManageMenuPanel()
 	}
+}
+
+function setLayersOff(){
+	document.getElementById("homeLayer").style.display = "none"
+	document.getElementById("aboutMeLayer").style.display = "none"
+	document.getElementById("contactMeLayer").style.display = "none"
+	document.getElementById("studiesLayer").style.display = "none"
+	document.getElementById("deviceLayer").style.display = "none"
+}
+
+function getDeviceData(){
+	document.getElementById("deviceLayerUserAgent").innerHTML += navigator.userAgent
+	document.getElementById("deviceLayerWidth").innerHTML += window.innerWidth
+	document.getElementById("deviceLayerHeight").innerHTML += window.innerHeight
+	document.getElementById("deviceLayerViewport").innerHTML += document.documentElement.clientWidth
+
 }
 
 //Eventos Propios
@@ -83,11 +96,13 @@ var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
 var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
 var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
 var menuPanelStudiesBtn = document.getElementById("menuPanelStudiesBtn")
+var menuPanelDeviceBtn = document.getElementById("menuPanelDeviceBtn")
 
 menuPanelHomeBtn.addEventListener("click", listenerShowLayer)
 menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer)
 menuPanelContactMe.addEventListener("click", listenerShowLayer)
 menuPanelStudiesBtn.addEventListener("click", listenerShowLayer)
+menuPanelDeviceBtn.addEventListener("click", listenerShowLayer)
 
 menuBtn.addEventListener("click", listenerManageMenuPanel)
 //Eventos del Sistema
