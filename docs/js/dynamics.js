@@ -84,8 +84,8 @@ function setLayersOff(){
 
 function getDeviceData(){
 	document.getElementById("deviceLayerUserAgent").innerHTML += navigator.userAgent
-	document.getElementById("deviceLayerWidth").innerHTML += window.innerWidth
-	document.getElementById("deviceLayerHeight").innerHTML += window.innerHeight
+	document.getElementById("deviceLayerWidth").innerHTML += screen.innerWidth
+	document.getElementById("deviceLayerHeight").innerHTML += screen.innerHeight
 	document.getElementById("deviceLayerViewport").innerHTML += document.documentElement.clientWidth
 
 }
