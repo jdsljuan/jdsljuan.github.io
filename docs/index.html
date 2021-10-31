@@ -26,15 +26,18 @@
 	<img alt="Messenger" src="./img/messenger.png" class="menuImg">
 </div>
 <div id="menuPanel">
-	<div id="menuPanelHomeBtn" class="menuPanelItem">Pagina Principal</div>
+	<div id="menuPanelHomeBtn" class="menuPanelItem">Inicio</div>
 	<div id="menuPanelAboutMeBtn" class="menuPanelItem">Sobre de Mi</div>
 	<div id="menuPanelStudiesBtn" class="menuPanelItem">Mis Estudios</div>
-	<div id="menuPanelContactMeBtn" class="menuPanelItem">Contacta Me</div>
-	<div id="menuPanelDeviceBtn" class="menuPanelItem">Tu Dispositivo</div>
+	<div id="menuPanelContactMeBtn" class="menuPanelItem">Contacto</div>
+	<div id="menuPanelAppBtn" class="menuPanelItem">Aplicativo Movil</div>
+	<div id="menuPanelBlogBtn" class="menuPanelItem">Blog Personal</div>
+	<div id="menuPanelDeviceBtn" class="menuPanelItem">Dispositivo</div>
+	<div class="layerItem"></div><!--Borde inferior -->
 </div>
 <div id="aboutMeLayer" class="layer">
 	<div id="" class="layerItem layerTitle">Capacidades, Habilidades y Destrezas</div>
-	<div id="" class="layerItem">Hola, me llamo <span class="boldText">Juan David,</span> soy desarrollador de aplicaciones para dispositivos moviles y de escritorio, actualmente desarrollo actividades de estudios en <span class="boldText">  Analisis y Desarrollo de Sistemas de la Informacion (ADSI)</span>, te invito a conocer las diferentes tecnologias que he aprendido a lo largo de mi formacion.</div>
+	<div id="" class="layerItem">Hola, me llamo <b class="boldText"> Juan David </b>, soy desarrollador de aplicaciones para dispositivos móviles y de escritorio, actualmente desarrollo actividades de estudios en  Análisis y Desarrollo de Sistemas de la Información <b class="boldText">(ADSI)</b>, te invito a conocer las diferentes tecnologías que he aprendido a lo largo de mi formación.</div>
 	<img id="" class="layerItem layerImg" src="./img/undraw_DeveloperActivity.svg">
 	<div id="" class="layerItem">
 		Entre mis conocimientos con respecto al area de Proyectos de Software estan:
@@ -81,11 +84,10 @@
 <div id="homeLayer" class="layer">
 	<div id="homeLayerTitle" class="layerItem">Bienvenido</div>
 	<img id="homeLayerImg" class="layerItem" src="./img/logoJDSLJUAN.svg">
-	<div id="homeLayerText" class="layerItem">Usa el menu para navegar. Si quieres visitar mis gists<a class="boldText" target="_blank" href="https://gist.github.com/jdsljuan/starred"> 🢂 @jdsljuan</a>
-	</div>
+	<div id="homeLayerText" class="layerItem"> Usa el menú para navegar.</div>
 </div>
 <div id="contactMeLayer" class="layer">
-	<div class="layerItem layerTitle">Dame tu Opinion</div>
+	<div class="layerItem layerTitle">Redes y Contacto.</div>
 	<div class="layerItem">
 		<div id="contactMeLayerInfoBox" class="layerItem">
 			<div id="twitterFeed" class="layerItem layerImg">
@@ -101,13 +103,11 @@
 			</div>
 		</div>
 	</div>
-
-
-	<div style="clear: both;" class="layerItem"></div>
+	<div style="clear: both;"></div>
 </div>
 <div id="studiesLayer" class="layer">
-	<div class="layerItem layerTitle">Mi Formacion</div>
-	<div id="" class="layerItem">Si estas interesado en saber mas acerca de mi educacion puedes ver este corto video.</div>
+	<div class="layerItem layerTitle">Formación</div>
+	<div id="" class="layerItem">Si estás interesado en saber más acerca de mi último proceso educativo puedes ver este corto video.</div>
 	<video id="aboutMeLayerVideoADSI" class="layerItem" controls>
 		<source src="./video/infoADSI.mp4" type="video/mp4">
 	</video>
@@ -119,12 +119,57 @@
 	<img id="" class="layerItem layerSkill" src="https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg">
 </div>
 <div id="deviceLayer" class="layer">
-	<div class="layerItem layerTitle">Informacion del Dispositivo.</div>
-	<div id="deviceLayerUserAgent" class="layerItem layerSubTitle">User-Agent = </div>
+	<div class="layerItem layerTitle">Información del Dispositivo.</div>
+	<div id="deviceLayerBrowser" class="layerItem layerSubTitle">Navegador = </div>
 	<div id="deviceLayerWidth" class="layerItem layerSubTitle">Width Screen = </div>
 	<div id="deviceLayerHeight" class="layerItem layerSubTitle">Height Screen = </div>
 	<div id="deviceLayerViewport" class="layerItem layerSubTitle">Viewport = </div>
+</div>
+<div id="appLayer" class="layer">
+	<div class="layerItem layerTitle">Mi App</div>
+	<div class="layerItem">La web ahora también en aplicación para <b>Android,</b> descargala ya. <br><br> En la aplicación tendrás disponible acceso a más opciones como <b> Mi Blog o Monitor de Recursos,</b> y próximamente muchas más...<br><br>
+	<a id="appLayerDownloadBtn" href="https://raw.githubusercontent.com/jdsljuan/jdsljuan.github.io/master/apk/PersonalWeb.apk">DESCARGAR</a> 
+	</div>
+	<div class="layerItem layerSubTitle">¿Cómo usar la app?</div>
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss5.jpg">
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss2.jpg">
+	<div class="layerItem appLayerDescText"><br><b>Pantalla Principal (Izquierda)</b><br><br>
+	Está pantalla es la más importante pues es donde las SPA serán mostradas. Por defecto la aplicación se dirige a cargar está página pero puedes cambiarla en la pantalla de controles.<br><br><b>Pantalla de Carga (Derecha)</b><br><br>La pantalla de carga se mostrará cada vez que un vínculo nuevo sea cargado. La barra de carga que se muestra en ella muestra el tiempo de carga del vínculo una vez cargado como un Toast en la pantalla principal. Si la barra llega a su límite de dos (2) segundos, mostrara el color amarillo y si el tiempo de carga sobrepasa los cuatro (4) segundos se pondra roja.<br><br></div>	
+	<div style="clear: both;"></div>
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss4.jpg">
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss3.jpg">
+	<div class="layerItem appLayerDescText"><br><br><b>Navegación</b><br><br>Abre está pantalla presionando la tecla ATRÁS. En está pantalla puedes: Salir de la aplicación de manera definitiva, cambia de SPA escribiendo su dirección en la barra de texto, luego presiona URL,  y por último, si deseas cargar mi SPA presiona APP.<br><br></div>	
+	<div style="clear: both;"></div>
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss1.jpg">
+	<img id="" class="layerItem layerSkillEsp" src="./img/screenshots/ss6.jpg">
+	<div class="layerItem appLayerDescText"><br><br><b>Usar el App como un Navegador Web</b><br><br>Si sales del dominio de la aplicación y usarás este aplicativo como navegador web, la barra de estado de Android se tornará roja, de lo contrario será siempre negra como se muestra en la imagen. Recuerda que debes conocer la URL completa del aplicativo que deseas visitar.<br><br></div>	
+	<div style="clear: both;"></div>
+	<div class="layerItem layerSubTitle">Descarga e Instalación</div>
+	<div class="layerItem layerSkillEsp">
+		<img id="" class="layerItem " src="./img/screenshots/ss02.jpg">
+		<div class="layerItem boldTextCenter">DESCARGA</div>
+	</div>
+	<div class="layerItem layerSkillEsp">
+		<img id="" class="layerItem " src="./img/screenshots/ss05.jpg">
+		<div class="layerItem boldTextCenter">BUSCA</div>
+	</div>
+	<div class="layerItem layerSkillEsp">
+		<img id="" class="layerItem " src="./img/screenshots/ss04.jpg">
+		<div class="layerItem boldTextCenter">EJECUTA</div>
+	</div>
+	<div class="layerItem layerSkillEsp">
+		<img id="" class="layerItem " src="./img/screenshots/ss03.jpg">
+		<div class="layerItem boldTextCenter">AUTORIZA</div>
+	</div>
+	<div class="layerItem layerSkillEsp">
+		<img id="" class="layerItem " src="./img/screenshots/ss01.jpg">
+		<div class="layerItem boldTextCenter">¡LISTO!</div>
+	</div>
+	<div style="clear: both;" class="layerItem"></div>
 
+</div>
+<div class="layerItem" id="blogLayer">
+	
 </div>
 </body>
 <script type="text/javascript" src="./js/dynamics.js"></script>

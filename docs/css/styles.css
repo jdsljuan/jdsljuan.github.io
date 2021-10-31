@@ -9,7 +9,7 @@ body{
 	overflow-x: hidden;
 }
 
-/*-----------------------------------*/
+/*----------- MENU BAR AND SIDE PANEL----------------*/
 
 #menuBar {
 	width: 100%;
@@ -59,16 +59,17 @@ body{
 	margin-top: 10px;
 	text-align: center;
 	color: white;
-	border-left: 2px solid darkcyan;
+	border-left: 2px solid lightcyan;
 	border-radius: 3px;
+	transition:border 200ms linear;
 }
 
 .menuPanelItem:hover{
 	color: black;
-	background-color: darkcyan;
+	background: linear-gradient(to bottom,#008B8B,#2CA692);
 }
 
-/*-----------------------------------*/
+/*---------- GENERAL LAYER -------------------*/
 
 .layer { 
 	position: relative;
@@ -119,7 +120,7 @@ body{
 	height: 14vw;
 	margin: 2vw 2vw 0vh 1vw;
 	border-radius: 100%;
-	transition: border-radius 200ms linear, background-color 200ms linear;
+	transition: border-radius 300ms linear, background-color 500ms linear;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
 	padding: 1vw;
 }
@@ -130,10 +131,34 @@ body{
 	background-color: rgba(0, 0, 0, 0.05);
 }
 
-/*---------------------------------------------*/
+.layerSkillEsp{
+	width: 14vw;
+	height: auto;
+	margin: 2vw 2vw 0vh 1vw;
+	transition: border-radius 300ms linear, background-color 500ms linear;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+	padding: 1vw;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	background-color: rgba(0, 0, 0, 0.05);
+	float: left;
+	font-size: 0.8em;
+}
+
+.boldText{
+	font-weight: bold;
+	color: darkcyan;
+}
+
+.boldTextCenter{
+	font-weight: bolder;
+	color: darkcyan;
+	text-align: center;
+}
+
+/*----------- HOME LAYER--------------------*/
 
 #homeLayer{
-	display: block;
 	opacity: 0.8;
 }
 
@@ -157,7 +182,7 @@ body{
 	font-size: 0.85em;
 }
 
-/*---------------------------------------------*/
+/*-------------- CONTACT LAYER ------------------*/
 
 #twitterFeed{
 	border-color: darkcyan;
@@ -183,13 +208,24 @@ body{
 	font-weight: bolder;
 	position: relative;
 }
-/*---------------------------------------------*/
 
-.boldText{
-	font-weight: bold;
-	text-align: left;
-	color: darkcyan;
+
+/*------------ APP LAYER -------------------*/
+
+#appLayerDownloadBtn{
+	padding: 10px;
+	width: 100%;
+	display: block;
+	background: linear-gradient(to right,#008B8B,#2CA692,#57C099,#83DBA0,#AEF5A6);
+	border-radius: 20px;
+	color: white;
+	text-decoration: none;
+	font-weight: bolder;
+	font-size: 1.5em;
+	text-align: center;
 }
+
+/*---------------------------------------------*/
 
 /*--------------- QUERY --------------------*/
 
@@ -260,6 +296,11 @@ body{
 		height: 34vw;
 	}
 
+	.layerSkillEsp{
+		width: 34vw;
+		height: auto;
+	}
+
 	#homeLayerImg{
 		padding: 0px;
 		width: 80vw;
@@ -268,6 +309,10 @@ body{
 
 	#contactMeLayerInfoBoxData{
 		top: 0px;
+	}
+
+	.appLayerDescText{
+		clear: left;
 	}
 
 }
@@ -288,6 +333,13 @@ body{
 
 	.layerSubTitle{
 		font-size: 1.5em;
+	}
+
+	#homeLayerImg {
+		padding: 0px;
+		width: 60vw;
+		height: 60vw;
+		margin-left: 10vw;
 	}
 }
 /*--------------------------------*/

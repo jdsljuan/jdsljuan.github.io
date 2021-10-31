@@ -27,11 +27,20 @@ function calculateMenuHeight() {
 	return (height+(padding*2))
 }
 
+
+/**
+ * This function do all init work.
+ * */
 function onLoad() {
 	window.scrollTo(0,0)
+	setGlobalListeners()
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
+	hideOnAppContent()
 	getDeviceData()
+	document.getElementById("menuPanelHomeBtn").click()
+	//TODO: PAgina
+	//getDeviceData()
 }
 
 
@@ -49,64 +58,105 @@ function listenerManageMenuPanel() {
 	}
 }
 
+/**
+ * @param layerName Event generated for the click of the panel's divs
+ * */
 function listenerShowLayer(layerName) {
 	document.getElementById("aboutMeLayerVideoADSI").pause()
+	setLayersOff()
+
+	var colorOnLayer = "darkcyan"
 	if (layerName.target.id == "menuPanelHomeBtn") {
-		setLayersOff()
+		document.getElementById("menuPanelHomeBtn").style.color = colorOnLayer
 		document.getElementById("homeLayer").style.display = "block"
-		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelAboutMeBtn"){
-		setLayersOff()
+		document.getElementById("menuPanelAboutMeBtn").style.color = colorOnLayer
 		document.getElementById("aboutMeLayer").style.display = "block"
-		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelContactMeBtn"){
-		setLayersOff()
+		document.getElementById("menuPanelContactMeBtn").style.color = colorOnLayer
 		document.getElementById("contactMeLayer").style.display = "block"
-		listenerManageMenuPanel()
 	}else if(layerName.target.id == "menuPanelStudiesBtn"){
-		setLayersOff()
 		document.getElementById("studiesLayer").style.display = "block"
-		listenerManageMenuPanel()
+		document.getElementById("menuPanelStudiesBtn").style.color = colorOnLayer
 	}else if(layerName.target.id == "menuPanelDeviceBtn"){
-		setLayersOff()
 		document.getElementById("deviceLayer").style.display = "block"
-		listenerManageMenuPanel()
+		document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
+	}else if(layerName.target.id == "menuPanelAppBtn"){
+		document.getElementById("appLayer").style.display = "block"
+		document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
+	}else if(layerName.target.id == "menuPanelBlogBtn"){
+		document.getElementById("blogLayer").style.display = "block"
+		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
 	}
+	listenerManageMenuPanel()
 }
 
 function setLayersOff(){
+	//Disable the Panel backgroundColor.
+	var colorOnLayer = "white"
+	document.getElementById("menuPanelHomeBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelAboutMeBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelContactMeBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelStudiesBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
+	//Disable
 	document.getElementById("homeLayer").style.display = "none"
 	document.getElementById("aboutMeLayer").style.display = "none"
 	document.getElementById("contactMeLayer").style.display = "none"
 	document.getElementById("studiesLayer").style.display = "none"
 	document.getElementById("deviceLayer").style.display = "none"
+	document.getElementById("appLayer").style.display = "none"
+	document.getElementById("blogLayer").style.display = "none"
+
 }
 
+//TODO Get the data.
 function getDeviceData(){
-	document.getElementById("deviceLayerUserAgent").innerHTML += navigator.userAgent
+	document.getElementById("deviceLayerBrowser").innerHTML += navigator.appCodeName
 	document.getElementById("deviceLayerWidth").innerHTML += screen.innerWidth
 	document.getElementById("deviceLayerHeight").innerHTML += screen.innerHeight
 	document.getElementById("deviceLayerViewport").innerHTML += document.documentElement.clientWidth
-
 }
 
-//Eventos Propios
-var menuBtn = document.getElementById("menuBtn")
-var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
-var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
-var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
-var menuPanelStudiesBtn = document.getElementById("menuPanelStudiesBtn")
-var menuPanelDeviceBtn = document.getElementById("menuPanelDeviceBtn")
 
-menuPanelHomeBtn.addEventListener("click", listenerShowLayer)
-menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer)
-menuPanelContactMe.addEventListener("click", listenerShowLayer)
-menuPanelStudiesBtn.addEventListener("click", listenerShowLayer)
-menuPanelDeviceBtn.addEventListener("click", listenerShowLayer)
+/**
+ * TODO: Fix this stupid thing
+ * */
+function setGlobalListeners() {
+	//Eventos Propios
+	var menuBtn = document.getElementById("menuBtn")
+	var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
+	var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
+	var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
+	var menuPanelStudiesBtn = document.getElementById("menuPanelStudiesBtn")
+	var menuPanelDeviceBtn = document.getElementById("menuPanelDeviceBtn")
+	var menuPanelBlogBtn = document.getElementById("menuPanelBlogBtn")
+	var menuPanelAppBtn = document.getElementById("menuPanelAppBtn")
+	
+	menuPanelHomeBtn.addEventListener("click", listenerShowLayer)
+	menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer)
+	menuPanelContactMe.addEventListener("click", listenerShowLayer)
+	menuPanelStudiesBtn.addEventListener("click", listenerShowLayer)
+	menuPanelDeviceBtn.addEventListener("click", listenerShowLayer)
+	menuPanelAppBtn.addEventListener("click", listenerShowLayer)
+	menuPanelBlogBtn.addEventListener("click", listenerShowLayer)
+	
+	menuBtn.addEventListener("click", listenerManageMenuPanel)
 
-menuBtn.addEventListener("click", listenerManageMenuPanel)
-//Eventos del Sistema
-window.addEventListener("scroll", listenerMenuPosition)
-window.addEventListener("resize", listenerSetBodyConfig)
+	//Eventos del Sistema
+	window.addEventListener("scroll", listenerMenuPosition)
+	window.addEventListener("resize", listenerSetBodyConfig)
+}
 
+function hideOnAppContent() {
+	if (navigator.userAgent.indexOf("&jdsljuan") == -1) {
+		document.getElementById("menuPanelBlogBtn").style.display = "none"
+		document.getElementById("menuPanelDeviceBtn").style.display = "none"		
+	}
+}
+
+
+//Magic.....
 onLoad()
