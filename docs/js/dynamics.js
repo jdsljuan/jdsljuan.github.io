@@ -36,7 +36,7 @@ function onLoad() {
 	setGlobalListeners()
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
-	hideOnAppContent()
+	//hideOnAppContent()
 	document.getElementById("menuPanelHomeBtn").click()
 
 }
@@ -79,6 +79,7 @@ function listenerShowLayer(layerName) {
 	}else if(layerName.target.id == "menuPanelDeviceBtn"){
 		document.getElementById("deviceLayer").style.display = "block"
 		document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
+		getDeviceData()
 	}else if(layerName.target.id == "menuPanelAppBtn"){
 		document.getElementById("appLayer").style.display = "block"
 		document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
@@ -119,11 +120,11 @@ function getDeviceData(){
 	var uStorage = parseFloat(data[1])
 	var tMemory = parseFloat(data[2])
 	var uMemory = parseFloat(data[3])
-	var pStorage = (uStorage/tStorage)*100
-	var pMemory = (uMemory/tMemory)*100
+	var pStorage = (uStorage/tStorage)*100.0
+	var pMemory = (uMemory/tMemory)*100.0
 
-	document.getElementById("deviceLayerStorageLabel").innerHTML += (uStorage + "Gb de " + tStorage + "Gb") 
-	document.getElementById("deviceLayerMemoryLabel").innerHTML += (uMemory + "Gb de " + tMemory + "Gb")
+	document.getElementById("deviceLayerStorageLabel").innerHTML = ("almacenamiento: " + uStorage + "Gb de " + tStorage + "Gb") 
+	document.getElementById("deviceLayerMemoryLabel").innerHTML = ("memoria: " + uMemory + "Gb de " + tMemory + "Gb")
 	document.getElementById("deviceLayerStorageBar").style.width = pStorage + "%"
 	document.getElementById("deviceLayerMemoryBar").style.width = pMemory + "%"
 }
@@ -170,7 +171,6 @@ function hideOnAppContent() {
 		document.getElementById("deviceLayer").innerHTML = ""	
 	}else{//Make the things on App
 		document.getElementById("menuPanelAppBtn").style.display = "none"
-		getDeviceData()
 	}
 }
 
