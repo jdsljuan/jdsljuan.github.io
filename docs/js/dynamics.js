@@ -82,7 +82,7 @@ function listenerShowLayer(layerName) {
 	}else if(layerName.target.id == "menuPanelDeviceBtn"){
 		document.getElementById("deviceLayer").style.display = "block"
 		document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
-		//getDeviceData()
+		getDeviceData()
 	}else if(layerName.target.id == "menuPanelAppBtn"){
 		document.getElementById("appLayer").style.display = "block"
 		document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
