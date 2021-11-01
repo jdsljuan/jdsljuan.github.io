@@ -38,8 +38,8 @@ function calculateMenuHeight() {
 function onLoad() {
 	window.scrollTo(0,0)
 	setGlobalListeners()
-	listenerSetBodyConfig()
 	listenerManageMenuPanel()
+	listenerSetBodyConfig()
 	hideOnAppContent()
 	document.getElementById("menuPanelHomeBtn").click()
 }
