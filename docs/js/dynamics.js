@@ -37,10 +37,8 @@ function onLoad() {
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
 	hideOnAppContent()
-	getDeviceData()
 	document.getElementById("menuPanelHomeBtn").click()
-	//TODO: PAgina
-	//getDeviceData()
+
 }
 
 
@@ -114,10 +112,20 @@ function setLayersOff(){
 
 //TODO Get the data.
 function getDeviceData(){
-	document.getElementById("deviceLayerBrowser").innerHTML += navigator.appCodeName
-	document.getElementById("deviceLayerWidth").innerHTML += screen.innerWidth
-	document.getElementById("deviceLayerHeight").innerHTML += screen.innerHeight
-	document.getElementById("deviceLayerViewport").innerHTML += document.documentElement.clientWidth
+
+	var str = navigator.userAgent.split("&jdsljuan")[1]
+	var data = str.split(":")
+	var tStorage = parseFloat(data[0])
+	var uStorage = parseFloat(data[1])
+	var tMemory = parseFloat(data[2])
+	var uMemory = parseFloat(data[3])
+	var pStorage = uStorage/tStorage
+	var pMemory = uMemory/tMemory
+
+	document.getElementById("deviceLayerStorageLabel").innerHTML += (uStorage + "Gb de " + tStorage + "Gb") 
+	document.getElementById("deviceLayerMemoryLabel").innerHTML += (uMemory + "Gb de " + tMemory + "Gb")
+	document.getElementById("deviceLayerStorageBar").style.width = pStorage + "%"
+	document.getElementById("deviceLayerMemoryBar").style.width = pMemory + "%"
 }
 
 
@@ -150,10 +158,19 @@ function setGlobalListeners() {
 	window.addEventListener("resize", listenerSetBodyConfig)
 }
 
+/**
+ * Hide all the user content for the App.
+ * */
 function hideOnAppContent() {
 	if (navigator.userAgent.indexOf("&jdsljuan") == -1) {
+		//On Web Browser
 		document.getElementById("menuPanelBlogBtn").style.display = "none"
-		document.getElementById("menuPanelDeviceBtn").style.display = "none"		
+		document.getElementById("blogLayer").innerHTML = ""
+		document.getElementById("menuPanelDeviceBtn").style.display = "none"
+		document.getElementById("deviceLayer").innerHTML = ""	
+	}else{//Make the things on App
+		document.getElementById("menuPanelAppBtn").style.display = "none"
+		getDeviceData()
 	}
 }
 

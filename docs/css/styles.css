@@ -59,8 +59,8 @@ body{
 	margin-top: 10px;
 	text-align: center;
 	color: white;
-	border-left: 2px solid lightcyan;
-	border-radius: 3px;
+	border-bottom: 1px dashed lightcyan;
+	border-radius: 2px;
 	transition:border 200ms linear;
 }
 
@@ -225,7 +225,36 @@ body{
 	text-align: center;
 }
 
-/*---------------------------------------------*/
+/*------------- DEVICE LAYER ---------------*/
+
+.layerDeviceBar{
+	border-radius: 20px;
+	width: 100%;
+	height: 30px;
+	color: white;
+	text-align: center;
+	background-color: rgba(194, 197, 170, 0.9);
+	transition: width 500ms ease;
+	transition-delay: 330ms;
+}
+
+.layerDeviceLabel{
+	font-weight: bolder;
+	color: dimgray;
+	height: 100%;
+	text-align: right;
+	width: 100%;
+}
+
+#deviceLayerStorageBar{
+	background: linear-gradient(to right, darkgreen, green);
+}
+
+
+#deviceLayerMemoryBar{
+	background: linear-gradient(to right, darkgreen, green);
+}
+
 
 /*--------------- QUERY --------------------*/
 
