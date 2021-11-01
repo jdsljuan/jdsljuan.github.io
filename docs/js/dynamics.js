@@ -40,9 +40,8 @@ function onLoad() {
 	setGlobalListeners()
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
-	hideOnAppContent()
+	//hideOnAppContent()
 	document.getElementById("menuPanelHomeBtn").click()
-
 }
 
 
@@ -53,7 +52,7 @@ function listenerManageMenuPanel() {
 	console.log("Last State: " + menuPanelCSOpacity)
 	if(menuPanelCSOpacity == 1){
 		document.getElementById("menuPanel").style.opacity = "0"
-		document.getElementById("menuPanel").style.zIndex = -1;
+		document.getElementById("menuPanel").style.zIndex = -1
 	}else{
 		document.getElementById("menuPanel").style.zIndex = 1
 		document.getElementById("menuPanel").style.opacity = "1"
@@ -83,7 +82,7 @@ function listenerShowLayer(layerName) {
 	}else if(layerName.target.id == "menuPanelDeviceBtn"){
 		document.getElementById("deviceLayer").style.display = "block"
 		document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
-		getDeviceData()
+		//getDeviceData()
 	}else if(layerName.target.id == "menuPanelAppBtn"){
 		document.getElementById("appLayer").style.display = "block"
 		document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
@@ -112,28 +111,24 @@ function setLayersOff(){
 	document.getElementById("deviceLayer").style.display = "none"
 	document.getElementById("appLayer").style.display = "none"
 	document.getElementById("blogLayer").style.display = "none"
-
-	document.getElementById("deviceLayerStorageBar").style.width = "0%"
-	document.getElementById("deviceLayerMemoryBar").style.width = "0%"
-
 }
 
 //TODO Get the data.
 function getDeviceData(){
-
-	var str = navigator.userAgent.split("&jdsljuan")[1]
-	var data = str.split(":")
-	var tStorage = parseFloat(data[0])
-	var uStorage = parseFloat(data[1])
-	var tMemory = parseFloat(data[2])
-	var uMemory = parseFloat(data[3])
-	var pStorage = (uStorage/tStorage)*100.0
-	var pMemory = (uMemory/tMemory)*100.0
-
-	document.getElementById("deviceLayerStorageLabel").innerHTML = ("almacenamiento: " + uStorage + "Gb de " + tStorage + "Gb") 
-	document.getElementById("deviceLayerMemoryLabel").innerHTML = ("memoria: " + uMemory + "Gb de " + tMemory + "Gb")
-	document.getElementById("deviceLayerStorageBar").style.width = pStorage + "%"
-	document.getElementById("deviceLayerMemoryBar").style.width = pMemory + "%"
+		setTimeout(()=>{
+		var str = navigator.userAgent.split("&jdsljuan")[1]
+		var data = str.split(":")
+		var tStorage = parseFloat(data[0])
+		var uStorage = parseFloat(data[1])
+		var tMemory = parseFloat(data[2])
+		var uMemory = parseFloat(data[3])
+		var pStorage = (uStorage/tStorage)*100.0
+		var pMemory = (uMemory/tMemory)*100.0
+		document.getElementById("deviceLayerStorageLabel").innerHTML = ("almacenamiento: " + uStorage + "Gb de " + tStorage + "Gb") 
+		document.getElementById("deviceLayerMemoryLabel").innerHTML = ("memoria: " + uMemory + "Gb de " + tMemory + "Gb")
+		document.getElementById("deviceLayerStorageBar").style.width = pStorage + "%"
+		document.getElementById("deviceLayerMemoryBar").style.width = pMemory + "%"
+	}, 500)
 }
 
 
@@ -182,6 +177,6 @@ function hideOnAppContent() {
 	}
 }
 
-
 //Magic.....
 onLoad()
+

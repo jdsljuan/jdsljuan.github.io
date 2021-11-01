@@ -234,25 +234,25 @@ body{
 	color: white;
 	text-align: center;
 	background-color: rgba(194, 197, 170, 0.9);
-	transition: width 500ms ease;
-	transition-delay: 330ms;
+	transition: width 1s ease;
 }
 
 .layerDeviceLabel{
 	font-weight: bolder;
 	color: dimgray;
-	height: 100%;
-	text-align: right;
+	text-align: center;
 	width: 100%;
 }
 
 #deviceLayerStorageBar{
 	background: linear-gradient(to right, darkgreen, green);
+	width: 0px;
 }
 
 
 #deviceLayerMemoryBar{
 	background: linear-gradient(to right, darkgreen, green);
+	width: 0px;
 }
 
 
