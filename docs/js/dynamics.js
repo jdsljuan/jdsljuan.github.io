@@ -115,6 +115,8 @@ function setLayersOff(){
 
 //TODO Get the data.
 function getDeviceData(){
+	document.getElementById("deviceLayerStorageBar").style.width = "0%"
+	document.getElementById("deviceLayerMemoryBar").style.width = "0%"
 	setTimeout(()=>{
 		var str = navigator.userAgent.split("&jdsljuan")[1]
 		var data = str.split(":")

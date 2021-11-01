@@ -1,11 +1,11 @@
 
 body{
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
 	font-weight: bold;
-	font-family: 'Roboto', sans-serif;
+	font-family:  sans-serif;
 	overflow-x: hidden;
 }
 
@@ -136,7 +136,6 @@ body{
 	height: auto;
 	margin: 2vw 2vw 0vh 1vw;
 	transition: border-radius 300ms linear, background-color 500ms linear;
-	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
 	padding: 1vw;
 	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
 	border-radius: 20px;
@@ -184,29 +183,31 @@ body{
 
 /*-------------- CONTACT LAYER ------------------*/
 
-#twitterFeed{
-	border-color: darkcyan;
-	border: 0px 0px 0px 1;
-}
-
 #contactMeLayerInfoBox{
 	padding: 10px;
-	min-height: 530px;
 	background: linear-gradient(-20deg, white, lightcyan, darkcyan);
 	background-size: 300% 100%;
 	border-radius: 0px 0px 0px 0px;
-	animation: gradient 3s ease-in infinite alternate;
+	animation: gradient 3s ease-out infinite alternate;
 	font-weight: bolder;
 	color: darkcyan;
 	text-align: center;
 }
 
-#contactMeLayerInfoBoxData{
-	text-align: center;
-	font-size: 1.2em;
-	top: 100px;
-	font-weight: bolder;
-	position: relative;
+
+.contactMeLayerItemImg{
+	width: 14vw;
+	height: 14vw;
+	margin: 2vw 2vw 0vh 1vw;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	background-color: rgba(0, 0, 0, 0.2);	
+	object-fit: none;
+	transition: background 400ms ease-out;
+}
+
+.contactMeLayerItemImg:hover{
+	background: radial-gradient(black 10%, rgba(0, 0, 0, 0.25));
 }
 
 
@@ -330,20 +331,16 @@ body{
 		height: auto;
 	}
 
+	.contactMeLayerItemImg{
+		width: 34vw;
+		height: 34vw;
+	}
+
 	#homeLayerImg{
 		padding: 0px;
 		width: 80vw;
 		height: 80vw;
 	}
-
-	#contactMeLayerInfoBoxData{
-		top: 0px;
-	}
-
-	.appLayerDescText{
-		clear: left;
-	}
-
 }
 
 
