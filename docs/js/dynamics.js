@@ -40,7 +40,7 @@ function onLoad() {
 	setGlobalListeners()
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
-	//hideOnAppContent()
+	hideOnAppContent()
 	document.getElementById("menuPanelHomeBtn").click()
 }
 
@@ -63,7 +63,6 @@ function listenerManageMenuPanel() {
  * @param layerName Event generated for the click of the panel's divs
  * */
 function listenerShowLayer(layerName) {
-	document.getElementById("aboutMeLayerVideoADSI").pause()
 	setLayersOff()
 
 	var colorOnLayer = "darkcyan"
@@ -94,6 +93,7 @@ function listenerShowLayer(layerName) {
 }
 
 function setLayersOff(){
+	document.getElementById("aboutMeLayerVideoADSI").pause()
 	//Disable the Panel backgroundColor.
 	var colorOnLayer = "white"
 	document.getElementById("menuPanelHomeBtn").style.color = colorOnLayer
@@ -115,7 +115,7 @@ function setLayersOff(){
 
 //TODO Get the data.
 function getDeviceData(){
-		setTimeout(()=>{
+	setTimeout(()=>{
 		var str = navigator.userAgent.split("&jdsljuan")[1]
 		var data = str.split(":")
 		var tStorage = parseFloat(data[0])
