@@ -1,3 +1,7 @@
+/**
+ * @file: dynamics.js
+ * @author: Juan David Sanchez Leal
+ * */
 
 function listenerSetBodyConfig(){
 	document.body.style.paddingTop = calculateMenuHeight()+"px"
@@ -36,7 +40,7 @@ function onLoad() {
 	setGlobalListeners()
 	listenerSetBodyConfig()
 	listenerManageMenuPanel()
-	//hideOnAppContent()
+	hideOnAppContent()
 	document.getElementById("menuPanelHomeBtn").click()
 
 }
@@ -109,6 +113,9 @@ function setLayersOff(){
 	document.getElementById("appLayer").style.display = "none"
 	document.getElementById("blogLayer").style.display = "none"
 
+	document.getElementById("deviceLayerStorageBar").style.width = "0%"
+	document.getElementById("deviceLayerMemoryBar").style.width = "0%"
+
 }
 
 //TODO Get the data.
@@ -171,6 +178,7 @@ function hideOnAppContent() {
 		document.getElementById("deviceLayer").innerHTML = ""	
 	}else{//Make the things on App
 		document.getElementById("menuPanelAppBtn").style.display = "none"
+		document.getElementById("appLayer").innerHTML = ""	
 	}
 }
 
