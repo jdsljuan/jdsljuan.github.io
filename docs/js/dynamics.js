@@ -119,8 +119,8 @@ function getDeviceData(){
 	var uStorage = parseFloat(data[1])
 	var tMemory = parseFloat(data[2])
 	var uMemory = parseFloat(data[3])
-	var pStorage = uStorage/tStorage
-	var pMemory = uMemory/tMemory
+	var pStorage = (uStorage/tStorage)*100
+	var pMemory = (uMemory/tMemory)*100
 
 	document.getElementById("deviceLayerStorageLabel").innerHTML += (uStorage + "Gb de " + tStorage + "Gb") 
 	document.getElementById("deviceLayerMemoryLabel").innerHTML += (uMemory + "Gb de " + tMemory + "Gb")
