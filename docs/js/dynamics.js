@@ -138,26 +138,17 @@ function getDeviceData(){
  * TODO: Fix this stupid thing
  * */
 function setGlobalListeners() {
-	//Eventos Propios
-	var menuBtn = document.getElementById("menuBtn")
-	var menuPanelHomeBtn = document.getElementById("menuPanelHomeBtn")
-	var menuPanelAboutMeBtn = document.getElementById("menuPanelAboutMeBtn")
-	var menuPanelContactMe = document.getElementById("menuPanelContactMeBtn")
-	var menuPanelStudiesBtn = document.getElementById("menuPanelStudiesBtn")
-	var menuPanelDeviceBtn = document.getElementById("menuPanelDeviceBtn")
-	var menuPanelBlogBtn = document.getElementById("menuPanelBlogBtn")
-	var menuPanelAppBtn = document.getElementById("menuPanelAppBtn")
-	
-	menuPanelHomeBtn.addEventListener("click", listenerShowLayer)
-	menuPanelAboutMeBtn.addEventListener("click", listenerShowLayer)
-	menuPanelContactMe.addEventListener("click", listenerShowLayer)
-	menuPanelStudiesBtn.addEventListener("click", listenerShowLayer)
-	menuPanelDeviceBtn.addEventListener("click", listenerShowLayer)
-	menuPanelAppBtn.addEventListener("click", listenerShowLayer)
-	menuPanelBlogBtn.addEventListener("click", listenerShowLayer)
-	
-	menuBtn.addEventListener("click", listenerManageMenuPanel)
 
+	//Eventos Propios
+	document.getElementById("menuBtn").addEventListener("click", listenerManageMenuPanel)
+	document.getElementById("menuPanelHomeBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelAboutMeBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelContactMeBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelStudiesBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelDeviceBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelBlogBtn").addEventListener("click", listenerShowLayer)
+	document.getElementById("menuPanelAppBtn").addEventListener("click", listenerShowLayer)
+	
 	//Eventos del Sistema
 	window.addEventListener("scroll", listenerMenuPosition)
 	window.addEventListener("resize", listenerSetBodyConfig)
@@ -169,8 +160,8 @@ function setGlobalListeners() {
 function hideOnAppContent() {
 	if (navigator.userAgent.indexOf("&jdsljuan") == -1) {
 		//On Web Browser
-		document.getElementById("menuPanelBlogBtn").style.display = "none"
-		document.getElementById("blogLayer").innerHTML = ""
+		//document.getElementById("menuPanelBlogBtn").style.display = "none"
+		//document.getElementById("blogLayer").innerHTML = ""
 		document.getElementById("menuPanelDeviceBtn").style.display = "none"
 		document.getElementById("deviceLayer").innerHTML = ""	
 	}else{//Make the things on App

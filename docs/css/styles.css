@@ -116,8 +116,8 @@ body{
 }
 
 .layerSkill{
-	width: 14vw;
-	height: 14vw;
+	width: 13vw;
+	height: 13vw;
 	margin: 2vw 2vw 0vh 1vw;
 	border-radius: 100%;
 	transition: border-radius 300ms linear, background-color 500ms linear;
@@ -132,7 +132,7 @@ body{
 }
 
 .layerSkillEsp{
-	width: 14vw;
+	width: 13vw;
 	height: auto;
 	margin: 2vw 2vw 0vh 1vw;
 	transition: border-radius 300ms linear, background-color 500ms linear;
@@ -185,13 +185,12 @@ body{
 
 #contactMeLayerInfoBox{
 	padding: 10px;
-	background: linear-gradient(-20deg, white, lightcyan, darkcyan);
-	background-size: 300% 100%;
+	background: radial-gradient(lightcyan, cyan 20%, darkcyan);
+	background-size: 300% 200%;
 	animation: gradient 3s ease-out infinite alternate;
-	font-weight: bolder;
-	color: darkcyan;
 	text-align: center;
 	border-radius: 40px;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5) ;
 }
 
 
@@ -255,7 +254,29 @@ body{
 	background: linear-gradient(to right, darkgreen, green);
 	width: 0px;
 }
+/*--------------- Blog page --------------------*/
 
+#blogLayer{
+	text-align: center;
+}
+
+.floatBtn{
+	position: fixed;
+	background-color: #dda15e;
+	padding: 5vw;
+	right: 11vw;
+	bottom: 4vw;
+	border-radius: 5px;
+}
+
+.layerPostItem{
+	width: 18vw;
+	height: 18vw;
+	border-radius: 20px;
+	border: 1vw solid white;
+	float: left;
+	background-color: darkcyan;
+}
 
 /*--------------- QUERY --------------------*/
 
@@ -319,12 +340,12 @@ body{
 	}
 
 	.layerSkill{
-		width: 34vw;
-		height: 34vw;
+		width: 32vw;
+		height: 32vw;
 	}
 
 	.layerSkillEsp{
-		width: 34vw;
+		width: 32vw;
 		height: auto;
 	}
 
@@ -336,7 +357,7 @@ body{
 	#homeLayerImg{
 		padding: 0px;
 		width: 80vw;
-		height: 80vw;
+		height: 50vw;
 	}
 }
 
@@ -356,6 +377,10 @@ body{
 
 	.layerSubTitle{
 		font-size: 1.5em;
+	}
+
+	#homeLayerTitle{
+		font-size: 2em;
 	}
 
 	#homeLayerImg {
