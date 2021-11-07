@@ -82,6 +82,9 @@
       	border-radius:3px;
 		touch-action:"none";
       }
+	  canvas{
+		touch-action:"none";
+	  }
       .itemBtn{
         border-radius:7px;
         background-color: rgba(255,230,50, 0.8);
@@ -173,9 +176,9 @@
    	document.getElementById("resetBtn").addEventListener("click", clearSign,false);
 
 	function drawSign(event){
-		document.getElementById("email").value = "Draw!";
+		document.getElementById("email").value =  drawsign(event);
 		event.preventDefault();
-		event.stopPropagation();
+		//event.stopPropagation();
 	    var c2d = canvas.getContext("2d");
 	    var canvasRect = canvas.getBoundingClientRect();
 		var x = event.clientX;
@@ -189,14 +192,8 @@
 
 	var onDraw;
 	function drawStateOn(event){
-		canvas.style.position = "fixed";
-		canvas.style.width = window.innerWidth+"px";
-		canvas.style.height = window.innerHeight+"px";
-		canvas.style.zIndex = "1";
-
-
 		event.preventDefault();
-		document.getElementById("email").value = "ON!";
+		document.getElementById("email").value = drawsign(event);
 		document.body.style.overflow = "hidden";
 		onDraw = true;
 		var c2d = canvas.getContext("2d");
@@ -204,18 +201,14 @@
 	}
 	
 	function drawStateOff(event){
-		canvas.style.position = "relative";
-		canvas.style.width = "initial";
-		canvas.style.height = "initial";
-		canvas.style.zIndex = "0";
 		event.preventDefault();
-		document.getElementById("email").value = "OFF!";
+		document.getElementById("email").value = drawsign(event);
 		document.body.style.overflow = "scroll";
 		onDraw = false;
 	}
 
 	function drawsign(event){
-		document.getElementById("email").value = " - " + event.changedTouches[0];
+		return " - " + event.changedTouches[0];
 	}
 
 	function clearSign(event){
