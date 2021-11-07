@@ -88,6 +88,9 @@ function listenerShowLayer(layerName) {
 	}else if(layerName.target.id == "menuPanelBlogBtn"){
 		document.getElementById("blogLayer").style.display = "block"
 		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
+	}else if(layerName.target.id == "menuPanelCasesBtn"){
+		document.getElementById("casesLayer").style.display = "block"
+		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
 	}
 	listenerManageMenuPanel()
 }
@@ -103,6 +106,7 @@ function setLayersOff(){
 	document.getElementById("menuPanelDeviceBtn").style.color = colorOnLayer
 	document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
 	document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
+	document.getElementById("menuPanelCasesBtn").style.color = colorOnLayer
 	//Disable
 	document.getElementById("homeLayer").style.display = "none"
 	document.getElementById("aboutMeLayer").style.display = "none"
@@ -111,6 +115,7 @@ function setLayersOff(){
 	document.getElementById("deviceLayer").style.display = "none"
 	document.getElementById("appLayer").style.display = "none"
 	document.getElementById("blogLayer").style.display = "none"
+	document.getElementById("casesLayer").style.display = "none"
 }
 
 //TODO Get the data.
@@ -148,7 +153,8 @@ function setGlobalListeners() {
 	document.getElementById("menuPanelDeviceBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelBlogBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelAppBtn").addEventListener("click", listenerShowLayer)
-	
+	document.getElementById("menuPanelCasesBtn").addEventListener("click", listenerShowLayer)
+
 	//Eventos del Sistema
 	window.addEventListener("scroll", listenerMenuPosition)
 	window.addEventListener("resize", listenerSetBodyConfig)
