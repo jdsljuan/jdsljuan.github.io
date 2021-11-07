@@ -174,8 +174,8 @@
 
 	function drawSign(event){
 		document.getElementById("email").value = "Draw!";
-		//event.preventDefault();
-		//event.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 	    var c2d = canvas.getContext("2d");
 	    var canvasRect = canvas.getBoundingClientRect();
 		var x = event.clientX;
@@ -189,6 +189,12 @@
 
 	var onDraw;
 	function drawStateOn(event){
+		canvas.style.position = "fixed";
+		canvas.style.width = window.innerWidth+"px";
+		canvas.style.height = window.innerHeight+"px";
+		canvas.style.zIndex = "1";
+
+
 		event.preventDefault();
 		document.getElementById("email").value = "ON!";
 		document.body.style.overflow = "hidden";
@@ -198,9 +204,12 @@
 	}
 	
 	function drawStateOff(event){
+		canvas.style.position = "relative";
+		canvas.style.width = "initial";
+		canvas.style.height = "initial";
+		canvas.style.zIndex = "0";
 		event.preventDefault();
 		document.getElementById("email").value = "OFF!";
-		event.preventDefault();
 		document.body.style.overflow = "scroll";
 		onDraw = false;
 	}
