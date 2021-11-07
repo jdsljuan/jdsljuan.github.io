@@ -143,10 +143,10 @@
     		</div>
     		<div class="itemList">
 				<div class="textFieldLabel">firma</div>
-    			<canvas id="canvas"></canvas>
+    			<canvas id="canvas" touch-action="none"></canvas>
 	    	</div>
     		<div class="itemList">
-				<input class="itemBtn" type="reset" value="limpiar" name="resetBtn" id="resetBtn">
+				<input class="itemBtn" type="button" value="limpiar" name="resetBtn" id="resetBtn">
     		</div>
     		<div class="itemList">
 				<input class="itemBtn" type="submit" value="subir" name="submitBtn" id="submitBtn">
@@ -159,7 +159,6 @@
 
   </body>
   <script>
-    alert("FORMATO DE EJEMPLO FUNCIONAL!");
 
     var canvas = document.getElementById("canvas");
     canvas.addEventListener("mouseup",     drawStateOff,false);
@@ -174,7 +173,7 @@
 
 	function drawSign(event){
 		event.preventDefault();
-		event.stopPropagation();
+		//event.stopPropagation();
 	    var c2d = canvas.getContext("2d");
 	    var canvasRect = canvas.getBoundingClientRect();
 		var x = event.clientX;
@@ -187,14 +186,15 @@
 	}
 
 	var onDraw;
-	function drawStateOn(){
+	function drawStateOn(event){
 		document.body.style.overflow = "hidden";
 		onDraw = true;
 		var c2d = canvas.getContext("2d");
 		c2d.beginPath();
 	}
 	
-	function drawStateOff(){
+	function drawStateOff(event){
+		event.preventDefault();
 		document.body.style.overflow = "scroll";
 		onDraw = false;
 	}
