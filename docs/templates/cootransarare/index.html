@@ -142,7 +142,7 @@
     				<span class="textFieldSubLabel">temporal</span>
 				</div>
     		</div>
-    		<div class="itemList">
+    		<div class="itemList" id="canvasRoot">
 				<div class="textFieldLabel">firma</div>
     			<canvas id="canvas"></canvas>
 	    	</div>
@@ -162,32 +162,35 @@
   <script>
 
     var canvas = document.getElementById("canvas");
-    canvas.addEventListener("mouseup",     drawStateOff,false);
-    canvas.addEventListener("mousemove",   drawSign,false);
-    canvas.addEventListener("mousedown",   drawStateOn,false);
+    document.getElementById("canvasRoot").addEventListener("pointerup",     drawStateOff,false);
+    document.getElementById("canvasRoot").addEventListener("pointermove",   drawSign,false);
+    document.getElementById("canvasRoot").addEventListener("pointerdown",   drawStateOn,false);
     
-    canvas.addEventListener("pointerup",     drawStateOff,false);
-    canvas.addEventListener("pointermove",   drawSign,false);
-    canvas.addEventListener("pointerdown",   drawStateOn,false);
+    //canvas.addEventListener("pointerup",     drawStateOff,false);
+    //canvas.addEventListener("pointermove",   drawSign,false);
+    //canvas.addEventListener("pointerdown",   drawStateOn,false);
     
    	document.getElementById("resetBtn").addEventListener("click", clearSign,false);
 
 	function drawSign(event){
-		event.preventDefault();
+		document.getElementById("email").value = "Draw!";
+		//event.preventDefault();
 		//event.stopPropagation();
 	    var c2d = canvas.getContext("2d");
 	    var canvasRect = canvas.getBoundingClientRect();
 		var x = event.clientX;
 		var y = event.clientY-canvasRect.top;
 		c2d.fillStyle = "#FF00FF";
-		if(onDraw){
+		//if(onDraw){
 			c2d.lineTo(x,y);
 			c2d.stroke(); 			
-		}
+		//}
 	}
 
 	var onDraw;
 	function drawStateOn(event){
+		event.preventDefault();
+		document.getElementById("email").value = "ON!";
 		document.body.style.overflow = "hidden";
 		onDraw = true;
 		var c2d = canvas.getContext("2d");
@@ -196,17 +199,20 @@
 	
 	function drawStateOff(event){
 		event.preventDefault();
+		document.getElementById("email").value = "OFF!";
+		event.preventDefault();
 		document.body.style.overflow = "scroll";
 		onDraw = false;
 	}
 
 	function drawsign(event){
-		document.getElementById("email").value = " - " +event.type;
+		document.getElementById("email").value = " - " + event.changedTouches[0];
 	}
 
 	function clearSign(event){
 		var c2d = canvas.getContext("2d");
 		c2d.clearRect(0, 0, canvas.width, canvas.height);
+		c2d.beginPath();
 	}
  	
   </script>
