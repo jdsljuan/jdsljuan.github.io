@@ -1,221 +1,282 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  	<meta charset="UTF-8">
-    <meta name="viewport" content="width = 320px，initial-scale = 1.0">
-    <base target="_base">
-  </head>
-  <body>
-    <style>
-     body{
-     	margin: 0px;
-     	padding: 0px;
-     	text-align: center;
-     	width: 320px;
-     	height: auto;
-     	font-size: 16px;
-     	font-family: 'saens-serif';
-     }
-     .itemList{
-     	margin-top: 20px;
-     }
-     .itemListLeft{
-     	margin-top: 20px;
-		padding-left:10%;
-		text-align:left; 
-     }
-      #box{
-        border: 1px solid black;
-        background: white;
-        text-align: center;
-      }
-      #banner{
-      	background: linear-gradient(to right, green, darkgreen);
-      	text-align: center;
-      }
-      #bannerImg{
-      	width: 120px;
-      	height: 85px;    
-      }
-	  #bannerText {
-	  	font-size: 1.4em;
-	  	color: white;
-	  	font-weight: bolder;
-	  	padding-bottom: 20px;
-	  }
-      .textFieldLabel{
-      	font-size: 11px;
-      	color: dimgray;
-      	font-weight:900;
-      	width:80%;
-      	text-align:left;
-      	margin-left:10%;
-      }
-      .textField {
-      	border-radius:7px;
-      	font-size: 14px;
-      	text-align: center;
-      	border: 1px solid rgba(255,230,50, 0.8);
-      	box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.04);
-      	width: 80%;
-      	padding: 10px 0px 10px 0px;
-      	transition:padding 300ms ease;
-      }
-      .textField:focus {
-      	padding: 15px 0px 15px 0px;
-      	border: solid rgba(255,230,50, 1);
-      	border-width: 3px 0px 3px 0px;
-      	box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
-      	outline: none;
-      	border-radius: unset;
-      }
-      .textFieldSubLabel{
-      	font-size: 10px;
-      	color: dimgray;
-      	font-weight:500;
-      }
-      #canvas{
-      	width: 80%;
-      	height: 150px;
-      	background: rgba(255,230,50,0.05);
-      	border: 1px solid rgb(255,230,50);
-      	border-radius:3px;
-		touch-action:"none";
-      }
-	  canvas{
-		touch-action:"none";
-	  }
-      .itemBtn{
-        border-radius:7px;
-        background-color: rgba(255,230,50, 0.8);
-        color: black;
-        font-weight:600;
-      	font-size: 14px;
-      	text-align: center;
-      	padding: 10px 0px 10px 0px;
-      	border: 1px solid rgba(255,230,50, 0.8);
-      	box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.04);
-      	width: 80%;
-      }
-      #submitBtn{
-      	background-color: green;
-      	color: white;
-      	font-weight:800;
-      }
-
-</style>
-    <div id="box">
-    	<div id="banner">
-    		<img  id="bannerImg" src="https://cootransarare.com/wp-content/uploads/2020/06/Untitled-2-1.png"/>
-    		<div  id="bannerText">Registro del Personal</div>
-    	</div>
-    	<form>
-    	 	<div class="itemList">
-				<div class="textFieldLabel">nombres</div>
-    			<input class="textField" type="text" name="names" required>
-    		</div>
-    		<div class="itemList">
-    			<div class="textFieldLabel">apellidos</div>
-    			<input class="textField" type="text" name="fullnames" required>
-    		</div>
-			<div class="itemList">
-				<div class="textFieldLabel">telefono</div>
-    			<input class="textField" type="tel" name="telephone" required pattern="[3][0-6][0-9]{8}">
-    		</div>
-			<div class="itemList">
-				<div class="textFieldLabel">e-mail</div>
-    			<input class="textField" type="email" id="email" name="email" required>
-    		</div>
- 			<div class="itemList">
-				<div class="textFieldLabel">tipo de empleado</div>
-				<div class="itemListLeft">
-					<input class="checkBox" type="checkbox" name="emp_admin">
-	    	   		<span class="textFieldSubLabel">administrativo</span>
-				</div>
-				<div class="itemListLeft">
-					<input class="checkBox" type="checkbox" name="emp_driver">
-    				<span class="textFieldSubLabel">conductor</span>	
-				</div>
-				<div class="itemListLeft">
-					<input class="checkBox" type="checkbox" name="emp_service">
-	    			<span class="textFieldSubLabel">servicios</span>
-				</div>
-				<div class="itemListLeft">
-    				<input class="checkBox" type="checkbox" name="emp_tmp">
-    				<span class="textFieldSubLabel">temporal</span>
-				</div>
-    		</div>
-    		<div class="itemList" id="canvasRoot">
-				<div class="textFieldLabel">firma</div>
-    			<canvas id="canvas"></canvas>
-	    	</div>
-    		<div class="itemList">
-				<input class="itemBtn" type="button" value="limpiar" name="resetBtn" id="resetBtn">
-    		</div>
-    		<div class="itemList">
-				<input class="itemBtn" type="submit" value="subir" name="submitBtn" id="submitBtn">
-    		</div>
-    	</form>
- 
-
-    	<div id="spacer" class="itemList"></div>
-    </div>
-
-  </body>
-  <script>
-
-    var canvas = document.getElementById("canvas");
-    document.getElementById("canvasRoot").addEventListener("touchstart",  (e)=>{ e.preventDefault();},false);
-    //document.getElementById("canvasRoot").addEventListener("touchmove",   drawSign,false);
-    //document.getElementById("canvasRoot").addEventListener("touchend",   drawStateOn,false);
-    
-    canvas.addEventListener("pointerup",     drawStateOff,false);
-    canvas.addEventListener("pointermove",   drawSign,false);
-    canvas.addEventListener("pointerdown",   drawStateOn,false);
-    
-   	document.getElementById("resetBtn").addEventListener("click", clearSign,false);
-
-	function drawSign(event){
-		document.getElementById("email").value =  "DRAW";
-		event.preventDefault();
-		//event.stopPropagation();
-	    var c2d = canvas.getContext("2d");
-	    var canvasRect = canvas.getBoundingClientRect();
-		var x = event.clientX;
-		var y = event.clientY-canvasRect.top;
-		c2d.fillStyle = "#FF00FF";
-		if(onDraw){
-			c2d.lineTo(x,y);
-			c2d.stroke(); 			
-		}
-	}
-
-	var onDraw;
-	function drawStateOn(event){
-		event.preventDefault();
-		document.getElementById("email").value = "ON";
-		document.body.style.overflow = "hidden";
-		onDraw = true;
-		var c2d = canvas.getContext("2d");
-		c2d.beginPath();
-	}
-	
-	function drawStateOff(event){
-		event.preventDefault();
-		document.getElementById("email").value = "OFF";
-		document.body.style.overflow = "scroll";
-		onDraw = false;
-	}
-
-	function drawsign(event){
-		return " - " + event.changedTouches[0];
-	}
-
-	function clearSign(event){
-		var c2d = canvas.getContext("2d");
-		c2d.clearRect(0, 0, canvas.width, canvas.height);
-		c2d.beginPath();
-	}
- 	
-  </script>
-</html>
+<!--Registro Basico de Personal 
+ 	Author: Juan David Sanchez Leal -->
+	 <!DOCTYPE html>
+	 <html>
+	   <head>
+		   <meta charset="UTF-8">
+		 <meta name="viewport" content="width = 320px，initial-scale = 1.0">
+		 <base target="_base">
+	   </head>
+	   <body>
+		 <style>
+		  body{
+			  margin: 0px;
+			  padding: 0px;
+			  text-align: center;
+			  width: 320px;
+			  height: auto;
+			  font-size: 16px;
+			  font-family: 'saens-serif';
+		  }
+		  .itemList{
+			  margin-top: 20px;
+		  }
+		  .itemListLeft{
+			  margin-top: 20px;
+			 padding-left:10%;
+			 text-align:left; 
+		  }
+		   #box{
+			 border: 1px solid black;
+			 background: white;
+			 text-align: center;
+		   }
+		   #banner{
+			   background: linear-gradient(to right, green, darkgreen);
+			   text-align: center;
+		   }
+		   #bannerImg{
+			   width: 120px;
+			   height: 85px;    
+		   }
+		   #bannerText {
+			   font-size: 1.4em;
+			   color: white;
+			   font-weight: bolder;
+			   padding-bottom: 20px;
+		   }
+		   .textFieldLabel{
+			   font-size: 11px;
+			   color: dimgray;
+			   font-weight:900;
+			   width:80%;
+			   text-align:left;
+			   margin-left:10%;
+		   }
+		   .textField{
+			   border-radius:7px;
+			   font-size: 14px;
+			   text-align: center;
+			   border: 1px solid rgba(255,230,50, 0.8);
+			   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.04);
+			   width: 80%;
+			   padding: 10px 0px 10px 0px;
+			   transition:padding 300ms ease;
+		   }
+		   .textField:valid{
+			   border-color: green;
+			   border-width: 1px 1px 3px 1px;
+		   }
+		   .textField:focus {
+			   padding: 15px 0px 15px 0px;
+			   border: solid rgba(255,230,50, 1);
+			   border-width: 3px 0px 3px 0px;
+			   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+			   outline: none;
+			   border-radius: unset;
+		   }
+		   .textFieldSubLabel{
+			   font-size: 12px;
+			   color: dimgray;
+			   font-weight:500;
+		   }
+		   #canvas{
+			   width: 80%;
+			   height: 150px;
+			   background: rgba(255,230,50,0.05);
+			   border: 1px solid rgb(255,230,50);
+			   border-radius:3px;
+			 touch-action:"none";
+		   }
+		   canvas{
+			 touch-action:"none";
+		   }
+		   .itemBtn{
+			 border-radius:7px;
+			 background-color: rgba(255,230,50, 0.8);
+			 color: black;
+			 font-weight:600;
+			   font-size: 14px;
+			   text-align: center;
+			   padding: 10px 0px 10px 0px;
+			   border: 1px solid rgba(255,230,50, 0.8);
+			   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.04);
+			   width: 80%;
+		   }
+		   #submitBtn{
+			   background-color: green;
+			   color: white;
+			   font-weight:800;
+		   }
+		   #imgInput{
+			 display: none;
+		   }
+	 </style>
+		 <div id="box">
+			 <div id="banner">
+				 <img  id="bannerImg" src="https://cootransarare.com/wp-content/uploads/2020/06/Untitled-2-1.png"/>
+				 <div  id="bannerText">Registro del Personal</div>
+			 </div>
+			 <form id="form" name="main_form" onsubmit="clientFormHandler(this)">
+				  <div class="itemList">
+					 <div class="textFieldLabel">nombres</div>
+					 <input class="textField" type="text" name="names" placeholder="escriba sus nombres" required id="namesTf">
+				 </div>
+				 <div class="itemList">
+					 <div class="textFieldLabel">apellidos</div>
+					 <input class="textField" type="text" name="fullnames" placeholder="escriba sus apellidos" required id="fullnamesTf">
+				 </div>
+				 <div class="itemList">
+					 <div class="textFieldLabel">celular</div>
+					 <input class="textField" type="tel" name="telephone" required id="cellphoneTf" placeholder="numero de celular" pattern="[3][0-6][0-9]{8}">
+				 </div>
+				 <div class="itemList">
+					 <div class="textFieldLabel">e-mail</div>
+					 <input class="textField" type="email" name="email" placeholder="correo electrinico" required id="emailTf">
+				 </div>
+				  <div class="itemList">
+					 <div class="textFieldLabel">tipo de empleado</div>
+					 <div class="itemListLeft">
+						 <input class="checkBox" type="checkbox" name="emp_admin">
+							<span class="textFieldSubLabel">administrativo</span>
+					 </div>
+					 <div class="itemListLeft">
+						 <input class="checkBox" type="checkbox" name="emp_driver" checked>
+						 <span class="textFieldSubLabel">conductor</span>	
+					 </div>
+					 <div class="itemListLeft">
+						 <input class="checkBox" type="checkbox" name="emp_service">
+						 <span class="textFieldSubLabel">servicios</span>
+					 </div>
+					 <div class="itemListLeft">
+						 <input class="checkBox" type="checkbox" name="emp_tmp">
+						 <span class="textFieldSubLabel">temporal</span>
+					 </div>
+				 </div>
+				 <input name="codesign" id="imgInput" type="text" required>
+				 <div class="itemList" id="canvasRoot">
+					 <div class="textFieldLabel">firma</div>
+					 <canvas id="canvas"></canvas>
+				 </div>
+				 <div class="itemList">
+					 <input class="itemBtn" type="button" value="limpiar firma" name="resetBtn" id="resetBtn">
+				 </div>
+				 <div class="itemList">
+					 <input class="itemBtn" form="form" type="submit" value="subir" name="submitBtn" id="submitBtn">
+				 </div>
+			 </form>
+	  
+	 
+			 <div id="spacer" class="itemList"></div>
+		 </div>
+	 
+	   </body>
+	   <script>
+		 //============= FORM SETUP =======================
+	 
+		 // Cuando se hace submit al botton se previenen el default oper.
+		 function preventFormSubmit() {
+			 var form = document.getElementById("form");
+			 form.addEventListener('submit', function(event) {
+				 event.preventDefault();
+				 console.log("submit button");
+			 });
+		   }
+		 window.addEventListener('load', preventFormSubmit);
+	 
+		 //Esto se ejecuta primero antes del evento submit del boton,
+		 //pero la validatacion de vista se lleva acabo antes.
+		 //Sin imagen esto no se ejecuta.
+		 function clientFormHandler(form){
+			 google.script.run.withSuccessHandler(registrationProcessComplete).myFunction(form);
+		 console.log("Asincrono.");
+		 }
+	 
+		 function registrationProcessComplete(msgFromServer){
+			 alert(msgFromServer);
+		 }
+	 
+	 
+		 document.getElementById("form").reset();
+	 
+		 //============= CANVAS SETUP =======================
+	 
+		 //La firma se guarda por trazos (;) y
+		 //cada trazo esta separado por puntos (:) y los puntos 
+		 //tienen dos coordenadas (,) la firma tiene un trazo inicial.
+		 //El lienzo minimo para pintarla es de 0,0,320,150.
+		 var signPoints = ":i,i;";
+		 var codeSign = document.getElementById("imgInput");
+		 var canvas = document.getElementById("canvas");
+		 document.getElementById("canvasRoot").addEventListener("touchstart",  (e)=>{ e.preventDefault();},false);
+		 codeSign.addEventListener("invalid", ()=>{
+			 canvas.style.background = "rgba(255,0,0,0.2)";
+		 });
+	 
+		 canvas.addEventListener("pointerup",     drawStateOff,false);
+		 canvas.addEventListener("pointermove",   drawSign,false);
+		 canvas.addEventListener("pointerdown",   drawStateOn,false);
+		 
+			document.getElementById("resetBtn").addEventListener("click", clearSign,false);
+	 
+		 function drawSign(event){
+			 event.preventDefault();
+			 var c2d = canvas.getContext("2d");
+			 var canvasRect = canvas.getBoundingClientRect();
+			 var x = event.clientX;
+			 var y = event.clientY-canvasRect.top;
+			 c2d.fillStyle = "#FF00FF";
+			 if(onDraw){
+				 signPoints = signPoints + x + "," + y + ":";
+				 c2d.lineTo(x,y);
+				 c2d.stroke(); 			
+			 }
+		 }
+	 
+		 var onDraw;
+		 function drawStateOn(event){
+			 event.preventDefault();
+			 document.body.style.overflow = "hidden";
+			 onDraw = true;
+			 var c2d = canvas.getContext("2d");
+			 c2d.beginPath();
+		 }
+		 
+		 function drawStateOff(event){
+			 canvas.style.background = "rgba(0,255,0,0.2)";
+			 event.preventDefault();
+			 document.body.style.overflow = "scroll";
+			 onDraw = false; 
+			 signPoints = signPoints + ";";
+			 codeSign.value = signPoints;
+		 }
+	 
+		 function clearSign(event){
+			 signPoints = ":i,i;";
+			 var c2d = canvas.getContext("2d");
+			 c2d.clearRect(0, 0, canvas.width, canvas.height);
+			 c2d.beginPath();
+		 }
+		 //=========================================================
+	 
+		 //=================== CHECKBOX SETUP ============================
+		 var checkBoxes = document.getElementsByClassName("checkBox");
+	 
+		 for (let index = 0; index < checkBoxes.length; index++) {
+			 checkBoxes.item(index).addEventListener("change",checked);
+		 }
+	 
+		 function checked(event){
+			 console.log("check");
+			 for (let index = 0; index < checkBoxes.length; index++) {
+				 if(event.target != checkBoxes.item(index) && event.target.checked){
+					 checkBoxes.item(index).checked = false;
+				 }
+			 }
+		 }
+		 //=========================================================
+	 
+		  
+	   </script>
+	 </html>
+	 
