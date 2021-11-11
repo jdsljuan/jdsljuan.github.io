@@ -90,7 +90,7 @@ function listenerShowLayer(layerName) {
 		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
 	}else if(layerName.target.id == "menuPanelCasesBtn"){
 		document.getElementById("casesLayer").style.display = "block"
-		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
+		document.getElementById("menuPanelCasesBtn").style.color = colorOnLayer
 	}
 	listenerManageMenuPanel()
 }

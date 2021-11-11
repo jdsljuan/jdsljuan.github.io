@@ -78,6 +78,8 @@ body{
 	width: 80%;
 	margin-left: 10%;
 	margin-bottom: 30px;
+	touch-action: none;
+	text-align: center;
 }
 
 .layerItem{
@@ -120,7 +122,7 @@ body{
 	height: 13vw;
 	margin: 2vw 2vw 0vh 1vw;
 	border-radius: 100%;
-	transition: border-radius 300ms linear, background-color 500ms linear;
+	transition: border-radius 200ms linear;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
 	padding: 1vw;
 }
@@ -128,7 +130,6 @@ body{
 .layerSkill:hover{
 	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
 	border-radius: 3px;
-	background-color: rgba(0, 0, 0, 0.05);
 }
 
 .layerSkillEsp{
@@ -171,7 +172,6 @@ body{
 #homeLayerImg{
 	width: 30vw;
 	height: 30vw;
-	padding-left: 25vw;
 }
 
 #homeLayerText{
@@ -214,10 +214,10 @@ body{
 
 #appLayerDownloadBtn{
 	padding: 10px;
-	width: 100%;
+	width: 99%;
 	display: block;
 	background: linear-gradient(to right,#008B8B,#2CA692,#57C099,#83DBA0,#AEF5A6);
-	border-radius: 20px;
+	border-radius: 10px;
 	color: white;
 	text-decoration: none;
 	font-weight: bolder;
