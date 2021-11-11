@@ -78,7 +78,6 @@ body{
 	width: 80%;
 	margin-left: 10%;
 	margin-bottom: 30px;
-	touch-action: none;
 	text-align: center;
 }
 
@@ -387,7 +386,6 @@ body{
 		padding: 0px;
 		width: 60vw;
 		height: 60vw;
-		margin-left: 10vw;
 	}
 }
 /*--------------------------------*/
