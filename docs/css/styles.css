@@ -270,13 +270,30 @@ body{
 }
 
 .layerPostItem{
-	width: 18vw;
-	height: 18vw;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5) ;
+	width: 78vw;
+	height: 200px;
 	border-radius: 20px;
 	border: 1vw solid white;
 	float: left;
-	background-color: darkcyan;
+	opacity: 0.2;
+	text-align: center;
+	background: url("../img/undraw_BuildWeb.svg");
+	background-size: 100% 100%;
+	box-shadow: 1px 1px 1px;
+	transition: opacity 200ms ease;
 }
+
+.layerPostItem:hover{
+	opacity: 1;
+}
+
+.layerPostItemLabel{
+	bottom: -50%;
+	position: relative;
+
+}
+
 
 /*--------------- QUERY --------------------*/
 
@@ -359,6 +376,7 @@ body{
 		width: 80vw;
 		height: 50vw;
 	}
+
 }
 
 
