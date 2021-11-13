@@ -9,6 +9,10 @@ body{
 	overflow-x: hidden;
 }
 
+a{
+	text-decoration: none;
+	color: white;
+}
 /*----------- MENU BAR AND SIDE PANEL----------------*/
 
 #menuBar {
@@ -19,6 +23,16 @@ body{
 	z-index: 1;
 	transition: top 300ms linear;
 	padding: 10px;
+}
+
+#backBar {
+	width: 100%;
+	position: relative;
+	top: 0px;
+	background-color: black;
+	padding: 10px;
+	z-index: 1;
+	transition: position 300ms ease;
 }
 
 #menuName{
@@ -300,25 +314,9 @@ body{
 .layerPostItemSpace{
 	width: 100%;
 	height: 60px;
-	background-color: none;
+	background-color: transparent;
 }
 
-#blogLayerPostHomeBtn{
-	padding: 4%;
-	display: inline-block;
-	background: linear-gradient(to right,#008B8B,#2CA692,#57C099,#83DBA0,#AEF5A6);
-	border-radius: 10px;
-	color: white;
-	text-decoration: none;
-	font-weight: bolder;
-	font-size: 1em;
-	text-align: center;
-}
-
-#blogLayerPostHomeBtnContainer{
-	text-align: center;
-	width: 100%;
-}
 /*--------------- QUERY --------------------*/
 
 @keyframes gradient{

@@ -86,8 +86,8 @@ function listenerShowLayer(layerName) {
 		document.getElementById("appLayer").style.display = "block"
 		document.getElementById("menuPanelAppBtn").style.color = colorOnLayer
 	}else if(layerName.target.id == "menuPanelBlogBtn"){
-		document.getElementById("blogLayer").style.display = "block"
-		document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
+		//document.getElementById("blogLayer").style.display = "block"
+		//document.getElementById("menuPanelBlogBtn").style.color = colorOnLayer
 	}else if(layerName.target.id == "menuPanelCasesBtn"){
 		document.getElementById("casesLayer").style.display = "block"
 		document.getElementById("menuPanelCasesBtn").style.color = colorOnLayer
@@ -114,7 +114,7 @@ function setLayersOff(){
 	document.getElementById("studiesLayer").style.display = "none"
 	document.getElementById("deviceLayer").style.display = "none"
 	document.getElementById("appLayer").style.display = "none"
-	document.getElementById("blogLayer").style.display = "none"
+	//document.getElementById("blogLayer").style.display = "none"
 	document.getElementById("casesLayer").style.display = "none"
 }
 
