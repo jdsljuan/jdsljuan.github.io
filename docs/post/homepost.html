@@ -66,8 +66,8 @@
 	var totalPost = 0;
 	function loadPostData(){
 		var xhr = new XMLHttpRequest();
-		var method = "GET";
-		var urlBase = "https://script.google.com/macros/s/AKfycbykl9-K739WjZjXnQ5JWphut08E0SFUuGpGILnQw4jJ7cCENIT5BzMFbnv7qILHV6tf/exec";
+		var method = "POST";
+		var urlBase = "https://script.google.com/macros/s/AKfycbw6p-4t-_OGY_l5tqLZSis83FDzrRZvuTQpvnwAeed2wJwtfURjJiR1cE5Yu0eTLYbv/exec";
 		var parameters = "?post=1&range=10"
 		var url = urlBase+parameters;
 		xhr.onreadystatechange = ()=>{
