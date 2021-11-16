@@ -151,7 +151,7 @@ function setGlobalListeners() {
 	document.getElementById("menuPanelContactMeBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelStudiesBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelDeviceBtn").addEventListener("click", listenerShowLayer)
-	document.getElementById("menuPanelBlogBtn").addEventListener("click", listenerShowLayer)
+	//document.getElementById("menuPanelBlogBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelAppBtn").addEventListener("click", listenerShowLayer)
 	document.getElementById("menuPanelCasesBtn").addEventListener("click", listenerShowLayer)
 
