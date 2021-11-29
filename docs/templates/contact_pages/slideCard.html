@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide vCard</title>
+    <style>
+        body{
+            width: 100vw;
+            height: 100vh;
+        }
+        div{
+            border-radius: 20px;
+        }
+        #mainCointainer {
+	        width: 50vw;
+	        padding: 5vh 5vw 5vh 5vw;
+            height: 50vh;
+	        background-color: goldenrod;
+	        text-align: center;
+	        vertical-align: middle;
+	        position: absolute;
+	        top: 20vh;
+	        left: 20vw;
+        }
+        .panel{
+            width: 50%;
+            height: 50vh;
+            background-color: coral;
+            display: inline-block;
+        }
+
+        .panel * {
+            float:left;
+        }
+        
+        #float-panel {
+	        float: left;
+	        background-color: red;
+	        position: relative;
+	        bottom: 51vh;
+            z-index: 3;
+            transition: all 500ms ease-in;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="mainCointainer">
+        <div>
+        <div class="panel" onclick="changeSide(this)" id="left-panel"><span>Textodsadasdasdsadsaddsa sadsa das d asda dsa dsadsa
+            dsadsadasd dsadasa dasdadsadas</span></div><div onclick="changeSide(this)" class="panel" id="right-panel">
+        <span>Texto</span></div>
+        </div>
+        <div class="panel" id="float-panel"></div>
+    </div>
+    <div style="clear: both;"></div>
+</body>
+<script>
+    function changeSide(element){
+        if(element.id == "left-panel"){
+            document.getElementById("float-panel").style.transform = "translateX(0%)"
+        }if(element.id == "right-panel"){
+            document.getElementById("float-panel").style.transform = "translateX(100%)";
+        }
+        console.log(element.id);
+    }
+
+</script>
+</html>
