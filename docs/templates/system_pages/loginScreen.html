@@ -14,17 +14,18 @@
                 width: 100vw;
                 height: 100vh;
                 background: linear-gradient(to bottom,#000000,#008b8b);
+                background-repeat: repeat;
             }
 
             #main_container{
-                width: 100vw;
-                height: 100vh;
-                background: linear-gradient(to bottom,#000000,#008b8b);
+                width: 100%;
+                height: auto;
+                background: none;
                 text-align: center;
             }
 
             #form_container{
-                margin-top: 20vh;
+                margin-top: 10%;
                 width: 240px;
                 height: auto;
                 background-color: white;
@@ -86,14 +87,15 @@
             }
 
             .form_textfield{
-                border: 3px double;
-                border-color: #008b8b;
+                border: solid #008b8b;
+                border-width: 1px 1px 3px 1px;
                 transition: border-style 300ms ease-in;
                 width: 90%;
                 font-weight: lighter;
                 background-color: white;
                 color: dimgray;
                 padding: 8px;
+                border-radius: 3px;
             }
 
             .form_textfield:focus-visible{
@@ -102,6 +104,14 @@
                 outline: none;
                 color:black;
                 font-weight: bolder;
+            }
+
+            input:invalid{
+                border-color: red;
+            }
+
+            input:required:valid{
+                border-color: green;
             }
 
             .form_submit{
@@ -114,14 +124,16 @@
                 padding: 10px;
             }
 
-            @media screen and (max-width: 241px) {
-                #main_container{
-                    width: auto;
-                    background-color: none;
-                }
+            .form_sublabel{
+                color: black;
+                font-size: 0.8em;
+                font-weight: 100;
+                font-style: italic;
+            }
 
-                #form_container{
-                    width: auto;
+            @media screen and (max-width: 241px) {
+                .form_textfield{
+                    padding: 0px;
                 }
             }
 
@@ -130,9 +142,11 @@
         <div id="main_container">
             <div id="form_container">
                 <input onclick="showLoginForm()" class="button_sw" type="button" value="Log-In" id="login_button"><input onclick="showRegisterForm()" class="button_sw" type="button" value="Sign-Up" id="register_button">
+                
                 <h1 id="form_title">PLEXY</h1>
                 <h3 id="form_subtitle">system</h3>
-                <form id="login_form" class="form_box">
+
+                <form id="login_form" class="form_box" action="" onsubmit="onFormSubmit(this)">
                     <div class="form_item">
                         <div class="form_label">username / e-mail</div>
                         <input class="form_textfield" autocomplete="off" type="text" placeholder="" required id="user">
@@ -144,7 +158,7 @@
                     <input class="form_submit" form="login_form" type="submit" value="check" id="submitLogin">
                 </form>
 
-                <form id="register_form" class="form_box">
+                <form id="register_form" class="form_box" action="" onsubmit="onFormSubmit(this)">
                     <div class="form_item">
                         <div class="form_label">username</div>
                         <input class="form_textfield" autocomplete="off" type="text" placeholder="" required id="username">
@@ -153,7 +167,11 @@
                         <div class="form_label">e-mail</div>
                         <input class="form_textfield" autocomplete="off" type="email" placeholder="" required id="email">
                     </div>
-                    <input class="form_submit" form="register_form" type="submit" value="verify" id="submitRegister">
+                    <div class="form_item">
+                        <div class="form_sublabel">I authorized them to send me emails</div>
+                        <div class="form_sublabel">with system-related information.</div>
+                    </div>
+                    <input class="form_submit" form="register_form" type="submit" value="verify" id="submitRegister"> 
                 </form>
             </div>
         </div>
@@ -194,7 +212,12 @@
                 rbt2.style.backgroundColor = "darkcyan";
                 rbt2.style.color = "white";
                 rbt2.style.opacity = "60%";
+            }
 
+            //===========================================================
+
+            function onFormSubmit(obj){
+                alert("Form Submit!");
             }
 
             window.addEventListener("load", showLoginForm);
