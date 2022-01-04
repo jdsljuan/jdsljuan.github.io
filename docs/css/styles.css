@@ -177,10 +177,10 @@ a{
 
 #homeLayerTitle{
 	border: none;
-	font-size: 3em;
+	font-size: 2em;
 	text-align: center;
 	color: darkcyan;
-	margin-top: 10vh;
+	margin-top: 5vh;
 }
 
 #homeLayerImg{
@@ -198,7 +198,7 @@ a{
 /*-------------- CONTACT LAYER ------------------*/
 
 #contactMeLayerInfoBox{
-	padding: 10px;
+	padding-bottom: 10px;
 	background: radial-gradient(lightcyan, cyan 20%, darkcyan);
 	background-size: 300% 200%;
 	animation: gradient 3s ease-out infinite alternate;
