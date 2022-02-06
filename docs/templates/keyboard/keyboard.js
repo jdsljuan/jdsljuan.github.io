@@ -224,6 +224,7 @@ function showKeyboard(e){
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
+    e.target.blur();
     var keyboardBackscreen = document.getElementById("keyboard-backscreen");
     __onEditInput = e.target;
     __onEditInputCursor = e.target.selectionStart;
