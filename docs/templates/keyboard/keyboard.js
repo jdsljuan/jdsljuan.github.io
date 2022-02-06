@@ -75,7 +75,7 @@ function createKeyboard(ranges, keyboard){
     //Tecla de Caracteres Especiales.
     var smbKey = document.createElement("span");
     smbKey.classList.add("key");
-    smbKey.classList.add("key-aux-smb");
+    smbKey.setAttribute("id","key-aux-smb");
     smbKey.classList.add("key-status-on");
     smbKey.innerText = "*/=";
     smbKey.addEventListener("click", showSymbols);
@@ -84,7 +84,7 @@ function createKeyboard(ranges, keyboard){
     //Tecla de Cambio de Mayusculas y Minusculas.
     var mayusKey = document.createElement("span");
     mayusKey.classList.add("key");
-    mayusKey.classList.add("key-aux-shift");
+    mayusKey.setAttribute("id","key-aux-shift");
     mayusKey.classList.add("key-status-on");
     mayusKey.innerText = String.fromCharCode(8613);
     mayusKey.addEventListener("click", toggleKeys);
@@ -93,7 +93,7 @@ function createKeyboard(ranges, keyboard){
     //Tecla de Espacio
     var spaceKey = document.createElement("span");
     spaceKey.classList.add("key");
-    spaceKey.classList.add("key-aux-space");
+    spaceKey.setAttribute("id","key-aux-space");
     spaceKey.classList.add("key-status-on");
     spaceKey.innerText = String.fromCharCode(9251);
     spaceKey.addEventListener("click", onKeyClick);
@@ -102,7 +102,7 @@ function createKeyboard(ranges, keyboard){
     //Tecla de Borrado
     var eraseKey = document.createElement("span");
     eraseKey.classList.add("key");
-    eraseKey.classList.add("key-aux-backspace");
+    eraseKey.setAttribute("id","key-aux-backspace");
     eraseKey.classList.add("key-status-on");
     eraseKey.innerText = String.fromCharCode(8592);
     eraseKey.addEventListener("click", onKeyClick);
@@ -129,6 +129,8 @@ function toggleKeys(e){
         turnOffGroupByClass("key-group-mayus");
         turnOnGroupByClass("key-group-minus");
         e.target.style.backgroundColor = "var(--keyboard-key-aux-background-color)";
+    }else if(isOffGroupByClass("key-group-mayus") && isOffGroupByClass("key-group-minus")){
+        e.target.style.backgroundColor = "var(--keyboard-key-aux-background-color)";
     }
     return 0;
 }
@@ -145,8 +147,9 @@ function showSymbols(e){
     if(isOnGroupByClass("key-group-smb1") && isOnGroupByClass("key-group-smb2")){
         turnOffGroupByClass("key-group-smb1");
         turnOffGroupByClass("key-group-smb2");
-        turnOnGroupByClass("key-group-minus");
+        turnOnGroupByClass("key-group-mayus");
         e.target.style.backgroundColor = "var(--keyboard-key-aux-background-color)";
+        document.getElementById("key-aux-shift").click();
         return 1;
     }else if(isOffGroupByClass("key-group-smb1") && isOffGroupByClass("key-group-smb2")){
         turnOffGroupByClass("key-group-minus");
@@ -154,6 +157,7 @@ function showSymbols(e){
         turnOnGroupByClass("key-group-smb1");
         turnOnGroupByClass("key-group-smb2");
         e.target.style.backgroundColor = "var(--keyboard-key-aux-hover-color)";
+        document.getElementById("key-aux-shift").click();
         return 0;
     }
 }
@@ -182,21 +186,30 @@ function configKeyboardListeners(){
  */
 function onKeyClick(e){
     e.stopPropagation();
-    if(__onEditInput == null){
+    if(__onEditInput == null && __onEditInputCursor == null){
         console.error("test press??");
         return 1;
     }else{
+        var substr1 = __onEditInput.value.substring(0, __onEditInputCursor);
+        var substr2 = __onEditInput.value.substring(__onEditInputCursor, __onEditInput.value.length);
         //Borrado
         if(e.target.innerText == String.fromCharCode(8592)){
-            __onEditInput.value = __onEditInput.value.substring(0, __onEditInput.value.length-1);
+            __onEditInput.value = substr1.substring(0, substr1.length-1)+substr2;
+            if(__onEditInputCursor < 0){ 
+                __onEditInputCursor=0;
+            }else{
+                __onEditInputCursor--;
+            }
             return 0;
         //Espacio    
         }else if(e.target.innerText == String.fromCharCode(9251)){
-            __onEditInput.value = __onEditInput.value+" ";
+            __onEditInput.value = substr1+" "+substr2;
+            __onEditInputCursor++;
             return 0;
         //Tecla Cualquiera no funcional.
         }else{
-            __onEditInput.value = __onEditInput.value+e.target.innerText;
+            __onEditInput.value = substr1+e.target.innerText+substr2;
+            __onEditInputCursor++;
             return 0;
         }
         //TEST: console.log("Keyboard Key Press : "+ e.target.innerText);
@@ -206,10 +219,14 @@ function onKeyClick(e){
 
 //TOOL function 
 var __onEditInput = null;
+var __onEditInputCursor=null;
 function showKeyboard(e){
     e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
     var keyboardBackscreen = document.getElementById("keyboard-backscreen");
     __onEditInput = e.target;
+    __onEditInputCursor = e.target.selectionStart;
     keyboardBackscreen.style.display = "initial";
 }
 
@@ -218,6 +235,7 @@ function hideKeyboard(e){
     var keyboardBackscreen = document.getElementById("keyboard-backscreen");
     keyboardBackscreen.style.display = "none";
     if(__onEditInput != null) __onEditInput = null;
+    if(__onEditInputCursor != null) __onEditInputCursor = null;
 }
 
 //TOOL function 
