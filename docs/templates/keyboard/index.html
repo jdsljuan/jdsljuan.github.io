@@ -8,10 +8,91 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        
+        <style>
+            body{
+                width: 100vw;
+                height: auto;
+                margin: 0px;
+                padding: 100px 0px 40px 0px;
+                background: linear-gradient(to bottom, darkorange, orange);
+                text-align: center;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                overflow-x: hidden;
+                color: whitesmoke;
+            }
+            input{
+                width: 50vw;
+                height: 50px;
+                border-radius: 8px;
+                box-shadow: 5px 5px 10px #e7dadaa0;
+                text-align: center;
+                margin-top: 20px;
+                border: solid 1px white;
+                background-color: white;
+            }
+            p{
+                position: relative;
+                width: 80vw;
+                left: 10vw;
+            }
+            img{
+                width: 25vw;
+                height: 25vw;
+                border-radius: 10px;
+                border: solid 1px white;
+                margin-top: 10px;
+            }
+        </style>
     </head>
 
     <body>
-        <input type="text" class="keyboard-input">
+        <h1>Virtual Basic Keyboard</h1>
+        <p> Virtual simple keyboard is a javascript tool for touch screens on Desktop scenarios. Offering a simple input for letters, symbols and numbers.</p>
+        <br>
+        <p><b>1.</b> to use it, download the keyboard.js y keyboard.css files and linked to the .html</p>
+        <p><b>2.</b> Add to the supported inputs the "keyboard-input" class.</p>
+        <a href="https://github.com/jdsljuan/VirtualWebKeyboard">GITHUB</a>
+        <br><br>
+        <h3>Screenshots</h3>
+        <img src="./screenshot/keyboard1.png"/>
+        <img src="./screenshot/keyboard2.png"/>
+        <img src="./screenshot/keyboard3.png"/>
+        <br>
+        <h3>Supported input types</h3>
+        <p>Some inputs are supported at the date. You can test the keyboard on they. And there are ...</p>
+        <input type="text" placeholder="text type" class="keyboard-input"><br>
+        <input type="tel" placeholder="tel type" class="keyboard-input"><br>
+        <input type="week" placeholder="week type" class="keyboard-input"><br>
+        <input type="url" placeholder="url type" class="keyboard-input"><br>
+        <input type="search" placeholder="search type" class="keyboard-input"><br>
+        <input type="password" placeholder="password type" class="keyboard-input"><br>
+        <input type="month" placeholder="month type" class="keyboard-input"><br>
+        <br><br>
+        <h3>Partialy supported input types</h3>
+        <input type="number" placeholder="number type" class="keyboard-input"><br>
+        <input type="email" placeholder="email type" class="keyboard-input"><br>
+        <br><br>
+        <h3>Unsupported input types</h3>
+        <p>Some inputs are unsupported. Or no recomended.</p><br>
+        <input type="button" value="button input" class=""><br>
+        <input type="time" value="00:00" class=""><br>
+        <input type="reset" class=""><br>
+        <input type="range" class=""><br>
+        <input type="radio" class=""><br>
+        <input type="image" value="image type" class=""><br>
+        <input type="hidden" placeholder="hidden type" class=""><br>
+        <input type="file" placeholder="file type" class=""><br>
+        <input type="datetime" placeholder="datetime type" class=""><br>
+        <input type="datetime-local" class=""><br>
+        <input type="color" class=""><br>
+        <input type="checkbox" class=""><br>
+        <input type="date" class=""><br>
+        <input type="submit" value="Submit Button" class=""><br>
+        <br><br><br><br>
+        <h5><b>2021 © Juan David Sanchez Leal</b></h5>
+        
     </body>
 
 </html>

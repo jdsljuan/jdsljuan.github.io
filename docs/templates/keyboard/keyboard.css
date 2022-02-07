@@ -19,7 +19,7 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: var(--keyboard-backscreen-color);
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
     display: none;
