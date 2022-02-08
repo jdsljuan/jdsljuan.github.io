@@ -12,24 +12,28 @@
         <style>
             body{
                 width: 100vw;
+                font-size: 14px;
                 height: auto;
                 margin: 0px;
                 padding: 100px 0px 40px 0px;
-                background: linear-gradient(to bottom, darkorange, orange);
+                background: linear-gradient(to bottom,darkviolet, orange, violet);
                 text-align: center;
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 overflow-x: hidden;
                 color: whitesmoke;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            a{
+                color:white;
             }
             input{
                 width: 50vw;
                 height: 50px;
                 border-radius: 8px;
-                box-shadow: 5px 5px 10px #e7dadaa0;
                 text-align: center;
                 margin-top: 20px;
-                border: solid 1px white;
+                border: dashed 1px black;
                 background-color: white;
             }
             p{
@@ -44,38 +48,64 @@
                 border: solid 1px white;
                 margin-top: 10px;
             }
+            h1{
+                font-size: 4em;
+                font-style: oblique;
+            }
+            code{
+                display: inline-block;
+                text-align: left;
+                border-left: solid 5px green;
+                background-color: whitesmoke;
+                padding: 10px 10px 10px 20px;
+                color: green;
+                font-weight: bolder;
+                border-radius: 5px;
+                text-shadow: 1px 1px 5px #00000050;
+            }
         </style>
     </head>
 
     <body>
-        <h1>Virtual Basic Keyboard</h1>
+        <h1>Virtual Basic <br> Keyboard</h1>
         <p> Virtual simple keyboard is a javascript tool for touch screens on Desktop scenarios. Offering a simple input for letters, symbols and numbers.</p>
         <br>
         <p><b>1.</b> to use it, download the keyboard.js y keyboard.css files and linked to the .html</p>
+        <br><br>
+        <code>
+            &#60;link rel="stylesheet" type="text/css" href="keyboard.css"&#62; <br>
+            &#60;script async src="keyboard.js">&#60;/script&#62; <br>
+        </code>
+        <br><br><br>
         <p><b>2.</b> Add to the supported inputs the "keyboard-input" class.</p>
+        <br><br>
+        <code>
+            &#60;input type="text" class="keyboard-input"&#62;<br>
+        </code>
+        <br><br><br>
         <a href="https://github.com/jdsljuan/VirtualWebKeyboard">GITHUB</a>
         <br><br>
-        <h3>Screenshots</h3>
+        <h2>Screenshots</h2>
         <img src="./screenshot/keyboard1.png"/>
         <img src="./screenshot/keyboard2.png"/>
         <img src="./screenshot/keyboard3.png"/>
-        <br>
-        <h3>Supported input types</h3>
-        <p>Some inputs are supported at the date. You can test the keyboard on they. And there are ...</p>
+        <br><br><br>
+        <h2>Supported</h2>
         <input type="text" placeholder="text type" class="keyboard-input"><br>
         <input type="tel" placeholder="tel type" class="keyboard-input"><br>
-        <input type="week" placeholder="week type" class="keyboard-input"><br>
         <input type="url" placeholder="url type" class="keyboard-input"><br>
         <input type="search" placeholder="search type" class="keyboard-input"><br>
         <input type="password" placeholder="password type" class="keyboard-input"><br>
-        <input type="month" placeholder="month type" class="keyboard-input"><br>
         <br><br>
-        <h3>Partialy supported input types</h3>
+        <h2>Partially Supported</h2>
         <input type="number" placeholder="number type" class="keyboard-input"><br>
         <input type="email" placeholder="email type" class="keyboard-input"><br>
         <br><br>
-        <h3>Unsupported input types</h3>
+        <!--
+        <h2>Unsupported input types</h2>
         <p>Some inputs are unsupported. Or no recomended.</p><br>
+        <input type="month" placeholder="month type" class="keyboard-input"><br>
+        <input type="week" placeholder="week type" class="keyboard-input"><br>
         <input type="button" value="button input" class=""><br>
         <input type="time" value="00:00" class=""><br>
         <input type="reset" class=""><br>
@@ -89,9 +119,9 @@
         <input type="color" class=""><br>
         <input type="checkbox" class=""><br>
         <input type="date" class=""><br>
-        <input type="submit" value="Submit Button" class=""><br>
+        <input type="submit" value="Submit Button" class=""><br>-->
         <br><br><br><br>
-        <h5><b>2021 © Juan David Sanchez Leal</b></h5>
+        <h5><b>2022 &#169; Juan David Sanchez Leal</b></h5>
         
     </body>
 
