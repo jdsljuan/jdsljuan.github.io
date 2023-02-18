@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una Sola Iglesía</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        }
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .post-description {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="h1 mb-3 mt-3">Ultimas Publicaciones</h1>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title post-title">Post 1</h5>
+                    <p class="card-text post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada nisl eu arcu dignissim consectetur. Sed gravida facilisis nulla, quis tristique est accumsan in. </p>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title post-title">Post 2</h5>
+                    <p class="card-text post-description">Vivamus ut arcu in libero sollicitudin bibendum. Proin faucibus odio eget lacus suscipit posuere. Vestibulum at elementum libero.</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</body>
+<script>
+    function synchronousGet(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false);  // false means synchronous
+        xhr.send();
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            logResponse(xhr.responseText);
+        }
+    }
+
+    function logResponse(responseText) {
+        console.log(responseText);
+    }
+
+    synchronousGet('https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_1.txt');
+</script>
+</html>
