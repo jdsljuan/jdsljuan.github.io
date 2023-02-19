@@ -37,6 +37,7 @@
             padding: 40px 80px 80px 80px;
             align-items: center;
             box-sizing: border-box;
+            line-height: 1.8em;
         }
         #salmo{
             margin-top: 30px;
@@ -62,6 +63,12 @@
             height: 40px;
             background-position: center;
         }
+
+        @media screen and (max-width:720px){
+            .stage{
+                padding: 60px 40px 40px 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -86,7 +93,8 @@
     function getSalmo() {
         let nxt = salmos[parseInt(Math.random(salmos.length)*100)];
         setContent("number", "Salmo "+nxt);
-        let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_"+nxt+".txt";
+        let url = "./Recursos/Salmos/Esp_"+nxt+".txt";
+        //let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_"+nxt+".txt";
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);  // false means synchronous
         xhr.send();
