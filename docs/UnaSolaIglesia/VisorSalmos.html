@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de Salmos - Una Solo Iglesía</title>
+    <title>Visualizador de capitulos - Una Solo Iglesía</title>
     <style>
         @font-face {
             font-family: "Sanchez Ita";
@@ -39,13 +39,12 @@
             box-sizing: border-box;
             line-height: 1.8em;
         }
-        #salmo{
+        #capitulo{
             margin-top: 30px;
             text-align: justify;
             font-weight: 100;
             font-family: 'Sanchez';
         }
-
         #number{
             margin-top: 40px;
             text-align: center;
@@ -53,7 +52,7 @@
             font-family: 'Batuphat';
             font-size: 2.5em;
         }
-        #salmo > span.ver {
+        #capitulo > span.ver {
             font-family: 'Batuphat';
             font-size: 1.5em;
         }
@@ -72,35 +71,35 @@
     </style>
 </head>
 <body>
-    <div id="stage" class="stage" ondblclick="getSalmo()">
+    <div id="stage" class="stage">
         <div id="btn-darkmode" onclick="toggleTheme()"></div>
-        <div id="salmo"></div>
         <div id="number"></div>
+        <div id="capitulo"></div>
     </div>
 </body>
 <script>
 
-    let salmos = [];
     function initVisor(){
-        salmos = [];
-        for (let index = 1; index < 151; index++) {
-            salmos.push(index);        
-        }
+        const paramsString = window.location.search;
+        const searchParams = new URLSearchParams(paramsString);
+        const libro = searchParams.get('l');
+        const cap = searchParams.get('c');
+
+        let url = "./Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
+        //let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
+
         toggleTheme();
-        getSalmo();
+        getText(url);
+        setContent("number", nxt);
     }
 
-    function getSalmo() {
-        let nxt = salmos[parseInt(Math.random(salmos.length)*100)];
-        setContent("number", "Salmo "+nxt);
-        let url = "./Recursos/Salmos/Esp_"+nxt+".txt";
-        //let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_"+nxt+".txt";
+    function getText(url) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);  // false means synchronous
         xhr.send();
         if (xhr.readyState === 4 && xhr.status === 200) {
-            setContent("salmo",xhr.responseText);
-            processSalmoNumbers();
+            setContent("capitulo", xhr.responseText);
+            processNumbers();
         }
     }
 
@@ -108,8 +107,8 @@
         document.getElementById(id).innerText = text;
     }
 
-    function processSalmoNumbers(){
-        var paragraph = document.getElementById("salmo");
+    function processNumbers(){
+        var paragraph = document.getElementById("capitulo");
         var regex = /([1-9]|[1-9][0-9]|100)\b/g;
         var matches = paragraph.textContent.match(regex);
         for (var i = 0; i < matches.length; i++) {
