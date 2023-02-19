@@ -6,38 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizador de Salmos - Una Solo Iglesía</title>
     <style>
+        @font-face {
+            font-family: "Sanchez Ita";
+            src: url("./fonts/Sanchezregular-ita.otf");
+        }
+        @font-face {
+            font-family: "Sanchez";
+            src: url("./fonts/Sanchezregular.otf");
+        }
+        @font-face {
+            font-family: "Batuphat";
+            src: url("./fonts/Batuphat\ Script.otf");
+        }
+        @font-face {
+            font-family: "Batuphat Ex";
+            src: url("./fonts/Batuphat\ Script\ Extrude.otf");
+        }
         body{
             margin: 0px;
             padding: 0px;
             background-color: black;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
         .stage{
             background-color: black;
             color: #ffffff;
             width: 100vw;
             min-width: 100vw;
-            padding: 40px;
+            padding: 40px 80px 80px 80px;
             align-items: center;
-            font-weight: bolder;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             box-sizing: border-box;
         }
         #salmo{
-            color: white;
+            margin-top: 30px;
             text-align: justify;
             font-weight: 100;
+            font-family: 'Sanchez';
         }
+
         #number{
-            margin-top: 20px;
-            color: white;
+            margin-top: 40px;
             text-align: center;
-            text-shadow: 1px 1px 10px white;
+            text-shadow: 1px 1px 50px lightslategray;
+            font-family: 'Batuphat';
+            font-size: 2.5em;
+        }
+        #salmo > span.ver {
+            font-family: 'Batuphat';
+            font-size: 1.5em;
+        }
+        #btn-darkmode{
+            background-image: url("img/dark_mode.svg");
+            width: 40px;
+            height: 40px;
+            background-position: center;
         }
     </style>
 </head>
 <body>
-    <div class="stage" onclick="getSalmo()">
-        <div id="salmo"></div>        
+    <div id="stage" class="stage" ondblclick="getSalmo()">
+        <div id="btn-darkmode" onclick="toggleTheme()"></div>
+        <div id="salmo"></div>
         <div id="number"></div>
     </div>
 </body>
@@ -49,10 +79,11 @@
         for (let index = 1; index < 151; index++) {
             salmos.push(index);        
         }
+        toggleTheme();
+        getSalmo();
     }
 
     function getSalmo() {
-        console.log("...")
         let nxt = salmos[parseInt(Math.random(salmos.length)*100)];
         setContent("number", "Salmo "+nxt);
         let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_"+nxt+".txt";
@@ -61,6 +92,7 @@
         xhr.send();
         if (xhr.readyState === 4 && xhr.status === 200) {
             setContent("salmo",xhr.responseText);
+            processSalmoNumbers();
         }
     }
 
@@ -68,7 +100,36 @@
         document.getElementById(id).innerText = text;
     }
 
+    function processSalmoNumbers(){
+        var paragraph = document.getElementById("salmo");
+        var regex = /([1-9]|[1-9][0-9]|100)\b/g;
+        var matches = paragraph.textContent.match(regex);
+        for (var i = 0; i < matches.length; i++) {
+        var span = document.createElement("span");
+        span.classList.add("ver");
+        span.textContent = matches[i];
+        paragraph.innerHTML = paragraph.innerHTML.replace(matches[i], span.outerHTML);
+        }
+    }
+
+    let __darkThemeOn = true;
+    function toggleTheme(){
+        if(__darkThemeOn){
+            document.getElementById("stage").style.color = "black";  
+            document.getElementById("stage").style.backgroundColor = "white";
+            document.body.style.backgroundColor = "white";
+            document.getElementById("btn-darkmode").style.filter = "invert(0)";
+            __darkThemeOn = false;
+        }else{
+            document.getElementById("stage").style.color = "white";  
+            document.getElementById("stage").style.backgroundColor = "black";
+            document.body.style.backgroundColor = "black";
+            document.getElementById("btn-darkmode").style.filter = "invert(1)";
+            __darkThemeOn = true;
+        }
+    }
+
     initVisor();
-    getSalmo();
+
 </script>
 </html>
