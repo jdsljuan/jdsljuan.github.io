@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Salmos - Una Solo Iglesía</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-color: black;
+        }
+        .stage{
+            background-color: black;
+            color: #ffffff;
+            width: 100vw;
+            min-width: 100vw;
+            padding: 40px;
+            align-items: center;
+            font-weight: bolder;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            box-sizing: border-box;
+        }
+        #salmo{
+            color: white;
+            text-align: justify;
+            font-weight: 100;
+        }
+        #number{
+            margin-top: 20px;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 10px white;
+        }
+    </style>
+</head>
+<body>
+    <div class="stage" onclick="getSalmo()">
+        <div id="salmo"></div>        
+        <div id="number"></div>
+    </div>
+</body>
+<script>
+
+    let salmos = [];
+    function initVisor(){
+        salmos = [];
+        for (let index = 1; index < 151; index++) {
+            salmos.push(index);        
+        }
+    }
+
+    function getSalmo() {
+        console.log("...")
+        let nxt = salmos[parseInt(Math.random(salmos.length)*100)];
+        setContent("number", "Salmo "+nxt);
+        let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/Salmos/Esp_"+nxt+".txt";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false);  // false means synchronous
+        xhr.send();
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            setContent("salmo",xhr.responseText);
+        }
+    }
+
+    function setContent(id, text){
+        document.getElementById(id).innerText = text;
+    }
+
+    initVisor();
+    getSalmo();
+</script>
+</html>
