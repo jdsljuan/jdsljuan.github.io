@@ -28,13 +28,14 @@
             background-color: black;
             overflow-x: hidden;
             box-sizing: border-box;
+            font-size: 16px;
         }
         .stage{
             background-color: black;
             color: #ffffff;
             width: 100vw;
             min-width: 100vw;
-            padding: 40px 80px 80px 80px;
+            padding: 40px 80px 100px 80px;
             align-items: center;
             box-sizing: border-box;
             line-height: 1.8em;
@@ -46,9 +47,9 @@
             font-family: 'Sanchez';
         }
         #number{
-            margin-top: 40px;
-            text-align: center;
-            text-shadow: 1px 1px 50px lightslategray;
+            margin-top: 15px;
+            text-align: right;
+            text-shadow: 1px 1px 50px lightgray;
             font-family: 'Batuphat';
             font-size: 2.5em;
         }
@@ -56,23 +57,38 @@
             font-family: 'Batuphat';
             font-size: 1.5em;
         }
+        .btn{
+            max-width: 32px;
+            max-height: 32px;
+            width: 32px;
+            height: 32px;
+            background-position: center;
+            display: inline-block;
+            background-size: contain;
+        }
         #btn-darkmode{
             background-image: url("img/dark_mode.svg");
-            width: 40px;
-            height: 40px;
-            background-position: center;
+        }
+        #btn-textincrese{
+            background-image: url("img/text_increase.svg");
+        }
+        #btn-textdecrese{
+            background-image: url("img/text_decrease.svg");
         }
 
         @media screen and (max-width:720px){
             .stage{
-                padding: 60px 40px 40px 40px;
+                padding: 40px 40px 80px 40px;
             }
         }
     </style>
 </head>
 <body>
     <div id="stage" class="stage">
-        <div id="btn-darkmode" onclick="toggleTheme()"></div>
+        <div class="btn" id="btn-darkmode" onclick="toggleTheme()"></div>
+        <div class="btn" id="btn-textincrese" onclick="changeFontSizeBy(1)"></div>
+        <div class="btn" id="btn-textdecrese" onclick="changeFontSizeBy(-1)"></div>
+
         <div id="number"></div>
         <div id="capitulo"></div>
     </div>
@@ -80,31 +96,37 @@
 <script>
 
     function initVisor(){
+        getText();
+        toggleTheme();
+    }
+
+    function getText() {
         const paramsString = window.location.search;
         const searchParams = new URLSearchParams(paramsString);
         const libro = searchParams.get('l');
         const cap = searchParams.get('c');
 
-        let url = "./Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
-        //let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
+        //let url = "/Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
+        let url = "https://jdsljuan.github.io/UnaSolaIglesia/Recursos/"+atob(libro)+"/Esp_"+atob(cap)+".txt";
 
-        toggleTheme();
-        getText(url);
-        setContent("number", nxt);
-    }
-
-    function getText(url) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);  // false means synchronous
         xhr.send();
         if (xhr.readyState === 4 && xhr.status === 200) {
             setContent("capitulo", xhr.responseText);
+            setContent("number", atob(libro)+", Cap. "+atob(cap));
             processNumbers();
         }
     }
 
     function setContent(id, text){
         document.getElementById(id).innerText = text;
+    }
+
+    function changeFontSizeBy(diff){
+        let stage = document.getElementById("stage");  
+        let cps_stage = window.getComputedStyle(stage);
+        stage.style.fontSize = (parseInt(cps_stage.fontSize) + diff) + "px";  
     }
 
     function processNumbers(){
@@ -119,20 +141,32 @@
         }
     }
 
-    let __darkThemeOn = true;
+    let __darkThemeOn = 1;
     function toggleTheme(){
-        if(__darkThemeOn){
+        if(__darkThemeOn == 1){ //LightMode
             document.getElementById("stage").style.color = "black";  
             document.getElementById("stage").style.backgroundColor = "white";
             document.body.style.backgroundColor = "white";
             document.getElementById("btn-darkmode").style.filter = "invert(0)";
-            __darkThemeOn = false;
-        }else{
+            document.getElementById("btn-textdecrese").style.filter = "invert(0)";
+            document.getElementById("btn-textincrese").style.filter = "invert(0)";
+            __darkThemeOn = 2;
+        }else if(__darkThemeOn == 2){ //DarkMode
             document.getElementById("stage").style.color = "white";  
             document.getElementById("stage").style.backgroundColor = "black";
             document.body.style.backgroundColor = "black";
             document.getElementById("btn-darkmode").style.filter = "invert(1)";
-            __darkThemeOn = true;
+            document.getElementById("btn-textdecrese").style.filter = "invert(1)";
+            document.getElementById("btn-textincrese").style.filter = "invert(1)";
+            __darkThemeOn = 3;
+        }else if(__darkThemeOn == 3){ //SunMode
+            document.getElementById("stage").style.color = "black";  
+            document.getElementById("stage").style.backgroundColor = "#f8e1ab";
+            document.body.style.backgroundColor = "black";
+            document.getElementById("btn-darkmode").style.filter = "invert(0)";
+            document.getElementById("btn-textdecrese").style.filter = "invert(0)";
+            document.getElementById("btn-textincrese").style.filter = "invert(0)";
+            __darkThemeOn = 1;
         }
     }
 
