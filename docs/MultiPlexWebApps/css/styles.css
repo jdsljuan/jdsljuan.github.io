@@ -1,0 +1,297 @@
+
+body{
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	font-weight: bold;
+	font-family:  sans-serif;
+	overflow-x: hidden;
+	background-color: #EEECEA;
+	transition: all 500ms ease-out;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
+
+/*----------- MENU BAR AND SIDE PANEL----------------*/
+
+#menuBar {
+	box-sizing: border-box;
+	width: 100%;
+	top: 0px;
+	background-color: black;
+	z-index: 1;
+	transition: top 300ms linear;
+	padding: 5px 5px 5px 7px;
+	box-shadow: 2px 2px 10px #000000A0;
+}
+
+#menuName{
+	color: #F5F3F1;
+	vertical-align: middle;
+	text-align: left;
+	display: inline-block;
+	margin-left: 5px;
+	padding-left: 10px;
+	border-left: 2px solid #F5F3F1;
+	margin-right: 5px;
+	padding-right: 10px;
+	border-right: 2px solid #F5F3F1;
+	animation: 1500ms infinite linearGradientText;
+}
+
+#menuName small{
+	font-size: 0.8em;
+}
+
+.menuImg{
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#menuPanel{
+	box-sizing: border-box;
+	padding: 0px 20px 20px 20px;
+	background: linear-gradient(-205deg,black, rgba(70, 70, 70, 0.763) 70%, lightgray);
+	z-index: 1;
+	height: auto;
+	position: absolute;
+	transition: opacity 250ms linear;
+	overflow: auto;
+	width: 50%;
+	border-radius: 0px 0px 10px 0px;
+}
+
+.menuPanelItem{
+	box-sizing: border-box;
+	width: 100%;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	text-align: left;
+	color: white;
+	border-radius: 2px;
+	transition:border 200ms linear;
+}
+
+#menuPanelItemSpecial{
+	display: none;
+	box-sizing: border-box;
+	width: 100%;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	text-align: left;
+	color: white;
+	border-radius: 2px;
+	transition:border 200ms linear;
+}
+
+.menuPanelItem:hover{
+	color: black;
+	background: white;
+}
+
+
+.container{
+	text-align: center;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px;
+	background-color: #EEECEA;
+}
+
+/*--------------- LABEL's --------------------*/
+
+.label{
+	font-family: monospace;
+	background: white;
+	color: grey;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 2px 2px 0px 0px;
+	display: inline-block;
+	font-size: 0.7rem;
+	border: 1px solid grey;
+}
+
+.label:hover{
+	background-color: grey;
+	color: white;
+	box-shadow: 1px 1px 10px black;
+}
+
+.label-success{
+	font-family: monospace;
+	background: #9ac9af8c;
+	color: #217446;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 2px 2px 0px 0px;
+	display: inline-block;
+	font-size: 0.7rem;
+	border: 1px solid #217446;
+}
+
+.label-success:hover{
+	background-color: #217446;
+	color: white;
+	box-shadow: 1px 1px 10px black;
+}
+
+.label-warning{
+	font-family: monospace;
+	background: #fffaea;
+	color: #ffc107;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 2px 2px 0px 0px;
+	display: inline-block;
+	font-size: 0.7rem;
+	border: 1px solid #ffc107;;
+}
+
+.label-warning:hover{
+	background-color: #ffc107;
+	color: black;
+	box-shadow: 1px 1px 10px black;
+}
+
+.label-danger{
+	font-family: monospace;
+	background: #ffe9e3;
+	color: #B7472B;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 2px 2px 0px 0px;
+	display: inline-block;
+	font-size: 0.7rem;
+	border: 1px solid #B7472B;
+}
+
+.label-danger:hover{
+	background-color: #B7472B;
+	color: white;
+	box-shadow: 1px 1px 10px black;
+}
+
+.label-info{
+	font-family: monospace;
+	background: #b1c6e4aa;
+	color: #2B579A;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 2px 2px 0px 0px;
+	display: inline-block;
+	font-size: 0.7rem;
+	border: 1px solid #2B579A;
+}
+
+.label-info:hover{
+	background-color: #2B579A;
+	color: white;
+	box-shadow: 1px 1px 10px black;
+}
+
+/*----------- COLORS ----------------*/
+
+.bg-linear-red{
+	background: linear-gradient(-205deg,#B7472B, #bc624c, 70%,#ffe9e3) !important;
+}
+
+.bg-red{
+	background: #B7472B !important;
+}
+
+.bg-linear-green{
+	background: linear-gradient(-205deg,#217446, #4a966c, 70%,#9ac9af) !important;
+}
+
+.bg-green{
+	background: #217446 !important;
+}
+
+.bg-linear-blue{
+	background: linear-gradient(-205deg,#2B579A, #6387bd 70%,#b1c6e4) !important;
+}
+
+.bg-blue{
+	background: #2B579A !important;
+}
+
+.bg-linear-rainbow{
+	background: linear-gradient(120deg, black 60%, red, orange, yellow, green, blue, magenta, violet) !important;
+}
+
+
+/*--------------- QUERY --------------------*/
+
+@keyframes gradient{
+	0%{
+		background-position: 0% 0%;
+		color: #2B579A;
+	}
+	50% {
+		background-position: 50% 0%;
+		color: #F5F3F1;
+	}
+	100%{
+		background-position: 100% 0%;
+		color: #F5F3F1;
+	}
+}
+
+@keyframes linearGradientText{
+	0% {color: #F5F3F1;}
+
+	34% {color: lightcyan;}
+
+	67% {color: whitesmoke;}
+}
+
+/* Dejar esto siempre de ultimo
+ * Y mantener el orden. */
+@media (max-width: 620px){
+	.menuImg{
+		display: none;
+	}
+
+	#menuBtn{
+		display: initial;
+	}
+
+	#menuPanel{
+		width: 100vw;
+	}
+
+	.menuPanelItem{
+		border: none;
+	}
+
+}
+
+
+@media (max-width: 360px){
+	#menuName small{
+		display: none;
+	}
+
+	#menuPanelItemSpecial{
+		font-size: 0.8em;
+		padding-top: 20px;
+		display: block;
+		text-align: center;
+	}	
+
+	#menuBtn{
+		display: initial;
+	}
+
+}
+/*--------------------------------*/
+

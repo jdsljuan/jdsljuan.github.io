@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <!-- Autor: Juan David Sanchez Leal - Noviembre 2022 -->
+
+    <!-- Motivo: Como complemento para MultiPlexwebApps una web ultra rapida y sin publicidad. -->
+
+
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+
+    <link rel="shortcut icon" type="image/jpg" href="./img/logoJDSLJUAN.svg" />
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MultiPlexWebApps | Aplicaciones Web Simples para Ejecutivos.</title>
+
+</head>
+
+
+
+<body>
+
+    <style>
+
+        #appholder{
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            grid-template-rows: auto;
+
+            column-gap: 7px;
+
+            row-gap: 7px;
+
+            box-sizing: border-box;
+
+            align-content: center;
+
+        }
+
+        .app{
+
+            width: auto;
+
+            border-radius: 5px;
+
+            color: white;
+
+            background: linear-gradient(45deg, #000000A0, #00000090, #00000035);
+
+            box-shadow: 1px 1px 5px black;
+
+            box-sizing: border-box;
+
+            padding: 30px 2px 0px 2px;
+
+            height: 80px;
+
+            word-wrap: break-word;
+
+        }
+
+        .app:hover{
+
+            box-shadow: 2px 2px 10px black;
+
+        }
+
+        .separator{
+
+            grid-column-start: 1;
+
+            grid-column-end: 3;
+
+            height: 5%;
+
+            margin-top: 10px;
+
+            text-align: left;
+
+            background: transparent;
+
+        }
+
+    </style>
+
+    <!----------------------------------------------->
+
+    <div id="menuBar" class="bg-linear-rainbow" >
+
+        <img id="menuBtn" alt="menu" src="./img/menu.png" class="menuImg">
+
+        <div id="menuName">MultiPlexWebApps <i><small>by Juan David Sanchez Leal</small></i></div>
+
+    </div>
+
+    <div id="menuPanel">
+
+        <div onclick="document.getElementById('menuBtn').click();" id="" class="menuPanelItem">LinkedIn</div>
+
+        <div onclick="document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Instagram</div>
+
+        <div id="" class="menuPanelItem"></div>
+
+        <div onclick="document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Mis Repositorios</div>
+
+        <div onclick="document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Sitio Hyper</div>
+
+        <div onclick="document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Sitio GitHub</div>
+
+        <div id="" class="menuPanelItem"></div>
+
+        <div id="menuPanelItemSpecial"><i><small>by <br> Juan David Sanchez Leal</small></i></div>
+
+    </div>
+
+    <!----------------------------------------------->
+
+    <div class="container">
+
+        <div id="appholder">
+
+            <span class="separator">Blog</span>
+
+            <span onclick="redirecTo('./basiceditor.html');" class="app bg-blue">BASIC EDITOR</span>
+
+            <span onclick="redirecTo('./blog.php');" class="app bg-blue">MICRO-BLOG</span>
+
+            <span class="separator">Offline Apps</span>
+
+            <span onclick="redirecTo('./freeclock.html');" class="app bg-linear-blue">FREE CLOCK</span>
+
+            <span onclick="redirecTo('./calculadora.html');" class="app bg-green">CALC+</span>
+
+            <span onclick="redirecTo('./reproductor.html');" class="app bg-red">REPRO+</span>
+
+            <span class="separator">Developer Resources</span>
+
+            <span onclick="redirecTo('https\:\/\/www.programiz.com\/python-programming\/online-compiler');" class="app">Online IDE</span>
+
+            <span onclick="redirecTo('https\:\/\/developer.mozilla.org\/es\/');" class="app">MDN Docs</span>
+
+            <span class="separator">Multimedia and Search</span>
+
+            <span onclick="redirecTo('https\:\/\/www.google.com');" class="app">Google</span>
+
+            <span onclick="redirecTo('https\:\/\/music.youtube.com');" class="app">Music YouTuBe</span>
+
+            <span onclick="redirecTo('https\:\/\/www.youtube.com');" class="app">YouTuBe</span>
+
+            <span onclick="redirecTo('https\:\/\/news.google.com');" class="app">Google News</span>
+
+            <span onclick="redirecTo('https\:\/\/co.pinterest.com');" class="app">Pinterest</span>
+
+            <span onclick="redirecTo('https\:\/\/translate.google.com\/?sl=en&tl=es');" class="app">Traductor de Google</span>
+
+            <span class="separator"> News</span>
+
+            <span onclick="redirecTo('https\:\/\/enter.co');" class="app">ENTER.CO</span>
+
+            <span onclick="redirecTo('https\:\/\/elespectador.com');" class="app">El Espectador</span>
+
+            <span onclick="redirecTo('https\:\/\/actualidad.rt.com');" class="app">RT Español</span>
+
+        </div>
+
+    </div>
+
+</body>
+
+<script type="text/javascript" src="./js/dynamics.js"></script>
+
+<script>
+
+    function redirecTo(url){
+
+        window.location = url;
+
+    }
+
+</script>
+
+</html>

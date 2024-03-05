@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <!-- Autor: Juan David Sanchez Leal - Noviembre 2022 -->
+
+    <!-- Motivo: Como complemento para MultiPlexwebApps una web ultra rapida y sin publicidad. -->
+
+
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+
+    <link rel="shortcut icon" type="image/jpg" href="./img/logoJDSLJUAN.svg" />
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TAREAS+ | Creador de Tareas Rapidas o Lista de Quehaceres.</title>
+
+</head>
+
+
+
+<body>
+
+    <style>
+
+        #tasksMaker{
+
+            width: 100%;
+
+            margin-bottom: 20px;
+
+            box-sizing: border-box;
+
+            border-radius: 4px;
+
+            padding: 10px;
+
+            background-color: #82abe8d0;
+
+            border: dashed 1px black;
+
+        }
+
+        #taskContainer{
+
+            width: 100%;
+
+        }
+
+        .taskCard{
+
+            width: 100%;
+
+            background-color: #ffea9c61;
+
+            border-radius: 4px;
+
+            margin: 5px 0px 0px 0px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr;
+
+            grid-template-rows: auto;
+
+            column-gap: 5px;
+
+            padding: 5px;
+
+            box-sizing: border-box;
+
+            border: dashed 1px black;
+
+        }
+
+        .taskCardItem{
+
+            font-family: monospace;
+
+            padding: 4px;
+
+            border-radius: 4px;
+
+            margin: 2px 2px 0px 0px;
+
+            display: inline-block;
+
+            font-size: 0.7rem;
+
+        }
+
+        .taskCardItemTop{
+
+            padding: 20px;
+
+            grid-column-start: 1;
+
+            grid-column-end: 4;
+
+            word-break: break-word;
+
+        }
+
+        .taskCardItemBottom{
+
+            padding-top: 5px;
+
+            grid-column-start: 1;
+
+            grid-column-end: 4;
+
+            font-size: 0.8em;
+
+            text-align: right;
+
+        }
+
+        .taskCardItemDone{
+
+            background-color: #217446;
+
+            color: white;
+
+        }
+
+        .taskCardItemOff{
+
+            background-color: #3c320b61;
+
+            color: white;
+
+            border: 1px solid rgba(0, 0, 0, 0.739);
+
+        }
+
+        .taskCardItemImportant{
+
+            background-color: #ffc107;
+
+            color: black;
+
+        }
+
+        .taskCardItemDelete{
+
+            background-color: #a5210082;
+
+            color: white;
+
+            border: 1px solid #B7472B;
+
+        }
+
+        #tasksMaker > input{
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            margin-bottom: 2px;
+
+            border-radius:4px;
+
+            padding: 5px;
+
+            font-size: 0.8em;
+
+        }
+
+        #taskSubmit{
+
+            padding-left:20px;
+
+            padding-right:20px;
+
+        }
+
+
+
+        #taskClose{
+
+            padding-left:20px;
+
+            padding-right:20px;
+
+        }
+
+    </style>
+
+    <!----------------------------------------------->
+
+    <div id="menuBar">
+
+        <img id="menuBtn" alt="menu" src="./img/menu.png" class="menuImg">
+
+        <div id="menuName">TAREAS+ <i><small>by Juan David Sanchez Leal</small></i></div>
+
+    </div>
+
+    <div id="menuPanel">
+
+        <div onclick="showById('tasksMaker', 'block');document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Nueva Tarea</div>
+
+        <div onclick="todayTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">¡Mi Día!</div>
+
+        <div onclick="todoTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Incompletas</div>
+
+        <div onclick="completedTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Completadas</div>
+
+        <div onclick="importantTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Importantes</div>
+
+        <div onclick="allTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Todas mis Tareas.</div>
+
+        <div   class="menuPanelItem"></div>
+
+        <div ondblclick="clearTasksReq();document.getElementById('menuBtn').click();" id="" class="menuPanelItem">Vaciar Tareas.</div>
+
+
+
+        <div id="" class="menuPanelItem"></div>
+
+        <div id="menuPanelItemSpecial"><i><small>by <br> Juan David Sanchez Leal</small></i></div>
+
+    </div>
+
+    <!----------------------------------------------->
+
+    <div class="container">
+
+        <div id="tasksMaker" onblur="hiddeById('tasksMaker');">
+
+            <div style="text-align: right;margin-bottom: 5px;">
+
+                <small>Importante!</small>
+
+                <input style="width: auto;" type="checkbox" id="taskFav">
+
+                <span id="taskSubmit" onclick="newTaskReq();" class="label-success"><img style="height: 15px;" src="./img/add_mark.svg"></span>
+
+                <span id="taskClose" onclick="hiddeById('tasksMaker')" class="label-danger"><img style="height: 15px;" src="./img/close_mark.svg"></span>
+
+            </div>
+
+            <input type="text" pattern="/^[ñÑ]*/" maxlength="40" placeholder="Debo hacer ..." id="taskText">
+
+            <input type="date" placeholder="Para el dia ..." id="taskDate">
+
+            <input type="time" placeholder="A las ..." id="taskTime">
+
+            <input type="text" placeholder="Temas Separados por ','" id="taskTopics">
+
+        </div>
+
+        <div id="tasksContainer">
+
+
+
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    
+
+    function deleteTaskReq(id){
+
+        reqMaker(urlUnique('./api.php?deleteTask='+btoa(id)));
+
+    }
+
+
+
+    function toggleCompletedStateTaskReq(id){
+
+        reqMaker(urlUnique('./api.php?stateCompletedTask='+btoa(id)));
+
+    }
+
+
+
+    function toggleImportantStateTaskReq(id){
+
+        reqMaker(urlUnique('./api.php?stateImportantTask='+btoa(id)));
+
+    }
+
+
+
+    function allTasksReq(){
+
+        reqMaker(urlUnique('./api.php?tasks=1'));
+
+    }
+
+
+
+    function importantTasksReq(){
+
+        reqMaker(urlUnique('./api.php?importantTasks=1'));
+
+    }
+
+
+
+    function todayTasksReq(){
+
+        reqMaker(urlUnique('./api.php?todayTasks=1'));
+
+    }
+
+
+
+    function todoTasksReq(){
+
+        reqMaker(urlUnique('./api.php?todoTasks=1'));
+
+    }
+
+
+
+    function completedTasksReq(){
+
+        reqMaker(urlUnique('./api.php?completedTasks=1'));
+
+    }
+
+
+
+    function clearTasksReq(){
+
+        reqMaker(urlUnique('./api.php?clearTasks=1'));
+
+    }
+
+
+
+    //----------------------------------------------------------------
+
+
+
+    function newTaskReq(){
+
+        if(document.getElementById('taskDate').value == '' || document.getElementById('taskTime').value == '' || document.getElementById('taskText').value == ''){
+
+            return false;
+
+        }
+
+        var tx = document.getElementById('taskText');
+
+        //tx.value = tx.value.replaceAll('ñ','n'); tx.value = tx.value.replaceAll('Ñ','N');
+
+        let date = btoa(document.getElementById('taskDate').value+' '+document.getElementById('taskTime').value);
+
+        let completed = false;
+
+        let important = document.getElementById('taskFav').checked;
+
+        let text = btoa(document.getElementById('taskText').value.replace(/[^a-zA-Z0-9 ]/g, ''));
+
+        let topics = btoa(document.getElementById('taskTopics').value);
+
+        reqMaker(urlUnique('./api.php?newTask=1&date='+date+'&comp='+completed+'&imp='+important+'&text='+text+'&topics='+topics));
+
+        hiddeById('tasksMaker');
+
+    }
+
+
+
+
+
+    function createTasks(tasksArray){
+
+        if(tasksArray.length == 0){
+
+            document.getElementById('tasksContainer').innerHTML = 'Ninguna Tarea Encontrada.';
+
+            //showById('tasksMaker', 'block');
+
+        }else{
+
+            document.getElementById('tasksContainer').innerHTML = '';
+
+            //hiddeById('tasksMaker');
+
+        }
+
+        for (let index = 0; index < tasksArray.length; index++) {
+
+            const element = document.createElement('div');
+
+            element.setAttribute('class', 'taskCard');
+
+
+
+            let onclickimportant = 'onclick="toggleImportantStateTaskReq('+tasksArray[index].id+')"';
+
+            let imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemOff"><img src="./img/heart_mark.svg"></span>'; 
+
+            if(tasksArray[index].important){
+
+                imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemImportant"><img src="./img/heart_mark.svg"></span>';
+
+            }
+
+
+
+            let onclickdone = 'onclick="toggleCompletedStateTaskReq('+tasksArray[index].id+')"';
+
+            let comp = '<span '+onclickdone+' class="taskCardItem taskCardItemOff"><img src="./img/done_mark.svg"></span>';
+
+            if(tasksArray[index].completed){
+
+                comp = '<span '+onclickdone+' class="taskCardItem taskCardItemDone"><img src="./img/done_mark.svg"></span>';
+
+            }
+
+           
+
+            let delt = '<span ondblclick="deleteTaskReq('+tasksArray[index].id+')" class="taskCardItem taskCardItemDelete"><img src="./img/delete_mark.svg"></span>';
+
+            let text = '<span class="taskCardItemTop">'+tasksArray[index].text+'</span>';
+
+            let date = '<span class="taskCardItemBottom"><i>'+tasksArray[index].date+'</i></span>';
+
+            
+
+            element.innerHTML = imp+comp+delt+text+date;
+
+            document.getElementById('tasksContainer').appendChild(element);
+
+        }
+
+    }
+
+
+
+    //-----------------------------------------------------------
+
+
+
+    function reqListener() {
+
+        let responseJsonObj = JSON.parse(this.responseText);
+
+        createTasks(responseJsonObj.tasks.reverse());
+
+        console.log(responseJsonObj);
+
+    }
+
+
+
+    function reqMaker(url){
+
+        const req = new XMLHttpRequest();
+
+        document.getElementById('tasksContainer').innerHTML = 'Cargando ...';
+
+        req.addEventListener("load", reqListener);
+
+        req.open("GET", url);
+
+        req.send();
+
+    }
+
+
+
+    function urlUnique(url){
+
+        return url+'&rqw='+Math.round(Math.random()*100000);
+
+    }
+
+
+
+    //-----------------------------------------------------------
+
+
+
+    window.addEventListener('DOMContentLoaded', (event)=>{
+
+        allTasksReq();
+
+        //hiddeById('tasksMaker');
+
+    });
+
+    
+
+</script>
+
+<script type="text/javascript" src="./js/dynamics.js"></script>
+
+
+
+</html>

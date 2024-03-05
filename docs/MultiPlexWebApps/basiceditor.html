@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Editor</title>
+    <link rel="shortcut icon" type="image/jpg" href="./img/logoJDSLJUAN.svg" />
+    <script src="./js/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+        selector: '#editor',
+        plugins: [
+          'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+          'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+          'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+          'alignleft aligncenter alignright alignjustify | ' +
+          'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+        init_instance_callback: function (editor) {
+            console.log('Editor was initialized:', editor);
+            //editor.on('change', (event)=>{
+            //    document.getElementById('preview').innerHTML = editor.getContent();
+            //});
+        }
+      });
+    </script>
+    <style>
+        @font-face {
+            font-family: "DigitalClockFont";
+            src: url("./fonts/DS-DIGI.TTF") format("truetype"); /* specify the path to your font file */
+        }
+        body{
+            margin: 8px;
+        }
+        button{
+            background-color: whitesmoke;
+            padding: 3px;
+            border-radius: 5px;
+            border: 0px solid whitesmoke;
+            width: 30px;
+            height: 30px;
+            box-sizing: border-box;
+            margin-left: 3px;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        button:hover{
+            box-shadow: 1px 1px 5px gray;
+        }
+        .section{
+            box-sizing: border-box;
+            width: 100%;
+            border-bottom: 1px solid black;
+            padding: 10px 0px 10px 0px;
+        }
+        #title{
+            font-weight: 900;
+            background-color: white;
+            color: black;
+            border-radius: 0px;
+            border: 0px;
+            box-sizing: border-box;
+            font-size: 3rem;
+            display: inline-block;
+            margin: 0px;
+            padding: 0px 20px 0px 0px;
+            font-family: 'DigitalClockFont', 'monospace';
+        }
+        .half{
+            width: 49%;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        .left{
+            text-align: left;
+        }
+        .right{
+            text-align: right;
+        }
+        footer{
+            font-size: 0.8em;
+            box-sizing: border-box;
+            background-color: white;
+            color: black;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1 id="title" class="half">Basic Editor</h1>
+        <div class="half right">
+            <input type="file" style="visibility: hidden;display: none;" id="fileInput" accept=".basiceditor"/>
+            <button id="load">
+                <img src="./img/upload_btn.svg" alt="Upload" title="Upload">
+            </button>
+            <button id="download">
+                <img src="./img/download_btn.svg" alt="Download" title="Download">
+            </button>
+            <button id="viewraw">
+                <img src="./img/raw_btn.svg" alt="View RAW" title="View RAW">
+            </button>
+            <button id="preview">
+                <img src="./img/preview_btn.svg" alt="Preview" title="Preview">
+            </button>
+        </div>
+    </div>
+    <div class="section">
+        <textarea name="editor" id="editor" cols="30" rows="20"></textarea>
+    </div>
+    <footer>
+        <i>
+            <div>2023 &#174; Juan D. Sanchez L. </div>
+            <div>e-mail: jdsljuan@gmail.com</div>
+            <div>Saravena - Arauca</div>
+        </i>
+    </footer>
+
+    <script>
+
+        const fileInput = document.getElementById('fileInput');
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const contents = event.target.result;
+                tinymce.get('editor').setContent(contents);
+                //document.getElementById('preview').innerHTML = contents;
+            };
+
+            reader.onerror = (event) => {
+                console.error('Error occurred while reading the file', event.target.error);
+            };
+
+            reader.readAsText(file);
+        });
+
+        document.getElementById('download').addEventListener('click', (event)=>{
+            downloadTextAsFile(prompt('Enter a Filename:', 'Document'));
+        });
+
+        document.getElementById('load').addEventListener('click', (event)=>{
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('viewraw').addEventListener('click', (event)=>{
+            viewRaw();
+        });
+
+        document.getElementById('preview').addEventListener('click', (event)=>{
+            viewRaw('text/html');
+        });
+
+        // FUNCs
+        function downloadTextAsFile(filename) {
+            if(filename == null) filename = 'Document';
+            const element = document.createElement('a');
+            const file = new Blob([tinymce.get('editor').getContent()], { type: 'text/plain' });
+            element.href = URL.createObjectURL(file);
+            element.download = filename+'.basiceditor';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function viewRaw(mimetype = 'text/plain') {
+            const element = document.createElement('a');
+            const file = new Blob([tinymce.get('editor').getContent()], { type: mimetype });
+            element.href = URL.createObjectURL(file);
+            element.target = '_blank';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+    </script>
+
+</body>
+</html>
