@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Autor: Juan David Sanchez Leal - Noviembre 2022 -->
+    <!-- Motivo: Como complemento para MultiPlexwebApps una web ultra rapida y sin publicidad. -->
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link rel="shortcut icon" type="image/jpg" href="./img/logoJDSLJUAN.svg" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPRO+ | Para Audio y Video.</title>
+</head>
+
+<body>
+    <script>
+        var __markCounter = 0;
+
+        function crearMarca(){
+            try {
+                var video = document.getElementById('video-player');
+                var container = document.getElementById('marksContainer');
+
+                var span = document.createElement('span');
+                span.setAttribute('class', 'label');
+                span.setAttribute('data-time', video.currentTime);
+                span.innerText = 'Mº '+(++__markCounter)+' ';
+                span.onclick = (event)=>{
+                    video.currentTime = event.target.attributes[1].value;
+                };
+                if( video.currentSrc != ''){
+                    container.appendChild(span);
+                }
+            } catch (error) {
+                
+            }
+        }
+        function quitarMarca(ultima){
+            try {
+                var elmt = document.getElementById('marksContainer');
+                if(ultima){   
+                    elmt.removeChild(elmt.lastChild);
+                }else{
+                    elmt.removeChild(elmt.firstChild);
+                }
+            } catch (error) {
+                
+            }
+        }
+    </script>
+    <style>
+        /*--------------- REPRODUCTOR PART's --------------------*/
+
+        #video-player{
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+    <!----------------------------------------------->
+    <div id="menuBar" class="bg-red">
+        <img id="menuBtn" alt="menu" src="./img/menu.png" class="menuImg">
+        <div id="menuName">REPRO+ <i><small>by Juan David Sanchez Leal</small></i></div>
+    </div>
+    <div id="menuPanel" class="bg-linear-red">
+        <div onclick="document.getElementById('loadFileBtn').click();document.getElementById('menuBtn').click();document.getElementById('marksContainer').innerHTML = '';" class="menuPanelItem">Cargar Archivo</div>
+        <div onclick="document.getElementById('video-player').play();document.getElementById('menuBtn').click();" class="menuPanelItem">Iniciar</div>
+        <div onclick="document.getElementById('video-player').pause();document.getElementById('menuBtn').click();" class="menuPanelItem">Pausar</div>
+        <div onclick="crearMarca();document.getElementById('menuBtn').click();" class="menuPanelItem">Marca</div>
+        <div onclick="quitarMarca(true);document.getElementById('menuBtn').click();" class="menuPanelItem">Desmarcar Ulitma</div>
+        <div onclick="quitarMarca(false);document.getElementById('menuBtn').click();" class="menuPanelItem">Desmarcar Primera</div>
+        <div id="" class="menuPanelItem"></div>
+        <div id="menuPanelItemSpecial"><i><small>by <br> Juan David Sanchez Leal</small></i></div>
+    </div>
+    <!----------------------------------------------->
+    <div class="container">
+        <div style="width: 100%;text-align: left;">
+            <span onclick="crearMarca();" class="label-success">¡Marcar!</span>
+            <span style="width: 100%;" id="marksContainer"></span>
+        </div>
+        
+        <video id="video-player" controls src=""></video>
+        <input id="loadFileBtn" style="display: none;" type="file" onchange="document.getElementById('video-player').src = window.URL.createObjectURL(this.files[0]);" accept="audio/*,video/*">
+    </div>
+</body>
+<script type="text/javascript" src="./js/dynamics.js"></script>
+
+</html>
