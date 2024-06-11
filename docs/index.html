@@ -215,7 +215,8 @@
             box-sizing: border-box;
             padding: 30px 10px;
             border-radius: 10px;
-            border: 1px solid gray;
+            box-shadow: 1px 1px 1px 1px #2a2a2a04;
+            border: 1px solid #80808029;
             transition: all 250ms ease-out;
             align-items: center;
             justify-items: center;
@@ -328,6 +329,45 @@
         }
         #btn-font-increase{
             background-image: url('./assests/text_increase.png');
+        }
+
+
+        /* APPS CARDS */
+        .jappscontainer {
+            width: 100%;
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+        }
+
+        .japp {
+            border-radius: 10px;
+            padding: 10px 15px;
+            border: 1px solid #00000022;
+            background-color: transparent;
+            box-shadow: 1px 1px 1px 1px #00000013;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            transition: all 250ms linear;
+        }
+
+        .japp:hover {
+            border: 1px solid #02171b;
+            box-shadow: 1px 1px 10px 0px #02171b8d;
+        }
+
+        .jappimage{
+            width: 36px;
+            height: 36px;
+            background-color: #02171ba2;
+            border-radius: 5px;
+            margin: 20px 0px;
+        }
+
+        .jappdesc{
+            color: #8f8f8f;
+            font-style: oblique;
         }
 
 
@@ -471,22 +511,32 @@
 
             <div>Mini-Apps</div>
             <br>
-            <div class="jskilltag">
-                <a href="./mwa/calculadora.html">Calculadora+</a>
-            </div>
+            <div class="jappscontainer">
+                <div class="japp">
+                    <div class="jappimage"></div>
+                    <a class="japptitle" href="./mwa/calculadora.html">Calculadora+</a>
+                    <p class="jappdesc">Implementación mas simple de una calculadora.</p>
+                </div>
 
-            <div class="jskilltag">
-                <a href="./mwa/freeclock.html">Reloj+</a>
-            </div>
+                <div class="japp">
+                    <div class="jappimage"></div>
+                    <a class="japptitle" href="./mwa/freeclock.html">Reloj+</a>
+                    <p class="jappdesc">Para dispositivos destinados a ser Reloj.</p>
+                </div>
 
-            <div class="jskilltag">
-                <a href="./mwa/reproductor.html">Reproductor+</a>
-            </div>
+                <div class="japp">
+                    <div class="jappimage"></div>
+                    <a class="japptitle" href="./mwa/reproductor.html">Reproductor+</a>
+                    <p class="jappdesc">Reproduce archivos de video locales desde el Navegador. </p>
+                </div>
 
-            <div class="jskilltag">
-                <a href="./mwa/tareas.html">Notas+</a>
+                <div class="japp">
+                    <div class="jappimage"></div>
+                    <a class="japptitle" href="./mwa/tareas.html">Notas+</a>
+                    <p class="jappdesc">Guarda memos, notas, tareas y demas.</p>
+                </div>
+            <br>
             </div>
-
 
 
             <!-- IMAGE AVATAR START -->
