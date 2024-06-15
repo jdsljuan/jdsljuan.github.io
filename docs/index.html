@@ -130,8 +130,6 @@
             color: white;
         } */
 
-
-
         a {
             text-decoration: none;
             color: black;
@@ -302,7 +300,7 @@
         }
 
         #confnav{
-            position: fixed;
+            /* position: fixed; */
             /* padding: 10px 5px; */
             top: 0px;
             border-radius: 0px 0px 5px 0px;
@@ -314,8 +312,8 @@
         #confnav>button {
             background-color: transparent;
             background-size: cover;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             margin: 12px;
             border: none;
         }
@@ -358,18 +356,70 @@
         }
 
         .jappimage{
-            width: 36px;
-            height: 36px;
-            background-color: #02171ba2;
+            width: 100%;
+            height: auto;
+            padding: 5px 0px;
+            background-color: #ffffff44;
             border-radius: 5px;
-            margin: 20px 0px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .japptitle{
+            margin-top: 10px;
+            display: inline-block;
         }
 
         .jappdesc{
-            color: #8f8f8f;
+            color: #000000;
             font-style: oblique;
+            filter: none;
         }
 
+        /* HOVERS */
+        .hv-success{
+            background-color: #21744663;
+        }
+
+        .hv-info{
+            background-color: #2b579a63;
+        }
+
+        .hv-danger{
+            background-color: #B7472B63;
+        }
+
+        .hv-warning{
+            background-color: #ffc10763;
+        }
+
+        .hv-success:hover{
+            background-color: #217446;
+        }
+
+        .hv-info:hover{
+            background-color: #2b579a;
+        }
+
+        .hv-danger:hover{
+            background-color: #B7472B;
+        }
+
+        .hv-warning:hover{
+            background-color: #ddb119;
+        }
+
+        div[class*="hv-"]:hover > a {
+            color: #FFFFFF !important;
+        }
+
+        div[class*="hv-"]:hover > p {
+            color: #FFFFFF !important;
+        }
+
+        div[class*="hv-"]:hover > .jappimage {
+            color: #FFFFFF !important;
+        }
 
         @media screen and (max-width: 1250px) {
 
@@ -381,6 +431,11 @@
             #jservicepanel {
                 grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: auto;
+            }
+
+            /* APPS CARDS */
+            .jappscontainer {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -432,6 +487,11 @@
                 grid-template-rows: auto;
             }
 
+            /* APPS CARDS */
+            .jappscontainer {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
         }
 
 
@@ -479,8 +539,8 @@
 
 <body>
     <nav id="confnav">
-        <button type="button" id="btn-dark-mode"></button></br>
-        <button type="button" id="btn-font-increase"></button></br>
+        <button type="button" id="btn-dark-mode"></button>
+        <button type="button" id="btn-font-increase"></button>
         <button type="button" id="btn-font-decrease"></button>
     </nav>
 
@@ -512,28 +572,32 @@
             <div>Mini-Apps</div>
             <br>
             <div class="jappscontainer">
-                <div class="japp">
-                    <div class="jappimage"></div>
+                <div class="japp hv-success">
                     <a class="japptitle" href="./mwa/calculadora.html">Calculadora+</a>
                     <p class="jappdesc">Implementación mas simple de una calculadora.</p>
+                    <a href="./mwa/calculadora.html"><div class="jappimage">usar</div></a>
+                    
                 </div>
 
-                <div class="japp">
-                    <div class="jappimage"></div>
+                <div class="japp hv-warning">
                     <a class="japptitle" href="./mwa/freeclock.html">Reloj+</a>
                     <p class="jappdesc">Para dispositivos destinados a ser Reloj.</p>
+                    <a href="./mwa/freeclock.html"><div class="jappimage">usar</div></a>
+                    
                 </div>
 
-                <div class="japp">
-                    <div class="jappimage"></div>
+                <div class="japp hv-danger">
                     <a class="japptitle" href="./mwa/reproductor.html">Reproductor+</a>
                     <p class="jappdesc">Reproduce archivos de video locales desde el Navegador. </p>
+                    <a href="./mwa/reproductor.html"><div class="jappimage">usar</div></a>
+                    
                 </div>
 
-                <div class="japp">
-                    <div class="jappimage"></div>
+                <div class="japp hv-info">
                     <a class="japptitle" href="./mwa/tareas.html">Notas+</a>
                     <p class="jappdesc">Guarda memos, notas, tareas y demas.</p>
+                    <a href="./mwa/tareas.html"><div class="jappimage">usar</div></a>
+                    
                 </div>
             <br>
             </div>
