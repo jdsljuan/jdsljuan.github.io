@@ -232,7 +232,7 @@
 
     <!----------------------------------------------->
 
-    <div class="container">
+    <div class="container" style="margin:auto; max-width: 800px; background-color: transparent;">
 
         <div id="tasksMaker" onblur="hiddeById('tasksMaker');">
 
@@ -242,19 +242,16 @@
 
                 <input style="width: auto;" type="checkbox" id="taskFav">
 
-                <span id="taskSubmit" onclick="newTaskReq();" class="label-success"><img style="height: 15px;" src="./img/add_mark.svg"></span>
+                <span id="taskSubmit" onclick="newTaskReq();" class="label-success"> Nueva</span>
 
-                <span id="taskClose" onclick="hiddeById('tasksMaker')" class="label-danger"><img style="height: 15px;" src="./img/close_mark.svg"></span>
+                <span id="taskClose" onclick="hiddeById('tasksMaker')" class="label-danger"> Cerrar</span>
 
             </div>
 
-            <input type="text" pattern="/^[ñÑ]*/" maxlength="40" placeholder="Debo hacer ..." id="taskText">
-
-            <input type="date" placeholder="Para el dia ..." id="taskDate">
-
-            <input type="time" placeholder="A las ..." id="taskTime">
-
-            <input type="text" placeholder="Temas Separados por ','" id="taskTopics">
+            <input required type="text" pattern="/^[ñÑ]*/" maxlength="40" placeholder="Debo hacer ..." id="taskText">
+            <input required type="date" placeholder="Para el dia ..." id="taskDate">
+            <input required type="time" placeholder="A las ..." id="taskTime">
+            <input required type="text" placeholder="Temas Separados por ','" id="taskTopics">
 
         </div>
 
@@ -270,178 +267,155 @@
 
 <script>
 
-    
-
     function deleteTaskReq(id){
-
-        reqMaker(urlUnique('./api.php?deleteTask='+btoa(id)));
-
+        if(confirm('¿Realmente desea continuar?')){
+            window.localStorage.removeItem('task_'+id);
+            document.getElementById('taskCard_'+id).remove();
+        }
     }
-
-
 
     function toggleCompletedStateTaskReq(id){
-
-        reqMaker(urlUnique('./api.php?stateCompletedTask='+btoa(id)));
-
+        let actualTask = JSON.parse(window.localStorage.getItem('task_'+id))
+        if(actualTask){
+            actualTask.completed = !actualTask.completed;
+            window.localStorage.setItem('task_'+id, JSON.stringify(actualTask));
+            document.getElementById('taskCard_'+id).replaceWith(replaceTask(actualTask))
+        }
     }
-
-
 
     function toggleImportantStateTaskReq(id){
-
-        reqMaker(urlUnique('./api.php?stateImportantTask='+btoa(id)));
-
+        let actualTask = JSON.parse(window.localStorage.getItem('task_'+id))
+        if(actualTask){
+            actualTask.important = !actualTask.important;
+            window.localStorage.setItem('task_'+id, JSON.stringify(actualTask));
+            document.getElementById('taskCard_'+id).replaceWith(replaceTask(actualTask))
+        }
     }
-
-
 
     function allTasksReq(){
-
-        reqMaker(urlUnique('./api.php?tasks=1'));
-
+        createTasks();
     }
-
-
 
     function importantTasksReq(){
-
-        reqMaker(urlUnique('./api.php?importantTasks=1'));
-
+        document.getElementById('tasksContainer').innerHTML = '';
+        for (let index = 0; index < window.localStorage.length; index++) {
+            let actualTask = JSON.parse(window.localStorage.getItem('task_'+(index)))
+            if(actualTask){
+                if(actualTask.important){ drawTask(actualTask);}
+            }
+        }
     }
-
-
 
     function todayTasksReq(){
-
-        reqMaker(urlUnique('./api.php?todayTasks=1'));
-
+        const strDate = (new Date((new Date()).toDateString())).toISOString().split('T')[0];
+        document.getElementById('tasksContainer').innerHTML = '';
+        for (let index = 0; index < window.localStorage.length; index++) {
+            let actualTask = JSON.parse(window.localStorage.getItem('task_'+(index)))
+            if(actualTask){
+                if(actualTask.date.toString().includes(strDate)){ drawTask(actualTask);}
+            }
+        }
     }
-
-
 
     function todoTasksReq(){
-
-        reqMaker(urlUnique('./api.php?todoTasks=1'));
-
+        document.getElementById('tasksContainer').innerHTML = '';
+        for (let index = 0; index < window.localStorage.length; index++) {
+            let actualTask = JSON.parse(window.localStorage.getItem('task_'+(index)))
+            if(actualTask){
+                if(!actualTask.completed){ drawTask(actualTask);}
+            }
+        }
     }
 
-
-
     function completedTasksReq(){
-
-        reqMaker(urlUnique('./api.php?completedTasks=1'));
-
+        document.getElementById('tasksContainer').innerHTML = '';
+        for (let index = 0; index < window.localStorage.length; index++) {
+            let actualTask = JSON.parse(window.localStorage.getItem('task_'+(index)))
+            if(actualTask){
+                if(actualTask.completed){ drawTask(actualTask); }
+            }
+        }
     }
 
 
 
     function clearTasksReq(){
-
-        reqMaker(urlUnique('./api.php?clearTasks=1'));
-
+        window.localStorage.clear();
+        createTasks();
     }
 
 
 
     //----------------------------------------------------------------
 
-
-
     function newTaskReq(){
-
         if(document.getElementById('taskDate').value == '' || document.getElementById('taskTime').value == '' || document.getElementById('taskText').value == ''){
-
             return false;
-
         }
-
-        var tx = document.getElementById('taskText');
-
-        //tx.value = tx.value.replaceAll('ñ','n'); tx.value = tx.value.replaceAll('Ñ','N');
-
-        let date = btoa(document.getElementById('taskDate').value+' '+document.getElementById('taskTime').value);
-
+        let date = document.getElementById('taskDate').value+' '+document.getElementById('taskTime').value;
         let completed = false;
-
         let important = document.getElementById('taskFav').checked;
+        let text = document.getElementById('taskText').value; //.replace(/[^a-zA-Z0-9 ]/g, '');
+        let topics = document.getElementById('taskTopics').value;
 
-        let text = btoa(document.getElementById('taskText').value.replace(/[^a-zA-Z0-9 ]/g, ''));
-
-        let topics = btoa(document.getElementById('taskTopics').value);
-
-        reqMaker(urlUnique('./api.php?newTask=1&date='+date+'&comp='+completed+'&imp='+important+'&text='+text+'&topics='+topics));
-
+        let task = { id: window.localStorage.length, date : date, completed: completed, important: important, text: text, topics: topics }
+        window.localStorage.setItem('task_'+window.localStorage.length, JSON.stringify(task));
+        createTasks();
         hiddeById('tasksMaker');
-
     }
 
-
-
-
-
-    function createTasks(tasksArray){
-
-        if(tasksArray.length == 0){
-
-            document.getElementById('tasksContainer').innerHTML = 'Ninguna Tarea Encontrada.';
-
-            //showById('tasksMaker', 'block');
-
-        }else{
-
-            document.getElementById('tasksContainer').innerHTML = '';
-
-            //hiddeById('tasksMaker');
-
-        }
-
-        for (let index = 0; index < tasksArray.length; index++) {
-
-            const element = document.createElement('div');
-
-            element.setAttribute('class', 'taskCard');
-
-
-
-            let onclickimportant = 'onclick="toggleImportantStateTaskReq('+tasksArray[index].id+')"';
-
-            let imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemOff"><img src="./img/heart_mark.svg"></span>'; 
-
-            if(tasksArray[index].important){
-
-                imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemImportant"><img src="./img/heart_mark.svg"></span>';
-
+    function createTasks(){
+        document.getElementById('tasksContainer').innerHTML = '';
+        for (let index = 0; index < window.localStorage.length; index++) {
+            let actualTask = JSON.parse(window.localStorage.getItem('task_'+(index)))
+            if(actualTask){
+                drawTask(actualTask);
             }
-
-
-
-            let onclickdone = 'onclick="toggleCompletedStateTaskReq('+tasksArray[index].id+')"';
-
-            let comp = '<span '+onclickdone+' class="taskCardItem taskCardItemOff"><img src="./img/done_mark.svg"></span>';
-
-            if(tasksArray[index].completed){
-
-                comp = '<span '+onclickdone+' class="taskCardItem taskCardItemDone"><img src="./img/done_mark.svg"></span>';
-
-            }
-
-           
-
-            let delt = '<span ondblclick="deleteTaskReq('+tasksArray[index].id+')" class="taskCardItem taskCardItemDelete"><img src="./img/delete_mark.svg"></span>';
-
-            let text = '<span class="taskCardItemTop">'+tasksArray[index].text+'</span>';
-
-            let date = '<span class="taskCardItemBottom"><i>'+tasksArray[index].date+'</i></span>';
-
-            
-
-            element.innerHTML = imp+comp+delt+text+date;
-
-            document.getElementById('tasksContainer').appendChild(element);
-
         }
+    }
 
+    function drawTask(actualTask){
+        console.log(actualTask);
+        const element = document.createElement('div');
+        element.setAttribute('class', 'taskCard');
+        element.setAttribute('id', 'taskCard_'+actualTask.id);
+        let onclickimportant = 'onclick="toggleImportantStateTaskReq('+actualTask.id+')"';
+        let imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemOff"><img src="./img/heart_mark.svg"></span>'; 
+        if(actualTask.important){
+            imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemImportant"><img src="./img/heart_mark.svg"></span>';
+        }
+        let onclickdone = 'onclick="toggleCompletedStateTaskReq('+actualTask.id+')"';
+        let comp = '<span '+onclickdone+' class="taskCardItem taskCardItemOff"><img src="./img/done_mark.svg"></span>';
+        if(actualTask.completed){
+            comp = '<span '+onclickdone+' class="taskCardItem taskCardItemDone"><img src="./img/done_mark.svg"></span>';
+        }
+        let delt = '<span onclick="deleteTaskReq('+actualTask.id+')" class="taskCardItem taskCardItemDelete"><img src="./img/delete_mark.svg"></span>';
+        let text = '<span class="taskCardItemTop">'+actualTask.text+'</span>';
+        let date = '<span class="taskCardItemBottom"><i>'+actualTask.date+'</i></span>';
+        element.innerHTML = imp+comp+delt+text+date;
+        document.getElementById('tasksContainer').appendChild(element);
+    }
+
+    function replaceTask(actualTask){
+        const element = document.createElement('div');
+        element.setAttribute('class', 'taskCard');
+        element.setAttribute('id', 'taskCard_'+actualTask.id);
+        let onclickimportant = 'onclick="toggleImportantStateTaskReq('+actualTask.id+')"';
+        let imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemOff"><img src="./img/heart_mark.svg"></span>'; 
+        if(actualTask.important){
+            imp = '<span '+onclickimportant+' class="taskCardItem taskCardItemImportant"><img src="./img/heart_mark.svg"></span>';
+        }
+        let onclickdone = 'onclick="toggleCompletedStateTaskReq('+actualTask.id+')"';
+        let comp = '<span '+onclickdone+' class="taskCardItem taskCardItemOff"><img src="./img/done_mark.svg"></span>';
+        if(actualTask.completed){
+            comp = '<span '+onclickdone+' class="taskCardItem taskCardItemDone"><img src="./img/done_mark.svg"></span>';
+        }
+        let delt = '<span onclick="deleteTaskReq('+actualTask.id+')" class="taskCardItem taskCardItemDelete"><img src="./img/delete_mark.svg"></span>';
+        let text = '<span class="taskCardItemTop">'+actualTask.text+'</span>';
+        let date = '<span class="taskCardItemBottom"><i>'+actualTask.date+'</i></span>';
+        element.innerHTML = imp+comp+delt+text+date;
+        //document.getElementById('tasksContainer').appendChild(element);
+        return element;
     }
 
 
@@ -492,7 +466,8 @@
 
     window.addEventListener('DOMContentLoaded', (event)=>{
 
-        allTasksReq();
+        //allTasksReq();
+        createTasks();
 
         //hiddeById('tasksMaker');
 
