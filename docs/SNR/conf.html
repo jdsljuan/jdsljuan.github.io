@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Opciones Bíblicas</title>
+    <script src="./assests/js/tailwindcss_3_4_17.js"></script>
+    <link href="./assests/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados para el contenedor del checkbox (Material Design Shadow) */
+        .card-checkbox {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* sm */
+            transition: all 0.2s ease-in-out;
+        }
+        .card-checkbox:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* md */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen ps-4 pe-4 pb-4">
+
+    <!-- Encabezado de la Aplicación -->
+    <header class="p-4 bg-white shadow-md rounded-b-xl text-center mb-6">
+        <h1 class="text-3xl sm:text-6xl font-extrabold text-gray-800 flex items-center justify-center">
+            <a href="./index.html">Scroll&Read</a>
+        </h1>
+        <p class="text-xs italic text-gray-500 mt-1 text-center">
+            Configuraciones del Contenido 
+        </p>
+    </header>
+
+    <hr>
+    <br>
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2 flex items-center">
+        <i class="fa fa-globe mr-2 text-blue-500" aria-hidden="true"></i> API's Adicionales
+    </h2>
+
+    <div class="card-checkbox bg-white p-3 rounded-lg flex items-center mb-2" >
+        <label class="relative flex items-center p-3 rounded-full cursor-pointer" for="API-Jokes">
+            <input type="checkbox" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-50 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10" id="API-Jokes" data-type="api">
+            <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 13.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </span>
+        </label>
+        <label class="text-gray-700 ml-2 cursor-pointer select-none" for="API-Jokes">API de Bromas</label>
+    </div>
+
+    <div class="card-checkbox bg-white p-3 rounded-lg flex items-center mb-2">
+        <label class="relative flex items-center p-3 rounded-full cursor-pointer" for="API-Affirmations">
+            <input type="checkbox" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-50 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10" id="API-Affirmations" data-type="api">
+            <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 13.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </span>
+        </label>
+        <label class="text-gray-700 ml-2 cursor-pointer select-none" for="API-Affirmations">API de Afirmaciones</label>
+    </div>
+
+    <div class="card-checkbox bg-white p-3 rounded-lg flex items-center mb-2">
+        <label class="relative flex items-center p-3 rounded-full cursor-pointer" for="API-BreakingBad">
+            <input type="checkbox" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-50 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10" id="API-BreakingBad" data-type="api">
+            <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 13.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </span>
+        </label>
+        <label class="text-gray-700 ml-2 cursor-pointer select-none" for="API-BreakingBad">API de Breaking Bad</label>
+    </div>
+
+    <br>
+    <hr class="ps-5 pe-5">
+    <br>
+
+    <div class="max-w-6xl mx-auto">
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
+            
+            <div id="versions-container" class="lg:col-span-1">
+                </div>
+
+            <div class="lg:col-span-2 space-y-8">
+                <div id="ot-container">
+                    </div>
+                <div id="nt-container">
+                    </div>
+            </div>
+            
+        </div>
+
+        <div class="fixed bottom-0 right-0 p-6 z-50">
+            <button onclick="saveAllOptions()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-150 ease-in-out flex items-center">
+                <i class="fa fa-floppy-o mr-2"></i> Guardar
+            </button>
+        </div>
+
+        <div class="fixed bottom-0 left-0 p-6 z-50">
+            <button onclick="toggleAllCheckboxes()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-150 ease-in-out flex items-center">
+                <i class="fa fa-check-circle mr-2"></i> Todo On
+            </button>
+        </div>
+
+        <div id="save-notification" class="fixed top-20 right-6 bg-green-500 text-white p-4 rounded-lg shadow-xl hidden transition-opacity duration-300 ease-in-out" role="alert">
+            <i class="fa fa-check-circle mr-2"></i> Opciones guardadas en LocalStorage.
+        </div>
+
+    </div>
+
+    <script src="./deno_api/versions.js"></script>
+    <script src="./deno_api/books.js"></script>
+
+    <script>
+
+        // --- 2. LÓGICA DE LOCALSTORAGE Y RENDERIZADO ---
+        const LS_KEY_VERSIONS = 'selectedVersions';
+        const LS_KEY_BOOKS = 'selectedBooks';
+        const LS_KEY_APIS = 'selectedApis';
+
+        /**
+         * Crea el HTML de un checkbox con estilo Material Design
+         * @param {string} id - ID único para el checkbox (ej: 'version-rv1960' o 'book-GN')
+         * @param {string} labelText - El texto de la etiqueta a mostrar
+         * @param {boolean} isChecked - Si debe estar marcado inicialmente
+         * @returns {string} El fragmento HTML
+         */
+        function createCheckboxHTML(id, labelText, isChecked) {
+            const checkedAttr = isChecked ? 'checked' : '';
+            return `
+                <div class="card-checkbox bg-white p-3 rounded-lg flex items-center mb-2">
+                    <label class="relative flex items-center p-3 rounded-full cursor-pointer" for="${id}">
+                        <input type="checkbox"
+                            class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-50 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
+                            id="${id}" data-type="${id.startsWith('version') ? 'version' : 'book'}" ${checkedAttr} />
+                        <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 13.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                    </label>
+                    <label class="text-gray-700 ml-2 cursor-pointer select-none" for="${id}">${labelText}</label>
+                </div>
+            `;
+        }
+
+        /**
+         * Carga los estados de LocalStorage
+         * @param {string} key - La clave de LocalStorage
+         * @returns {Set<string>} Un Set de IDs seleccionados
+         */
+        function loadSelectedOptions(key) {
+            try {
+                const stored = localStorage.getItem(key);
+                return stored ? new Set(JSON.parse(stored)) : new Set();
+            } catch (e) {
+                console.error("Error al cargar de LocalStorage:", e);
+                return new Set();
+            }
+        }
+
+        /**
+         * Genera y renderiza los checkboxes de versiones.
+         */
+        function renderVersions() {
+            const container = document.getElementById('versions-container');
+            const selectedVersions = loadSelectedOptions(LS_KEY_VERSIONS);
+            
+            let html = `
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2 flex items-center">
+                    <i class="fa fa-book mr-2 text-blue-500"></i> Versiones de la Biblia
+                </h2>
+                <div class="space-y-2">
+            `;
+
+            versions.forEach(v => {
+                const id = `version-${v.version}`;
+                const isChecked = selectedVersions.has(v.version);
+                html += createCheckboxHTML(id, v.name, isChecked);
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function toggleAllCheckboxes(checked = true) {
+            const selector = `input[type="checkbox"]`;
+            const checkboxes = document.querySelectorAll(selector);
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checked;
+            });
+
+            // Llama a la función de guardado para persistir el nuevo estado en LocalStorage
+            saveAllOptions(); 
+        }
+
+        /**
+         * Genera y renderiza los checkboxes de libros, categorizados por Testamento.
+         */
+        function renderBooks() {
+            const otContainer = document.getElementById('ot-container');
+            const ntContainer = document.getElementById('nt-container');
+            const selectedBooks = loadSelectedOptions(LS_KEY_BOOKS);
+
+            const otBooks = books.filter(b => b.testament === "Antiguo Testamento");
+            const ntBooks = books.filter(b => b.testament === "Nuevo Testamento");
+
+            // --- Antiguo Testamento ---
+            let otHtml = `
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2 flex items-center">
+                    <i class="fa fa-cross mr-2 text-blue-500"></i> Antiguo Testamento
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            `;
+            otBooks.forEach(b => {
+                const id = `book-${b.abrev}`;
+                // Usamos el primer nombre de la lista para la etiqueta
+                const label = b.names[0]; 
+                const isChecked = selectedBooks.has(b.abrev);
+                otHtml += createCheckboxHTML(id, label, isChecked);
+            });
+            otHtml += `</div>`;
+            otContainer.innerHTML = otHtml;
+
+            // --- Nuevo Testamento ---
+            let ntHtml = `
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2 flex items-center">
+                    <i class="fa fa-star mr-2 text-blue-500"></i> Nuevo Testamento
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            `;
+            ntBooks.forEach(b => {
+                const id = `book-${b.abrev}`;
+                const label = b.names[0];
+                const isChecked = selectedBooks.has(b.abrev);
+                ntHtml += createCheckboxHTML(id, label, isChecked);
+            });
+            ntHtml += `</div>`;
+            ntContainer.innerHTML = ntHtml;
+        }
+
+
+                /**
+         * Genera y renderiza los checkboxes de libros, categorizados por Testamento.
+         */
+        function renderApis() {
+            const apiJokes = document.getElementById('API-Jokes');
+            const apiAffirmations = document.getElementById('API-Affirmations');
+            const apiBrakingBad = document.getElementById('API-BreakingBad');
+            const selectedApis = loadSelectedOptions(LS_KEY_APIS);
+
+            console.log(selectedApis)
+
+            if(selectedApis.has('Jokes')){
+                apiJokes.checked = true;
+            }
+            if(selectedApis.has('Affirmations')){
+                apiAffirmations.checked = true;
+            }
+            if(selectedApis.has('BreakingBad')){
+                apiBrakingBad.checked = true;
+            }
+        }
+
+
+        /**
+         * Recopila todos los estados de los checkboxes y los guarda en LocalStorage.
+         */
+        function saveAllOptions() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selectedVersions = [];
+            const selectedBooks = [];
+            const selectedApis = [];
+
+            allCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    // El valor que se guarda es la parte después del prefijo
+                    const value = checkbox.id.split('-').pop(); 
+                    if (checkbox.dataset.type === 'version') {
+                        selectedVersions.push(value);
+                    } else if (checkbox.dataset.type === 'book') {
+                        selectedBooks.push(value);
+                    } else if (checkbox.dataset.type === 'api') {
+                        selectedApis.push(value);
+                    }
+                }
+            });
+
+            // Guardar en LocalStorage
+            try {
+                localStorage.setItem(LS_KEY_VERSIONS, JSON.stringify(selectedVersions));
+                localStorage.setItem(LS_KEY_BOOKS, JSON.stringify(selectedBooks));
+                localStorage.setItem(LS_KEY_APIS, JSON.stringify(selectedApis));
+                showSaveNotification();
+                console.log("Opciones de Versiones guardadas:", selectedVersions);
+                console.log("Opciones de Libros guardadas:", selectedBooks);
+                console.log("Opciones de API's guardadas:", selectedApis);
+            } catch (e) {
+                console.error("Error al guardar en LocalStorage:", e);
+                alert("Error al guardar las opciones en el navegador.");
+            }
+        }
+        
+        /**
+         * Muestra una notificación de guardado.
+         */
+        function showSaveNotification() {
+            const notification = document.getElementById('save-notification');
+            notification.classList.remove('hidden');
+            notification.classList.add('opacity-100');
+
+            setTimeout(() => {
+                notification.classList.remove('opacity-100');
+                notification.classList.add('opacity-0');
+                // Ocultar después de la transición de opacidad
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                    notification.classList.remove('opacity-0');
+                }, 300); 
+            }, 2000); // Mostrar por 2 segundos
+        }
+
+        // --- 3. INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVersions();
+            renderBooks();
+            renderApis();
+
+            // Asignar el evento saveAllOptions al cambio de cualquier checkbox
+            // Esto permite guardar automáticamente el estado al hacer clic,
+            // además del botón explícito de "Guardar".
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', saveAllOptions);
+            });
+            
+            // Forzar una primera carga de guardado por si el DOM fue renderizado
+            // antes de que el evento 'change' se adjuntara.
+            // Si quieres que el usuario use solo el botón, elimina la línea de arriba y esta.
+            saveAllOptions();
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Scroll&Read - Pasatiempo Educativo </title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="./assests/js/tailwindcss_3_4_17.js"></script>
+    <!-- Carga de Font Awesome 4.7.0 -->
+    <link href="./assests/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Configuración de fuente y estilos base */
+        :root {
+            --primary-color: #3b82f6; /* Blue 500 */
+            --secondary-color: #10b981; /* Emerald 500 */
+            --bg-color: #fafafa; /* Gray 50 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+        }
+        .card-container {
+            column-count: 1;
+            column-gap: 5px; 
+        } 
+
+        @media (min-width: 640px) {
+            .card-container { column-count: 2; }
+        }
+        @media (min-width: 1024px) {
+            .card-container { column-count: 3; }
+        }
+
+        .card {
+            display: inline-block; /* Crucial para el layout de columnas */
+            width: 100%;
+            margin-bottom: 1rem;
+            break-inside: avoid; /* Evita que las tarjetas se corten entre columnas */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <dialog id="miModal" style="max-width: 600px;" class="rounded-2xl p-9 border border-gray-100">
+        <div class="p-20 w-full">
+            <p class="p-20 text-sm text-center">!Click en alguna de las Tarjetas para Previsualizarla!</p>
+        </div>
+    </dialog>
+
+    <div class="container mx-auto">
+
+        <!-- Encabezado de la Aplicación -->
+        <!-- <header class="p-4 bg-white shadow-md rounded-b-xl text-center mb-6">
+            <h1 class="text-3xl sm:text-6xl font-extrabold text-gray-800 flex items-center justify-center">
+                Scroll&Read
+            </h1>
+            <p class="text-xs italic text-gray-500 mt-1 text-center">
+                Versículos, Enseñanzas, Afirmaciones, Frases y Chistes en formato de tablero visual.
+            </p>
+        </header> -->
+
+        <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
+        <div id="feed" class="w-full">
+            
+            <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
+            <!-- <div class="card-container w-full"> -->
+                <!-- Las tarjetas se insertarán aquí mediante JavaScript -->
+            <!-- </div> -->
+        </div>
+
+        <!-- Área de Paginación y Carga -->
+        <div class="flex flex-col items-center justify-center p-8">
+            <div id="loading-indicator" class="hidden text-gray-600">
+                <i class="fa fa-spinner fa-spin fa-2x text-primary-color"></i>
+                <span class="ml-2 text-lg font-medium">Cargando más frases...</span>
+            </div>
+
+            <button id="load-more-btn"
+                class="bg-primary-color text-gray-400 hover:bg-white border font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-lg">
+                <i class="fa fa-arrow-down mr-2"></i>
+                Cargar Más 
+            </button>
+            <p id="end-message" class="hidden mt-4 text-lg font-semibold text-gray-500">
+                <i class="fa fa-heartbeat mr-2 text-secondary-color"></i>
+                ¡Te has quedado sin Vidas!
+            </p>
+        </div>
+
+        <div class="p-20"></div>
+
+        <!-- Navegación Fija Inferior -->
+        <nav class="fixed bottom-0 left-0 right-0 ms-1 me-1 bg-white rounded-t-xl shadow-md border-t border-gray-300 z-50 p-1">
+            <div class="flex items-center justify-around max-w-lg mx-auto ">
+
+
+                <!-- Home Button -->
+                <a href="#" id="homeBtn" class="text-gray-500 p-2 pr-4 pl-4 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-200 hover:text-primary">
+                    <i class="fa fa-home text-xl"></i>
+                </a>
+
+                <span>
+                    <h1 class="text-2xl text-gray-800 flex items-center justify-center">
+                        <b class="font-extrabold">S<span class="text-red-500">&</span></b><span class="text-red-600">R</span>
+                    </h1>
+                </span>
+
+                <!-- Rev Btn -->
+                <!-- <a onclick="mostrarModal()" action="javascript:void(0);"
+                    class="text-gray-500 p-2 pr-4 pl-4 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-200 hover:text-primary">
+                    <i class="fa fa-bookmark text-xl"></i>
+                </a> -->
+
+                <!-- About Btn -->
+                <a action="javascript:void(0);" id="aboutBtn"
+                    class="text-gray-500 p-2 pr-5 pl-5 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-100 hover:text-primary">
+                    <i class="fa fa-user-circle text-xl" aria-hidden="true"></i>
+                </a>
+
+            </div>
+        </nav>
+        
+    </div>
+    <script src="./deno_api/versions.js"></script>
+    <script src="./deno_api/books.js"></script>
+    <script src="./api_data/affirmations.js"></script>
+
+    <script>
+
+        /**********************************************************
+        *           MANEJO DE LA VENTANA MODAL
+        ***********************************************************/
+        const abrirBoton = document.getElementById('abrirModal');
+        const cerrarBoton = document.getElementById('cerrarModal');
+        const modal = document.getElementById('miModal');
+
+        function mostrarModal(){
+            modal.showModal();
+        }
+
+        function mostrarModalContenido(contenidoHTML){
+            modal.innerHTML = contenidoHTML;
+            modal.showModal();
+        }
+
+        modal.addEventListener('click', (evento) => {
+            if (evento.target === modal) {
+                modal.close();
+            }
+        });
+        //--------------------------------------------------------
+
+        const TRIES = 16;
+        let TOTAL_EXITOS = 0;
+
+        //API de la Biblia
+        const API_BASE_URI = 'https://bible-api.deno.dev/api/read';
+        
+        // API's Externas
+        const API_EXT_JOKES = 
+            {  
+                name : "Jokes",
+                URI : "https://official-joke-api.appspot.com/random_joke",
+                responseProcess: function(dataResponse) {
+                    return {
+                        libro: 'Broma',
+                        capitulo: dataResponse.id,
+                        versiculo: '',
+                        version: 'Anonimo',
+                        texto: dataResponse.setup+' <i class="fa fa-caret-right mr-2 ml-2 text-gray-300" aria-hidden="true"></i> '+dataResponse.punchline,
+                        reflexion: dataResponse.type,
+                        color: "blue",
+                    }
+                }
+            };
+
+        const API_EXT_GAMEOFTHRONES = 
+            {  
+                name : "GameOfThrones",
+                URI : "https://api.gameofthronesquotes.xyz/v1/random",
+                responseProcess: function(dataResponse) {
+                    return {
+                        libro: 'Game Of Thrones',
+                        capitulo: '',
+                        versiculo: '',
+                        version: dataResponse.character.name,
+                        texto: dataResponse.sentence,
+                        reflexion: '',
+                        color: 'green',
+                    }
+                }
+            };
+
+        const API_EXT_BREAKINGBAD = 
+            {  
+                name : "BreakingBad",
+                URI : "https://api.breakingbadquotes.xyz/v1/quotes",
+                responseProcess: function(dataResponse) {
+                    return {
+                        libro: 'Breaking Bad',
+                        capitulo: '',
+                        versiculo: '',
+                        version: dataResponse[0].author,
+                        texto: dataResponse[0].quote,
+                        reflexion: '',
+                        color: 'yellow',
+                    }
+                }
+            };
+
+        const API_EXT_WIKIPEDIA = 
+            {  
+                name : "Wikipedia",
+                URI : "https://es.wikipedia.org/api/rest_v1/page/random/summary",
+                responseProcess: function(dataResponse) {
+                    return {
+                        libro: 'Wikipedia',
+                        capitulo: '',
+                        versiculo: '',
+                        version: '<a target="_blank" href="'+dataResponse.content_urls.mobile.page+'">'+dataResponse.title+'</a>',
+                        texto: dataResponse.extract,
+                        reflexion: '',
+                        color: 'violet',
+                    }
+                }
+            };
+
+        const API_EXT_YUGIOH = 
+            {  
+                name : "Yu-Gi-Oh",
+                URI : function(){ 
+                    let card = Math.round(Math.random()*13000)
+                    return "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=1&offset="+card; 
+                }(),
+                responseProcess: function(dataResponse) {
+                    return {
+                        libro: 'Yu-Gi-Oh!',
+                        capitulo: '',
+                        versiculo: '',
+                        version: '<a target="_blank" href="'+dataResponse.data[0].ygoprodeck_url+'">'+dataResponse.data[0].name+'</a>',
+                        texto: '<img class="w-full" src="'+dataResponse.data[0].card_images[0].image_url+'" >',
+                        reflexion: '',
+                        color: 'emerald',
+                    }
+                }
+            };
+        
+
+        // ----------------------------------------------------------------------
+        // LÓGICA DEL FRONTEND (JavaScript del Cliente)
+        // ----------------------------------------------------------------------
+        let isLoading = false;
+        let hasMoreData = true;
+
+        // const container = document.getElementById('phrases-container');
+        const feed = document.getElementById('feed');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const endMessage = document.getElementById('end-message');
+        const loadImageFeedBtn = document.getElementById('image-feed-btn');
+
+        function createCard(phrase) {
+            const card = document.createElement('div');
+            card.className = 'card bg-white p-6 rounded-2xl hover:border-black border border-gray-200 w-full';
+
+            // Referencia y Versión
+            const reference = `${phrase.libro} ${phrase.capitulo}:${phrase.versiculo}`;
+            const versionHTML = `
+                <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
+                    <span class="text-sm font-semibold text-gray-500">
+                        <i class="fa fa-star-o mr-2" onclick=""></i>
+                    </span>
+                    <span class="text-sm font-extrabold text-primary-color">
+                        ${reference}
+                    </span>
+                </div>
+            `;
+
+            // Texto del Versículo
+            const verseTextHTML = `
+                <p class="text-lg font-serif italic text-gray-800 mb-6 leading-relaxed">
+                    <i class="fa fa-quote-left mr-2 text-gray-300"></i>
+                    ${phrase.texto} 
+                    <i class="fa fa-quote-right ml-2 text-gray-300"></i>
+                </p>
+            `;
+
+            // Reflexión / Enseñanza
+            const reflectionHTML = `
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <h3 class="text-xs font-bold uppercase text-secondary-color mb-2 flex items-center">
+                        <i class="fa fa-tag mr-1 text-secondary-color"></i>
+                        VERSION
+                    </h3>
+                    <p class="text-gray-600 text-xs">
+                        ${phrase.version}
+                    </p>
+                </div>
+            `;
+
+            card.innerHTML = versionHTML + verseTextHTML + reflectionHTML;
+            card.onclick = function(e) {
+                mostrarModalContenido('<div class="p-4 border-gray-100" >'+versionHTML + verseTextHTML + reflectionHTML+'</div>');
+            };
+            return card;
+        }
+
+        /********************* FREE DESING CARD CONSTRUCCTION ****************************/
+        // Createion of the HTML Card Function
+        function createFreeCard(html_content) {
+            const card = document.createElement('div');
+            card.className = 'card bg-white p-6 rounded-2xl hover:border-black border border-gray-200 w-full';
+            card.innerHTML = html_content;
+            card.onclick = function(e) {
+                mostrarModalContenido('<div class="p-4 border-gray-100" >'+html_content+'</div>');
+            };
+            return card;
+        }
+
+        // Call to the API getting the data an using createFreeCard.
+        async function loadFreeCard(container, API_EXT) {
+            isLoading = true;
+            loadMoreBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            try {                
+                //Carga las Frases de a una
+                response = await fetch(API_EXT.URI);
+                if (response.ok) {
+                    data = await response.json();
+                    container.appendChild(createFreeCard(API_EXT.responseProcess(data)));
+                    TOTAL_EXITOS++;
+                } 
+
+            } catch (error) {
+                console.error("Error al cargar las API's: "+API_EXT.name, error);
+            } finally {
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+            }
+        }
+        /********************************************************************************/
+
+
+        function createColorCard(phrase) {
+            const card = document.createElement('div');
+            card.className = 'card bg-white p-6 rounded-2xl hover:border-'+phrase.color+'-400 hover:shadow-lg border border-'+phrase.color+'-200 w-full';
+
+            // Referencia y Versión
+            const reference = `${phrase.libro}`;
+            const versionHTML = `
+                <div class="flex justify-between items-center mb-4 pb-2 border-b border-${phrase.color}-100">
+                    <span class="text-sm font-semibold text-${phrase.color}-500">
+                        <i class="fa fa-connectdevelop mr-2"></i>
+                    </span>
+                    <span class="text-sm font-extrabold text-${phrase.color}-800">
+                        ${reference}
+                    </span>
+                </div>
+            `;
+
+            // Texto del Versículo
+            const verseTextHTML = `
+                <p class="text-lg font-serif italic text-${phrase.color}-800 mb-6 leading-relaxed">
+                    <i class="fa fa-quote-left mr-2 text-${phrase.color}-300"></i>
+                    ${phrase.texto} 
+                    <i class="fa fa-quote-right ml-2 text-${phrase.color}-300"></i>
+                </p>
+            `;
+
+            // Reflexión / Enseñanza
+            const reflectionHTML = `
+                <div class="mt-4 pt-4 border-t border-${phrase.color}-100">
+                    <h3 class="text-xs font-bold uppercase text-${phrase.color}-800 mb-2 flex items-center">
+                        <i class="fa fa-tag mr-1 text-${phrase.color}-800"></i>
+                        AUTOR
+                    </h3>
+                    <p class="text-${phrase.color}-600 text-xs">
+                        ${phrase.version}
+                    </p>
+                </div>
+            `;
+
+            card.innerHTML = versionHTML + verseTextHTML + reflectionHTML;
+            card.onclick = function(e) {
+                mostrarModalContenido('<div class="p-4 border-gray-100" >'+versionHTML + verseTextHTML + reflectionHTML+'</div>');
+            };
+            return card;
+        }
+
+        async function loadPhrases(container) {
+            isLoading = true;
+            loadMoreBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                let phrases = [];
+                let version = versions[Math.round((Math.random(versions.length-1)*(versions.length-1)))];
+                let book = books[Math.round((Math.random(books.length-1)*(books.length-1)))];
+                let chapter = Math.round((Math.random(book.chapters)*(book.chapters))); 
+                let verse = Math.round((Math.random(20)*(20))); 
+                
+                chapter = chapter == 0 ? 1 : chapter;
+                verse = verse == 0 ? 1 : verse;
+
+                //Carga las Frases de a una
+                response = await fetch(API_BASE_URI + '/' + version.version + '/' + book.abrev + '/' + chapter + '/' + verse);
+
+                if (response.ok) {
+                    data = await response.json();
+                    let phrase = {
+                        libro: book.names[0],
+                        capitulo: chapter,
+                        versiculo: verse,
+                        version: version.name,
+                        texto: data.verse,
+                        reflexion: data.study == null ? '...' : data.study 
+                    };
+                    container.appendChild(createCard(phrase));
+                    TOTAL_EXITOS++;
+                } 
+            } catch (error) {
+                console.error("Error al cargar las frases:", error);
+            } finally {
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+            }
+        }
+
+        async function loadCard(container, API_EXT) {
+            isLoading = true;
+            loadMoreBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            try {                
+                //Carga las Frases de a una
+                response = await fetch(API_EXT.URI);
+                if (response.ok) {
+                    data = await response.json();
+                    container.appendChild(createColorCard(API_EXT.responseProcess(data)));
+                    TOTAL_EXITOS++;
+                } 
+
+            } catch (error) {
+                console.error("Error al cargar las API's: "+API_EXT.name, error);
+            } finally {
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+            }
+        }
+
+        async function loadAffirmation(container) {
+            isLoading = true;
+            loadMoreBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            try {              
+                let idx = Math.round((Math.random(affirmations.length)*(affirmations.length)))  
+                container.appendChild(createColorCard({
+                        libro: 'Afirmaciones',
+                        capitulo: '',
+                        versiculo: '',
+                        version: 'Anonimo',
+                        texto: affirmations[idx].affirmation,
+                        reflexion: '',
+                        color: 'rose'
+                    }));
+                TOTAL_EXITOS++;
+            } catch (error) {
+                console.error("Error al cargar las Afirmaciones: ", error);
+            } finally {
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            if (hasMoreData) {
+                loadMoreBtn.classList.remove('hidden');
+                loadMoreBtn.disabled = false;
+                endMessage.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+                endMessage.classList.remove('hidden');
+                feed.innerHTML = '';
+            }
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            const new_container = document.createElement('div');
+            new_container.className = 'card-container w-full pt-4';
+            for (let j = 0; j < TRIES; j++) {
+                //Desicion del Tipo de Consulta que se realizara
+                let option = Math.round((Math.random(150)*(150)));
+
+                if(41 <= option && option <= 46){
+                    loadAffirmation(new_container);
+                }
+
+                else if(5 <= option && option <= 7){
+                    loadCard(new_container, API_EXT_JOKES); 
+                }
+
+                else if(8 <= option && option <= 9){
+                    loadCard(new_container, API_EXT_GAMEOFTHRONES);
+                }
+                
+                else if(22 <= option && option <= 22){
+                    loadCard(new_container, API_EXT_BREAKINGBAD);
+                }
+
+                else if(100 <= option && option <= 150){
+                    loadCard(new_container, API_EXT_WIKIPEDIA);
+                }
+
+                else {
+                    loadPhrases(new_container);
+                }
+                
+            }
+            const new_hr = document.createElement('hr');
+            feed.appendChild(new_hr);
+            feed.appendChild(new_container);
+        });
+
+        // loadImageFeedBtn.addEventListener('click', () => {
+        //     const new_container = document.createElement('div');
+        //     new_container.className = 'card-container w-full pt-4';
+        //     for (let j = 0; j < TRIES; j++) {
+
+        //     }
+        //     const new_hr = document.createElement('hr');
+        //     feed.appendChild(new_hr);
+        //     feed.appendChild(new_container);
+        // });
+
+
+        homeBtn.addEventListener('click', () => {
+            feed.innerHTML = "";
+            loadMoreBtn.click();
+        });
+
+        window.onload = () => {
+            if (typeof tailwind !== 'undefined') {
+                 tailwind.config = {
+                    theme: {
+                        extend: {
+                            fontFamily: {
+                                sans: ['Inter', 'sans-serif'],
+                                serif: ['Georgia', 'serif'],
+                            }
+                        }
+                    }
+                }
+            }
+            loadMoreBtn.click();
+            
+        };
+
+
+        /* CONFIGURACIONES DEL BOTON ABOUT */
+        //------------------------------------------------------------------------------------------------
+        const aboutBtn = document.getElementById('aboutBtn'); 
+        aboutBtn.onclick = function() {
+            const aboutContent = `
+                <div class="p-4 w-full text-justify">
+                    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800 border-b pb-2">
+                        Acerca de Scroll&Read
+                    </h2>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2 pt-3">
+                        Concepto del Proyecto
+                    </h3>
+                    <p class="mb-4 text-gray-600 text-sm">
+                        <b>Scroll&Read</b> es un proyecto de demostración que simula un "feed" de contenido infinito y aleatorio. Su objetivo es mezclar distintas fuentes de información y entretenimiento, presentando versículos, citas de series, datos curiosos, chistes, y contenido de TCGs, todo en un atractivo <i>formato visual de tarjetas (estilo Pinterest)</i>
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2 border-t pt-3">
+                        Demostración Técnica
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 ml-4">
+                        <li>
+                            <b>Integración de APIs:</b> El contenido es generado en tiempo real al consumir y estandarizar datos de <b>más de 7 APIs externas</b> de diferentes temas (Biblia, Chistes, Wikipedia, Citas, etc.).
+                        </li>
+                        <li>
+                            <b>Diseño Responsivo:</b> Utiliza <b>Tailwind CSS</b> para un diseño dinámico de columnas (Masonry Layout) que se adapta perfectamente a dispositivos móviles y escritorio.
+                        </li>
+                        <li>
+                            <b>Mecánica de Rareza:</b> La aparición de cada tipo de tarjeta se controla mediante una lógica de "rareza" aleatoria (Common, Rare, Ultra Rare) simulando una experiencia de descubrimiento.
+                        </li>
+                    </ul>
+
+                    <br>
+                    <hr>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2 pt-3">
+                        Aviso Legal y Autor
+                    </h3>
+                    <p class="mb-2 text-xs italic text-gray-500">
+                        Este es un proyecto <b>fan-made</b> sin fines de lucro, utilizado únicamente para demostración técnica y propósitos educativos. Las marcas, imágenes, datos y fuentes de citas son propiedad de sus respectivos dueños.
+                    </p>
+
+                    <p class="mt-4 text-center text-sm text-gray-500">
+                        Desarrollado por <br> <b class="text-lg">Juan David Sanchez Leal <br> @jdsljuan </b>.
+                    </p>
+                    
+                    <button onclick="modal.close()" 
+                            class="mt-6 w-full text-sm text-gray-500 hover:text-gray-900 transition">
+                        Cerrar Ventana
+                    </button>
+                </div>
+            `;
+            mostrarModalContenido(aboutContent);
+        };
+    </script>
+</body>
+</html>
