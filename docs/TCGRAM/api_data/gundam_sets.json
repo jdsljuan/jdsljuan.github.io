@@ -1,0 +1,10 @@
+[
+  {"acronimo": "GD01", "cartas_totales": 130, "orden": 3 }, 
+  {"acronimo": "GD02", "cartas_totales": 130, "orden": 3 }, 
+  {"acronimo": "ST01", "cartas_totales": 16,  "orden": 3 }, 
+  {"acronimo": "ST02", "cartas_totales": 16,  "orden": 3 },
+  {"acronimo": "ST03", "cartas_totales": 16,  "orden": 3 },
+  {"acronimo": "ST04", "cartas_totales": 16,  "orden": 3 },
+  {"acronimo": "ST05", "cartas_totales": 15,  "orden": 3 },
+  {"acronimo": "ST06", "cartas_totales": 15,  "orden": 3 }
+]

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> TCGRAM </title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="./assests/js/tailwindcss_3_4_17.js"></script>
+    <!-- Carga de Font Awesome 4.7.0 -->
+    <link href="./assests/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Configuración de fuente y estilos base */
+        :root {
+            --primary-color: #3b82f6; /* Blue 500 */
+            --secondary-color: #10b981; /* Emerald 500 */
+            --bg-color: #f4f4f4; /* Gray 50 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+        }
+        .card-container {
+            column-count: 1;
+            column-gap: 5px; 
+        } 
+
+        @media (min-width: 320px) {
+            .card-container { column-count: 2; }
+        }
+        @media (min-width: 480px) {
+            .card-container { column-count: 2; }
+        }
+        @media (min-width: 640px) {
+            .card-container { column-count: 3; }
+        }
+        @media (min-width: 1024px) {
+            .card-container { column-count: 4; }
+        }
+
+        .card {
+            display: inline-block; /* Crucial para el layout de columnas */
+            width: 100%;
+            margin-bottom: 1rem;
+            min-height: 200px;
+            break-inside: avoid; /* Evita que las tarjetas se corten entre columnas */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* ************************************************************** */
+        /* 1. Definición de la animación de deslizamiento */
+        @keyframes brillo-animacion {
+            0% {
+                /* Comienza completamente fuera del contenedor por la izquierda */
+                transform: translateX(-180%);
+            }
+            100% {
+                /* Termina completamente fuera del contenedor por la derecha */
+                transform: translateX(180%);
+            }
+        }
+
+        /* 2. Estilos del contenedor */
+        .contenedor-brillo {
+            width: auto; /* Ajusta el ancho según tu imagen */
+            height: auto; /* Ajusta la altura según tu imagen */
+            position: relative; /* CLAVE para posicionar el brillo de forma absoluta */
+            overflow: hidden; /* Oculta el brillo antes de empezar y después de terminar */
+            border-radius: 8px; /* ¡Para que se vea más profesional! */
+        }
+
+        .contenedor-brillo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 3. Creación del efecto de brillo con ::after */
+        .contenedor-brillo::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 40px;
+            width: 55%; /* La mitad del ancho del contenedor */
+            height: 120%;
+        
+            /* El gradiente simula el destello de luz.
+                Va de transparente a blanco semi-opaco y de vuelta a transparente.
+                La inclinación (-45deg) le da un aspecto dinámico. */
+            background: linear-gradient( 
+                -45deg, 
+                rgba(229, 255, 255, 0.05) 0%, 
+                rgba(208, 208, 208, 0.2) 50%, 
+                rgba(255, 255, 255, 0.11) 100% 
+            );
+
+            /* Posiciona el brillo inicialmente a la izquierda (fuera de vista) */
+            transform: translateX(-100%);
+
+            filter: opacity(0.9) blur(30px);
+            rotate: 56deg;
+
+            box-shadow: 22px 40px 38px 11px rgba(255,255,255, 0.1);
+
+            /* Aplica la animación 
+            animation: brillo-animacion 2.5s 0s 1 linear; 
+             Duración, repetición y velocidad constante */
+        }
+
+        .contenedor-brillo:hover::after{
+            /* Aplica la animación */
+            animation: brillo-animacion 1250ms 0s alternate infinite forwards linear; /* Duración, repetición y velocidad constante */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <dialog id="miModal" style="max-width: 350px;" class="rounded-2xl p-2 border border-gray-100">
+        <div class="p-10 w-full">
+            <p class="p-10 text-sm text-center">!Click en alguna de las Tarjetas para Previsualizarla!</p>
+        </div>
+    </dialog>
+
+    <div class="container mx-auto">
+
+        <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
+        <div id="feed" class="w-full">
+            
+            <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
+            <!-- <div class="card-container w-full"> -->
+                <!-- Las tarjetas se insertarán aquí mediante JavaScript -->
+            <!-- </div> -->
+        </div>
+
+        <!-- Área de Paginación y Carga -->
+        <div class="flex flex-col items-center justify-center p-8">
+            <div id="loading-indicator" class="hidden text-gray-600">
+                <i class="fa fa-spinner fa-spin fa-2x text-primary-color"></i>
+                <span class="ml-2 text-lg font-medium">Cargando más ...</span>
+            </div>
+
+            <button id="load-more-btn"
+                class="bg-primary-color text-gray-400 hover:bg-white border font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-lg">
+                <i class="fa fa-arrow-down mr-2"></i>
+                Cargar Más Cartas
+            </button>
+            <p id="end-message" class="hidden mt-4 text-lg font-semibold text-gray-500">
+                <i class="fa fa-heartbeat mr-2 text-secondary-color"></i>
+                ¡Te has quedado sin Vidas!
+            </p>
+        </div>
+
+        <div class="p-20"></div>
+
+        <!-- Navegación Fija Inferior -->
+        <nav class="fixed bottom-0 left-0 right-0 ms-1 me-1 bg-gray-200 border border-gray-400 rounded-t-xl shadow-md z-50 p-1">
+            <div class="flex items-center justify-around max-w-lg mx-auto ">
+                
+                <!-- Home Button -->
+                <a href="#" id="homeBtn" 
+                    class="text-gray-500 p-2 pr-5 pl-5 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-100 hover:text-primary">
+                    <i class="fa fa-home text-xl" aria-hidden="true"></i>
+                </a>
+
+                <!-- Rev Btn -->
+                <a onclick="mostrarModal()" action="javascript:void(0);"
+                    class="text-gray-500 p-2 pr-5 pl-5 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-100 hover:text-primary">
+                    <i class="fa fa-reply-all text-xl" aria-hidden="true"></i>
+                </a>
+                
+                <span>
+                    <h1 class="text-2xl sm:text-3xl text-gray-800 flex items-center justify-center">
+                        <b class="font-extrabold">TC<span class="text-red-500">G</span></b><span class="text-red-600">RAM</span>
+                    </h1>
+                </span>
+
+                <!-- Configs Button -->
+                <a action="javascript:void(0);" id="configBtn"
+                    class="text-gray-500 p-2 pr-5 pl-5 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-100 hover:text-primary">
+                    <i class="fa fa-cog text-xl" aria-hidden="true"></i>
+                </a>
+
+                <!-- About Btn -->
+                <a action="javascript:void(0);" id="aboutBtn"
+                    class="text-gray-500 p-2 pr-5 pl-5 rounded-lg transition duration-150 active:bg-gray-100 hover:bg-gray-100 hover:text-primary">
+                    <i class="fa fa-user-circle text-xl" aria-hidden="true"></i>
+                </a>
+                
+
+                
+            </div>
+        </nav>
+        
+    </div>
+
+
+
+    <script>
+
+        /**********************************************************
+        *           MANEJO DE LA VENTANA MODAL
+        ***********************************************************/
+        const abrirBoton = document.getElementById('abrirModal');
+        const cerrarBoton = document.getElementById('cerrarModal');
+        const modal = document.getElementById('miModal');
+
+        function mostrarModal(){
+            modal.showModal();
+        }
+
+        function mostrarModalContenido(contenidoHTML){
+            modal.innerHTML = contenidoHTML;
+            modal.showModal();
+        }
+
+        modal.addEventListener('click', (evento) => {
+            if (evento.target === modal) {
+                modal.close();
+            }
+        });
+        //--------------------------------------------------------
+
+        let TRIES = 16;
+        let TOTAL_EXITOS = 0;
+
+        // API's Externas
+        const API_EXT_LIST = [
+            {  
+                name : "Yu-Gi-Oh",
+                active: true,
+                URI : function(){ 
+                    let card = Math.round(Math.random()*13000); card = card == 0 ? 1 : card;
+                    return "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=1&offset="+card; 
+                },
+                responseProcess: function(dataResponse) {
+                    //<a target="_blank" href="'+dataResponse.data[0].ygoprodeck_url+'"></a>
+                    return `
+                        <div class="contenedor-brillo w-full">
+                            <img src="${dataResponse.data[0].card_images[0].image_url}" class="w-full border border-2 border-gray-800 rounded-2xl">
+                        </div>
+                        <div class="flex justify-between text-center items-center p-1">
+                            <span class="text-sm pl-3 font-semibold text-gray-500">
+                                ${randomItemArray(mini_game)}
+                            </span>
+                            <span class="text-xs w-full font-extrabold text-primary-color">
+                                Yu-Gi-Oh!
+                            </span>
+                        </div>
+                    `;
+                }
+            }, 
+            {  
+                name : "Digimon",
+                active: false,
+                URI : function(){ 
+                    return "./api_data/digimon_sets.json"; 
+                },
+                responseProcess: function(dataResponse) {
+                    let resposeSize = dataResponse.length;
+                    let digimon_set = dataResponse[Math.round(Math.random(resposeSize)*resposeSize)];
+                    let card = Math.round(Math.random(digimon_set.cartas_totales)*digimon_set.cartas_totales);
+                    card = card == 0 ? 1 : card;
+                    let diff = (digimon_set.orden - card.toString().length);
+                    if(diff > 0){ card = ('0').repeat(diff)+card; }
+                    let uri = 'https://world.digimoncard.com/images/cardlist/card/'+digimon_set.acronimo+'-'+card+'.png';
+                    return `
+                        <div class="contenedor-brillo w-full">
+                            <img src="${uri}" class="w-full border border-2 border-gray-800 rounded-2xl" alt="">
+                        </div>
+                        <div class="flex justify-between text-center items-center p-1">
+                            <span class="text-sm pl-3 font-semibold text-gray-500">
+                                ${randomItemArray(mini_game)}
+                            </span>
+                            <span class="text-xs w-full font-extrabold text-primary-color">
+                                Digimon
+                            </span>
+                        </div>
+                    `;
+                }
+            },
+            {  
+                name : "One Piece",
+                active: false,
+                URI : function(){ 
+                    return "./api_data/onepiece_sets.json"; 
+                },
+                responseProcess: function(dataResponse) {
+                    let resposeSize = dataResponse.length;
+                    let op_set = dataResponse[Math.round(Math.random(resposeSize)*resposeSize)];
+                    let card = Math.round(Math.random(op_set.cartas_totales)*op_set.cartas_totales);
+                    card = card == 0 ? 1 : card;
+                    let diff = (op_set.orden - card.toString().length); if(diff > 0){ card = ('0').repeat(diff)+card; }
+                    let uri = 'https://en.onepiece-cardgame.com/images/cardlist/card/'+op_set.acronimo+'-'+card+'.png';
+                    return `
+                        <div class="contenedor-brillo w-full">
+                            <img src="${uri}" class="w-full border border-2 border-gray-800 rounded-2xl" alt="">
+                        </div>
+                        <div class="flex justify-between text-center items-center p-1">
+                            <span class="text-sm pl-3 font-semibold text-gray-500">
+                                ${randomItemArray(mini_game)}
+                            </span>
+                            <span class="text-xs w-full font-extrabold text-primary-color">
+                                One Piece
+                            </span>
+                        </div>
+                    `;
+                }
+            },
+            {  
+                name : "UNION ARENA",
+                active: false,
+                URI : function(){ 
+                    return "./api_data/unionarena_sets.json"; 
+                },
+                responseProcess: function(dataResponse) {
+                    let resposeSize = dataResponse.length;
+                    let ua_set = dataResponse[Math.round(Math.random(resposeSize)*resposeSize)];
+                    let card = Math.round(Math.random(ua_set.cartas_totales)*ua_set.cartas_totales);
+                    card = card == 0 ? 1 : card;
+                    let diff = (ua_set.orden - card.toString().length); if(diff > 0){ card = ('0').repeat(diff)+card; }
+                    let uri = 'https://www.unionarena-tcg.com/na/images/cardlist/card/'+ua_set.acronimo+'-'+card+'.png';
+                    return `
+                        <div class="contenedor-brillo w-full">
+                            <img src="${uri}" class="w-full border border-2 border-gray-800 rounded-2xl" alt="">
+                        </div>
+                        <div class="flex justify-between text-center items-center p-1">
+                            <span class="text-sm pl-3 font-semibold text-gray-500">
+                                ${randomItemArray(mini_game)}
+                            </span>
+                            <span class="text-xs w-full font-extrabold text-primary-color">
+                                Union Arena
+                            </span>
+                        </div>
+                    `;
+                }
+            },
+            {  
+                name : "Pokemon",
+                active: true,
+                URI : function(){ 
+                    return "./api_data/pokemon_sets.json"; 
+                },
+                responseProcess: function(dataResponse) {
+                    let resposeSize = dataResponse.length;
+                    let pokemon_set = dataResponse[Math.round(Math.random(resposeSize)*resposeSize)];
+                    let card = Math.round(Math.random(pokemon_set.official)*pokemon_set.official); 
+                    card = card == 0 ? 1 : card;
+                    let uri = pokemon_set.imageURI+card+'/low.png';
+                    //<a target="_blank" href="'+dataResponse.data[0].ygoprodeck_url+'"></a>
+                    return `
+                        <div class="contenedor-brillo w-full">
+                            <img src="${uri}" class="w-full border border-2 border-gray-800 rounded-2xl" alt="">
+                        </div>
+                        <div class="flex justify-between text-center items-center p-1">
+                            <span class="text-sm pl-3 font-semibold text-gray-500">
+                                ${randomItemArray(mini_game)}
+                            </span>
+                            <span class="text-xs w-full font-extrabold text-primary-color">
+                                Pokemon
+                            </span>
+                        </div>
+                    `;
+                }
+            }
+        ];
+        
+
+        // ----------------------------------------------------------------------
+        // LÓGICA DEL FRONTEND (JavaScript del Cliente)
+        // ----------------------------------------------------------------------
+        let isLoading = false;
+        let hasMoreData = true;
+
+        // const container = document.getElementById('phrases-container');
+        const feed = document.getElementById('feed');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const endMessage = document.getElementById('end-message');
+        const loadImageFeedBtn = document.getElementById('image-feed-btn');
+
+        /********************* FREE DESING CARD CONSTRUCCTION ****************************/
+        // Createion of the HTML Card Function
+        function createFreeCard(html_content) {
+            const card = document.createElement('div');
+            card.className = 'card bg-white rounded-2xl w-full';
+            card.innerHTML = html_content;
+            card.onclick = function(e) {
+                mostrarModalContenido('<div class="p-4 border-gray-100" >'+html_content+'</div>');
+            };
+            return card;
+        }
+
+        // Call to the API getting the data an using createFreeCard.
+        async function loadFreeCard(container) {
+            isLoading = true;
+            loadMoreBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            const ACTIVE_APIS = API_EXT_LIST.filter(api => api.active);
+
+            // Si no hay APIs activas, salimos.
+            if (ACTIVE_APIS.length === 0) {
+                console.error("No hay APIs activas para consultar.");
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+                return;
+            }
+
+            let API_EXT = ACTIVE_APIS[Math.round(Math.random()*(ACTIVE_APIS.length-1))];
+
+            try {                
+                //Carga las Frases de a una
+                response = await fetch(API_EXT.URI());
+                if (response.ok) {
+                    data = await response.json();
+                    container.appendChild(createFreeCard(API_EXT.responseProcess(data)));
+                    TOTAL_EXITOS++;
+                } 
+
+            } catch (error) {
+                console.error("Error al cargar las API's", error);
+            } finally {
+                isLoading = false;
+                loadingIndicator.classList.add('hidden');
+                updateUI();
+            }
+        }
+        /********************************************************************************/
+
+        function updateUI() {
+            if (hasMoreData) {
+                loadMoreBtn.classList.remove('hidden');
+                loadMoreBtn.disabled = false;
+                endMessage.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+                endMessage.classList.remove('hidden');
+                feed.innerHTML = '';
+            }
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            const new_container = document.createElement('div');
+            new_container.className = 'card-container w-full p-1 pt-4';
+            for (let j = 0; j < TRIES; j++) {
+                loadFreeCard(new_container);
+            }
+            const new_hr = document.createElement('hr');
+            feed.appendChild(new_hr);
+            feed.appendChild(new_container);
+        });
+
+
+        homeBtn.addEventListener('click', () => {
+            feed.innerHTML = "";
+            loadMoreBtn.click();
+        });
+
+        window.onload = () => {
+            if (typeof tailwind !== 'undefined') {
+                 tailwind.config = {
+                    theme: {
+                        extend: {
+                            fontFamily: {
+                                sans: ['Inter', 'sans-serif'],
+                                serif: ['Georgia', 'serif'],
+                            }
+                        }
+                    }
+                }
+            }
+            loadMoreBtn.click();
+        };
+
+        const mini_game = [
+            '<i class="fa fa-hand-rock-o text-lg" aria-hidden="true"></i>',
+            '<i class="fa fa-hand-scissors-o text-lg" aria-hidden="true"></i>',
+            '<i class="fa fa-hand-paper-o text-lg" aria-hidden="true"></i>'
+        ];
+
+        function randomItemArray(arr) {
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+        }
+
+        /* CONFIGURACIONES DEL BOTON CONF */
+        //------------------------------------------------------------------------------------------------
+        const configBtn = document.getElementById('configBtn'); // Asume el botón de Configuración es el 4to enlace.
+
+        function renderConfigModal() {
+            const modalContent = `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Ajustes del Sitio</h2>
+
+                    <div class="mb-6">
+                        <label for="numCartas" class="block text-sm font-medium text-gray-700 mb-2">
+                            Número de Cartas a Cargar por Intento
+                        </label>
+                        <div class="flex items-center space-x-3">
+                            <input type="number" id="numCartas" 
+                                class="w-20 p-2 border border-gray-300 rounded-lg text-center" 
+                                min="1" max="50" value="${TRIES}">
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Valor actual: <span id="currentTRIES">${TRIES}</span></p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3 border-t pt-3">Fuentes de Cartas (APIs)</h3>
+                        <div id="apiList" class="space-y-2">
+                            <p class="text-sm text-gray-500">Selecciona las fuentes que deseas consultar:</p>
+                            ${API_EXT_LIST.map((api, index) => `
+                                <label class="flex items-center space-x-3 text-sm">
+                                    <input type="checkbox" id="api-${index}" value="${index}" ${api.active ? 'checked' : ''} 
+                                        class="form-checkbox text-primary-color rounded border-gray-300 focus:ring-primary-color">
+                                    <span>${api.name}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <button id="guardarAPIsBtn" 
+                                class="mt-4 bg-secondary-color text-white py-2 px-4 rounded-full text-sm bg-emerald-600 transition w-full">
+                            Aplicar Cambios
+                        </button>
+                    </div>
+
+                    <button onclick="modal.close()" 
+                            class="mt-6 w-full text-sm text-gray-500 hover:text-gray-900 transition">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+
+            mostrarModalContenido(modalContent);
+
+            document.getElementById('guardarAPIsBtn').onclick = () => {
+
+                const newTRIES = parseInt(document.getElementById('numCartas').value);
+                if (newTRIES > 0) {
+                    TRIES = newTRIES; // Actualiza la variable global TRIES
+                    document.getElementById('currentTRIES').textContent = newTRIES;
+                    modal.close();
+                }
+
+                let activeCount = 0;
+                API_EXT_LIST.forEach((api, index) => {
+                    const checkbox = document.getElementById(`api-${index}`);
+                    api.active = checkbox.checked;
+                    if (checkbox.checked) activeCount++;
+                });
+
+                if (activeCount === 0) {
+                    alert('¡Debes seleccionar al menos una fuente de cartas!');
+                    // Forzar la activación de la primera si no hay ninguna
+                    API_EXT_LIST[0].active = true;
+                    return;
+                }
+                alert('Fuentes y Numero de cartas actualizados. Recarga el feed para ver los cambios.');
+                modal.close();
+                homeBtn.click(); // Recarga el feed
+            };
+        }
+
+        configBtn.onclick = renderConfigModal;
+
+
+        /* CONFIGURACIONES DEL BOTON ABOUT */
+        //------------------------------------------------------------------------------------------------
+        const aboutBtn = document.getElementById('aboutBtn'); 
+        aboutBtn.onclick = function() {
+            const aboutContent = `
+                <div class="p-4 w-full text-justify">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Acerca de TCGRAM</h2>
+                    
+                    <p class="mb-4 text-gray-600">
+                        <b>TCGRAM</b> es un proyecto de demostración que simula un "feed" social de cartas de Trading Card Games (TCGs). Su objetivo principal es mostrar el consumo y la manipulación de diferentes APIs externas de juegos de cartas coleccionables, utilizando un diseño de columnas estilo Pinterest y un efecto de brillo en CSS.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3 border-t pt-3">Alegaciones y Derechos de Autor (Disclaimer)</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 ml-4">
+                        <li>
+                            <b>Uso No Comercial</b> Este sitio es un proyecto <b>fan-made</b> sin fines de lucro, utilizado únicamente para demostración técnica y propósitos educativos.
+                        </li>
+                        <li>
+                            <b>Propiedad Intelectual</b> Todas las imágenes de cartas y marcas comerciales (incluyendo Yu-Gi-Oh!, Digimon, One Piece Card Game, Union Arena, y Pokémon) son propiedad de sus respectivos dueños, como <b>Konami</b>, <b>Bandai</b>, <b>Nintendo</b>, <b>The Pokémon Company</b>, y otros.
+                        </li>
+                        <li>
+                            <b>Fuentes de Datos</b> La información e imágenes de las cartas son obtenidas directamente de APIs públicas y bases de datos mantenidas por la comunidad o los propietarios de los juegos, y son servidas directamente desde sus respectivos servidores o CDNs (Content Delivery Networks).
+                        </li>
+                        <li>
+                            <b>TCGRAM</b> no reclama la propiedad de ninguna imagen de carta y respeta todos los derechos de autor y marcas registradas. Si se identifica algún problema, por favor contactar al desarrollador.
+                        </li>
+                    </ul>
+
+                    <p class="mt-6 text-center text-sm text-gray-500">
+                        Desarrollado por el <br> <b class="text-lg">Juan David Sanchez Leal <br> @jdsljuan </b>.
+                    </p>
+                    
+                    <button onclick="modal.close()" 
+                            class="mt-6 w-full text-sm text-gray-500 hover:text-gray-900 transition">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+            mostrarModalContenido(aboutContent);
+        };
+    </script>
+</body>
+</html>

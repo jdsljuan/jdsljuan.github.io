@@ -1,0 +1,8 @@
+[
+    {"acronimo": "UE01BT_BLC-1", "cartas_totales": 100, "orden": 3, "name" : "Bleach: Thousand-Year Blood War" },
+    {"acronimo": "UE02BT_HTR-1", "cartas_totales": 100, "orden": 3, "name": "HUNTER X HUNTER"},
+    {"acronimo": "UE05BT_KMY-1", "cartas_totales": 100, "orden": 3, "name": "Demon Slayer: Kimetsu no Yaiba" },
+    {"acronimo": "UE06BT_OPM-1", "cartas_totales": 100, "orden": 3, "name": "ONE PUSH MAN" },
+    {"acronimo": "UE07BT_SAO-1", "cartas_totales": 100, "orden": 3, "name": "Sword Art Online" },
+    {"acronimo": "UE09BT_FMA-1", "cartas_totales": 100, "orden": 3, "name": "FULLMETAL ALCHEMIST" }
+]
