@@ -13,7 +13,7 @@
         :root {
             --primary-color: #3b82f6; /* Blue 500 */
             --secondary-color: #10b981; /* Emerald 500 */
-            --bg-color: #fafafa; /* Gray 50 */
+            --bg-color: #f4f4f4; /* Gray 50 */
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -24,11 +24,14 @@
             column-gap: 5px; 
         } 
 
-        @media (min-width: 640px) {
+        @media (min-width: 480px) {
             .card-container { column-count: 2; }
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 640px) {
             .card-container { column-count: 3; }
+        }
+        @media (min-width: 1024px) {
+            .card-container { column-count: 4; }
         }
 
         .card {
@@ -64,7 +67,7 @@
         </header> -->
 
         <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
-        <div id="feed" class="w-full">
+        <div id="feed" class="w-full p-1">
             
             <!-- Contenedor Principal de las Tarjetas (Estilo Pinterest) -->
             <!-- <div class="card-container w-full"> -->
@@ -525,8 +528,6 @@
                 }
                 
             }
-            const new_hr = document.createElement('hr');
-            feed.appendChild(new_hr);
             feed.appendChild(new_container);
         });
 
