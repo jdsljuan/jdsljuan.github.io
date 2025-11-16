@@ -1,0 +1,317 @@
+{
+    "nameset": "Sacred Art",
+    "cards": [
+        {
+            "img": "/img/0.jpg",
+            "name": "The Fool"
+        },
+        {
+            "img": "/img/1.jpg",
+            "name": "The Magician"
+        },
+        {
+            "img": "/img/2.jpg",
+            "name": "The High Priestess"
+        },
+        {
+            "img": "/img/3.jpg",
+            "name": "The Empress"
+        },
+        {
+            "img": "/img/4.jpg",
+            "name": "The Emperor"
+        },
+        {
+            "img": "/img/5.jpg",
+            "name": "The Hierophant"
+        },
+        {
+            "img": "/img/6.jpg",
+            "name": "The Lovers"
+        },
+        {
+            "img": "/img/7.jpg",
+            "name": "The Chariot"
+        },
+        {
+            "img": "/img/8.jpg",
+            "name": "Strength"
+        },
+        {
+            "img": "/img/9.jpg",
+            "name": "The Hermit"
+        },
+        {
+            "img": "/img/10.jpg",
+            "name": "Wheel of Fortune"
+        },
+        {
+            "img": "/img/11.jpg",
+            "name": "Justice"
+        },
+        {
+            "img": "/img/12.jpg",
+            "name": "The Hanged Man"
+        },
+        {
+            "img": "/img/13.jpg",
+            "name": "Death"
+        },
+        {
+            "img": "/img/14.jpg",
+            "name": "Temperance"
+        },
+        {
+            "img": "/img/15.jpg",
+            "name": "The Devil"
+        },
+        {
+            "img": "/img/16.jpg",
+            "name": "The Tower"
+        },
+        {
+            "img": "/img/17.jpg",
+            "name": "The Star"
+        },
+        {
+            "img": "/img/18.jpg",
+            "name": "The Moon"
+        },
+        {
+            "img": "/img/19.jpg",
+            "name": "The Sun"
+        },
+        {
+            "img": "/img/20.jpg",
+            "name": "Judgement"
+        },
+        {
+            "img": "/img/21.jpg",
+            "name": "The World"
+        },
+        {
+            "img": "/img/22.jpg",
+            "name": "Ace of Wands"
+        },
+        {
+            "img": "/img/23.jpg",
+            "name": "Two of Wands"
+        },
+        {
+            "img": "/img/24.jpg",
+            "name": "Three of Wands"
+        },
+        {
+            "img": "/img/25.jpg",
+            "name": "Four of Wands"
+        },
+        {
+            "img": "/img/26.jpg",
+            "name": "Five of Wands"
+        },
+        {
+            "img": "/img/27.jpg",
+            "name": "Six of Wands"
+        },
+        {
+            "img": "/img/28.jpg",
+            "name": "Seven of Wands"
+        },
+        {
+            "img": "/img/29.jpg",
+            "name": "Eight of Wands"
+        },
+        {
+            "img": "/img/30.jpg",
+            "name": "Nine of Wands"
+        },
+        {
+            "img": "/img/31.jpg",
+            "name": "Ten of Wands"
+        },
+        {
+            "img": "/img/32.jpg",
+            "name": "Page of Wands"
+        },
+        {
+            "img": "/img/33.jpg",
+            "name": "Knight of Wands"
+        },
+        {
+            "img": "/img/34.jpg",
+            "name": "Queen of Wands"
+        },
+        {
+            "img": "/img/35.jpg",
+            "name": "King of Wands"
+        },
+        {
+            "img": "/img/36.jpg",
+            "name": "Ace of Cups"
+        },
+        {
+            "img": "/img/37.jpg",
+            "name": "Two of Cups"
+        },
+        {
+            "img": "/img/38.jpg",
+            "name": "Three of Cups"
+        },
+        {
+            "img": "/img/39.jpg",
+            "name": "Four of Cups"
+        },
+        {
+            "img": "/img/40.jpg",
+            "name": "Five of Cups"
+        },
+        {
+            "img": "/img/41.jpg",
+            "name": "Six of Cups"
+        },
+        {
+            "img": "/img/42.jpg",
+            "name": "Seven of Cups"
+        },
+        {
+            "img": "/img/43.jpg",
+            "name": "Eight of Cups"
+        },
+        {
+            "img": "/img/44.jpg",
+            "name": "Nine of Cups"
+        },
+        {
+            "img": "/img/45.jpg",
+            "name": "Ten of Cups"
+        },
+        {
+            "img": "/img/46.jpg",
+            "name": "Page of Cups"
+        },
+        {
+            "img": "/img/47.jpg",
+            "name": "Knight of Cups"
+        },
+        {
+            "img": "/img/48.jpg",
+            "name": "Queen of Cups"
+        },
+        {
+            "img": "/img/49.jpg",
+            "name": "King of Cups"
+        },
+        {
+            "img": "/img/50.jpg",
+            "name": "Ace of Swords"
+        },
+        {
+            "img": "/img/51.jpg",
+            "name": "Two of Swords"
+        },
+        {
+            "img": "/img/52.jpg",
+            "name": "Three of Swords"
+        },
+        {
+            "img": "/img/53.jpg",
+            "name": "Four of Swords"
+        },
+        {
+            "img": "/img/54.jpg",
+            "name": "Five of Swords"
+        },
+        {
+            "img": "/img/55.jpg",
+            "name": "Six of Swords"
+        },
+        {
+            "img": "/img/56.jpg",
+            "name": "Seven of Swords"
+        },
+        {
+            "img": "/img/57.jpg",
+            "name": "Eight of Swords"
+        },
+        {
+            "img": "/img/58.jpg",
+            "name": "Nine of Swords"
+        },
+        {
+            "img": "/img/59.jpg",
+            "name": "Ten of Swords"
+        },
+        {
+            "img": "/img/60.jpg",
+            "name": "Page of Swords"
+        },
+        {
+            "img": "/img/61.jpg",
+            "name": "Knight of Swords"
+        },
+        {
+            "img": "/img/62.jpg",
+            "name": "Queen of Swords"
+        },
+        {
+            "img": "/img/63.jpg",
+            "name": "King of Swords"
+        },
+        {
+            "img": "/img/64.jpg",
+            "name": "Ace of Coins"
+        },
+        {
+            "img": "/img/65.jpg",
+            "name": "Two of Coins"
+        },
+        {
+            "img": "/img/66.jpg",
+            "name": "Three of Coins"
+        },
+        {
+            "img": "/img/67.jpg",
+            "name": "Four of Coins"
+        },
+        {
+            "img": "/img/68.jpg",
+            "name": "Five of Coins"
+        },
+        {
+            "img": "/img/69.jpg",
+            "name": "Six of Coins"
+        },
+        {
+            "img": "/img/70.jpg",
+            "name": "Seven of Coins"
+        },
+        {
+            "img": "/img/71.jpg",
+            "name": "Eight of Coins"
+        },
+        {
+            "img": "/img/72.jpg",
+            "name": "Nine of Coins"
+        },
+        {
+            "img": "/img/73.jpg",
+            "name": "Ten of Coins"
+        },
+        {
+            "img": "/img/74.jpg",
+            "name": "Page of Coins"
+        },
+        {
+            "img": "/img/75.jpg",
+            "name": "Knight of Coins"
+        },
+        {
+            "img": "/img/76.jpg",
+            "name": "Queen of Coins"
+        },
+        {
+            "img": "/img/77.jpg",
+            "name": "King of Coins"
+        }
+    ]
+}
