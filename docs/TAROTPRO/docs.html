@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAROTPRO - Doc's Tarot</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="./assests/js/tailwindcss_3_4_17.js"></script>
+    <!-- Carga de Font Awesome 4.7.0 -->
+    <link href="./assests/css/font-awesome.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Paleta Minimalista y Clara
+                        'tarot-light': '#f9fafb', // gray-50 - Fondo
+                        'tarot-dark-text': '#1f2937', // gray-800 - Texto principal
+                        'tarot-accent': '#4f46e5', // indigo-600 - Acento Minor Arcana
+                        'tarot-bg': '#ffffff', // white - Fondo de la tarjeta
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos generales limpios */
+        .card-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #9ca3af; /* gray-400 */
+        }
+        /* Eliminar scroll-snap styles */
+    </style>
+</head>
+<body class="bg-tarot-light text-tarot-dark-text font-sans">
+
+    <!-- Barra de Navegación Fija con Dropdown -->
+    <nav class="sticky top-0 z-10 bg-tarot-bg shadow-lg p-4 flex items-center justify-center">
+        <h2 class="p-1 mr-10 border-r-2 pr-10 border-red-800 text-md text-2xl font-bold dialog-title-brand">
+            TAROT<span class="text-red-500">PRO</span>
+        </h2>
+        <label for="card-selector" class="mr-3 font-semibold inline text-gray-700 text-base lg:text-lg"><i class="fa fa-arrow-right" aria-hidden="true"></i></label>
+        <br>
+        <select id="card-selector" class="p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:ring-tarot-accent focus:border-tarot-accent w-48 sm:w-64 lg:w-96">
+            <!-- Opciones inyectadas por JS -->
+        </select>
+    </nav>
+
+    <!-- Contenedor para mostrar la carta seleccionada -->
+    <main id="card-display" class="p-4 lg:p-12 min-h-screen">
+        <!-- El contenido de la carta seleccionada se inyectará aquí -->
+    </main>
+
+    <p class="text-sm text-gray-600 w-full text-center mb-20">
+        Diseñado con ❤️ por <br> <b><i>Juan David Sanchez Leal</i></b> (@jdsljuan)
+    </p>
+
+    <script src="./tarotdecks/info.js"></script>
+    <script src="./tarotdecks/run.js"></script>
+
+    <script>
+        const cardSelector = document.getElementById('card-selector');
+        const cardDisplay = document.getElementById('card-display');
+
+        /**
+         * Función para renderizar la lista de elementos, ajustada para el tema claro.
+         * @param {string[]} items - Arreglo de cadenas de texto.
+         * @param {string} iconClass - Clase de Font Awesome para el ícono.
+         * @param {string} iconColor - Clase de Tailwind para el color del ícono.
+         * @returns {string} HTML de la lista.
+         */
+        const renderList = (items, iconClass, iconColor) => {
+            if (!items || items.length === 0) return '';
+            return `
+                <ul class="space-y-2 list-none p-0 mt-3 text-sm">
+                    ${items.map(item => `
+                        <li class="flex items-start">
+                            <i class="fa ${iconClass} mr-2 mt-1 ${iconColor} flex-shrink-0"></i>
+                            <span class="text-gray-700">${item}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+        };
+
+        /**
+         * Función para renderizar una sola carta en la vista principal.
+         * @param {object} card - Objeto de datos de la carta.
+         */
+        function renderSingleCard(card) {
+            if (!card) {
+                cardDisplay.innerHTML = '<p class="text-center text-gray-500 mt-20 text-xl">No hay cartas para mostrar.</p>';
+                return;
+            }
+
+            const imageURI = DECKENGINE.deckSets[parseInt(DECKENGINE.getActualDeck())].imageURI
+            let cardImage = '<img src="'+imageURI+'/'+card.img+'">';
+
+            const isMajorArcana = card.arcana === 'Major Arcana';
+            // Colores para el tema claro y minimalista
+            const majorArcanaColor = 'text-red-600';
+            const minorArcanaColor = 'text-tarot-accent'; // indigo-600
+            const cardAccent = isMajorArcana ? majorArcanaColor : minorArcanaColor;
+            const placeholderBorder = isMajorArcana ? 'border-red-300' : 'border-indigo-300';
+            
+            const cardContent = `
+                <div class="max-w-6xl mx-auto p-6 lg:p-8 bg-white shadow-xl rounded-2xl border border-gray-200">
+                    <div class="grid lg:grid-cols-3 gap-10 lg:gap-16 items-start">
+                        
+                        <!-- Columna 1: Imagen y título principal -->
+                        <div class="lg:col-span-1 flex flex-col items-center justify-center p-4 border-b lg:border-r lg:border-b-0 border-gray-200">
+                            <div class="w-48 h-80 rounded-xl shadow-lg overflow-hidden mb-6 border-4 ${placeholderBorder} bg-gray-100">
+                                <!-- Placeholder de imagen con referencia a la ruta original -->
+                                <div class="card-image-placeholder text-gray-800">
+                                    <div class="p-2">
+                                        ${cardImage}
+                                    </div>
+                                </div>
+                            </div>
+                            <h1 class="text-4xl lg:text-5xl font-extrabold mb-1 ${cardAccent} text-center uppercase tracking-wider">
+                                ${card.name}
+                            </h1>
+                            <p class="text-xl text-center text-gray-500 font-semibold mb-4">${card.arcana} <br> N°${card.number}</p>
+                            
+                            ${card.Archetype ? `
+                                <div class="mt-4 text-center border-t border-gray-200 pt-4 w-full">
+                                    <span class="text-sm font-medium text-gray-500">Arquetipo:</span>
+                                    <p class="font-bold text-gray-800">${card.Archetype}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <!-- Columna 2: Significados Positivos/Luz y Palabras Clave -->
+                        <div class="lg:col-span-1 p-4 lg:pr-6 border-b lg:border-r lg:border-b-0 border-gray-200">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center text-gray-800">
+                                <i class="fa fa-sun-o mr-3 text-yellow-500"></i>
+                                Meanings - Light (Upright)
+                            </h2>
+                            ${renderList(card.meanings?.light, 'fa-check-circle', 'text-green-500')}
+
+                            <h2 class="text-2xl font-bold mt-8 mb-4 flex items-center text-gray-800">
+                                <i class="fa fa-tag mr-3 ${minorArcanaColor}"></i>
+                                Keywords
+                            </h2>
+                            <div class="flex flex-wrap gap-2">
+                                ${card.keywords.map(keyword => `
+                                    <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">${keyword}</span>
+                                `).join('')}
+                            </div>
+
+                            ${card['Questions to Ask'] ? `
+                                <h2 class="text-2xl font-bold mt-8 mb-4 flex items-center text-gray-800">
+                                    <i class="fa fa-question-circle mr-3 text-orange-500"></i>
+                                    Questions to Ask
+                                </h2>
+                                ${renderList(card['Questions to Ask'], 'fa-puzzle-piece', 'text-orange-500')}
+                            ` : ''}
+                        </div>
+                        
+                        <!-- Columna 3: Significados de Sombra, Adivinación y Otros Detalles -->
+                        <div class="lg:col-span-1 p-4 lg:pl-6">
+                            
+                            <h2 class="text-2xl font-bold mb-4 flex items-center text-gray-800">
+                                <i class="fa fa-moon-o mr-3 text-gray-500"></i>
+                                Meanings - Shadow (Reversed)
+                            </h2>
+                            ${renderList(card.meanings?.shadow, 'fa-times-circle', 'text-red-500')}
+                            
+                            ${card.fortune_telling ? `
+                                <h2 class="text-2xl font-bold mt-8 mb-4 flex items-center text-gray-800">
+                                    <i class="fa fa-magic mr-3 text-blue-500"></i>
+                                    Fortune
+                                </h2>
+                                ${renderList(card.fortune_telling, 'fa-asterisk', 'text-blue-500')}
+                            ` : ''}
+
+                            ${card.Affirmation ? `
+                                <div class="mt-8 border-t border-gray-200 pt-4">
+                                    <h3 class="text-xl font-bold mb-2 flex items-center text-gray-800">
+                                        <i class="fa fa-quote-left mr-2 text-pink-500"></i>
+                                        Affirmation
+                                    </h3>
+                                    <p class="italic text-gray-600">${card.Affirmation.replace(/"/g, '')}</p>
+                                </div>
+                            ` : ''}
+                            
+                            ${card.Elemental ? `
+                                <div class="mt-4 text-sm text-gray-500">
+                                    Elemental: <span class="font-semibold text-gray-700">${card.Elemental}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            cardDisplay.innerHTML = cardContent;
+        }
+
+        /**
+         * Inicializa la aplicación: pobla el dropdown, configura el listener y renderiza la primera carta.
+         */
+        function setupApp() {
+            const cards = tarotData.cards || [];
+            
+            // 1. Poblar el Dropdown
+            cards.forEach((card, index) => {
+                const option = document.createElement('option');
+                option.value = index; // Usar el índice como valor
+                option.textContent = `${card.number} - ${card.name} (${card.arcana})`;
+                cardSelector.appendChild(option);
+            });
+
+            // 2. Manejar el cambio de selección
+            cardSelector.addEventListener('change', (event) => {
+                const selectedIndex = parseInt(event.target.value, 10);
+                renderSingleCard(cards[selectedIndex]);
+            });
+
+            // 3. Renderizar la primera carta al cargar
+            if (cards.length > 0) {
+                renderSingleCard(cards[0]);
+            } else {
+                renderSingleCard(null);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            setupApp();
+
+            // Obtiene los parámetros de la URL actual
+            const urlParams = new URLSearchParams(window.location.search);
+            // 2. Comprobar si un parámetro existe
+            if (urlParams.has('card')) {
+                cardSelector.value = parseInt(urlParams.get('card'))
+                cardSelector.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>

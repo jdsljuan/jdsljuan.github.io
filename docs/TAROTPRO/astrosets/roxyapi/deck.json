@@ -1,0 +1,110 @@
+[
+    {
+        "name": "Aries",
+        "symbol": "♈",
+        "start_date": "March 21",
+        "end_date": "April 19",
+        "element": "Fire",
+        "modality": "Cardinal",
+        "img": "/img/aries.png"
+    },
+    {
+        "name": "Taurus",
+        "symbol": "♉",
+        "start_date": "April 20",
+        "end_date": "May 20",
+        "element": "Earth",
+        "modality": "Fixed",
+        "img": "/img/taurus.png"
+    },
+    {
+        "name": "Gemini",
+        "symbol": "♊",
+        "start_date": "May 21",
+        "end_date": "June 20",
+        "element": "Air",
+        "modality": "Mutable",
+        "img": "/img/gemini.png"
+    },
+    {
+        "name": "Cancer",
+        "symbol": "♋",
+        "start_date": "June 21",
+        "end_date": "July 22",
+        "element": "Water",
+        "modality": "Cardinal",
+        "img": "/img/cancer.png"
+    },
+    {
+        "name": "Leo",
+        "symbol": "♌",
+        "start_date": "July 23",
+        "end_date": "August 22",
+        "element": "Fire",
+        "modality": "Fixed",
+        "img": "/img/leo.png"
+    },
+    {
+        "name": "Virgo",
+        "symbol": "♍",
+        "start_date": "August 23",
+        "end_date": "September 22",
+        "element": "Earth",
+        "modality": "Mutable",
+        "img": "/img/virgo.png"
+    },
+    {
+        "name": "Libra",
+        "symbol": "♎",
+        "start_date": "September 23",
+        "end_date": "October 22",
+        "element": "Air",
+        "modality": "Cardinal",
+        "img": "/img/libra.png"
+    },
+    {
+        "name": "Scorpio",
+        "symbol": "♏",
+        "start_date": "October 23",
+        "end_date": "November 21",
+        "element": "Water",
+        "modality": "Fixed",
+        "img": "/img/scorpio.png"
+    },
+    {
+        "name": "Sagittarius",
+        "symbol": "♐",
+        "start_date": "November 22",
+        "end_date": "December 21",
+        "element": "Fire",
+        "modality": "Mutable",
+        "img": "/img/sagittarius.png"
+    },
+    {
+        "name": "Capricorn",
+        "symbol": "♑",
+        "start_date": "December 22",
+        "end_date": "January 19",
+        "element": "Earth",
+        "modality": "Cardinal",
+        "img": "/img/capricorn.png"
+    },
+    {
+        "name": "Aquarius",
+        "symbol": "♒",
+        "start_date": "January 20",
+        "end_date": "February 18",
+        "element": "Air",
+        "modality": "Fixed",
+        "img": "/img/aquarius.png"
+    },
+    {
+        "name": "Pisces",
+        "symbol": "♓",
+        "start_date": "February 19",
+        "end_date": "March 20",
+        "element": "Water",
+        "modality": "Mutable",
+        "img": "/img/pisces.png"
+    }
+]

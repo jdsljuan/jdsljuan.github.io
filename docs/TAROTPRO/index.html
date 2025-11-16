@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> TAROTPRO - Desktop </title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="./assests/js/tailwindcss_3_4_17.js"></script>
+    <!-- Carga de Font Awesome 4.7.0 -->
+    <link href="./assests/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Configuración de fuente y estilos base */
+        :root {
+            --primary-color: #3b82f6; /* Blue 500 */
+            --secondary-color: #10b981; /* Emerald 500 */
+            --bg-color: #f4f4f4; /* Gray 50 */
+        }
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+        }
+        .main-container {
+            z-index: 1;
+        } 
+
+        #bluredScreen{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.62);
+            background-image: url('./arcanas/3.jpg');
+            background-size: cover;
+            filter: blur(1px);
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .card {
+            display: inline-block;
+            position: fixed; /* Crucial para el layout de columnas */
+            height: 150px;
+            width: 90px;
+            top: -200px;
+            left: -200px;
+            background-color: transparent;
+            z-index: 3;
+            transition: all 1s ease, background 250ms ease-in;
+            border-radius: 10px;
+            border: 2px solid #ffffffbc; 
+            background-position: center;
+            background-size: cover;
+        }
+
+        .card-1{
+            background-image: url('./cardbacks/1.jpg');
+        }
+
+        .card-2{
+            background-image: url('./cardbacks/2.jpg');
+        }
+
+        .card-3{
+            background-image: url('./cardbacks/3.jpg');
+        }
+
+        .card-4{
+            background-image: url('./cardbacks/4.jpg');
+        }
+
+        .card-5{
+            background-image: url('./cardbacks/5.jpg');
+        }
+
+        .card-6{
+            background-image: url('./cardbacks/6.jpg');
+        }
+
+        .card-7{
+            background-image: url('./cardbacks/7.jpg');
+        }
+
+        .card-8{
+            background-image: url('./cardbacks/8.jpg');
+        }
+
+        .card-9{
+            background-image: url('./cardbacks/9.jpg');
+        }
+
+        .card-10{
+            background-image: url('./cardbacks/10.jpg');
+        }
+
+        .card-11{
+            background-image: url('./cardbacks/11.jpg');
+        }
+
+        .card:hover{
+            z-index: 10;
+            /* border: 2px solid rgba(255, 218, 9, 0.727); */
+            background-color: transparent;
+            box-shadow: -0px -0px 15px 15px rgba(255, 255, 255, 0.498);
+        }
+
+        .card.active{
+            z-index: 10;
+            background-color: transparent;
+            box-shadow: -0px -0px 15px 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .card.inactive{
+            z-index: 3;
+            background-color: rgb(255, 218, 9, 0.1);
+            opacity: 0.1;
+            box-shadow: -0px -0px 1px 1px rgba(255, 255, 0, 0.1);
+            filter: blur(4px);
+            visibility: hidden;
+        }
+
+        .btnSelect {
+            width: 40px;
+            height: 40px;
+            bottom: -103%;
+            left: 23px;
+            background: #1ace1a;
+            padding: 7px;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.545);
+            display: none;
+            color: white;
+            z-index: 10;
+        }
+
+        .card.active .btnSelect {
+            display: block;
+            z-index: 10;
+        }
+
+        dialog img {
+            display: inline-block;
+            border-radius: 8px;
+            padding: 5px;
+            background-color: black;
+            margin-right: 10px;
+            margin-bottom: 50px;
+            width: 200px;
+            max-width: 200px;
+            object-fit: cover;
+            height: 360px;
+            max-height: 360px;
+        }
+
+        #selectedCardsModal a:nth-of-type(1)::after {
+            content: "1";
+            width: 35px;
+            background-color: #000;
+            display: inline-block;
+            position: relative;
+            left: -30px;
+            height: 35px;
+            top: -200px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bolder;
+            font-style: italic;
+            border: 2px dashed white;
+        }
+
+        #selectedCardsModal a:nth-of-type(2)::after {
+            content: "2";
+            width: 35px;
+            background-color: #000;
+            display: inline-block;
+            position: relative;
+            left: -30px;
+            height: 35px;
+            top: -200px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bolder;
+            font-style: italic;
+            border: 2px dashed white;
+        }
+
+        #selectedCardsModal a:nth-of-type(3)::after {
+            content: "3";
+            width: 35px;
+            background-color: #000;
+            display: inline-block;
+            position: relative;
+            left: -30px;
+            height: 35px;
+            top: -200px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bolder;
+            font-style: italic;
+            border: 2px dashed white;
+        }
+
+        #selectedCardsModal a:nth-of-type(4)::after {
+            content: "4";
+            width: 35px;
+            background-color: #000;
+            display: inline-block;
+            position: relative;
+            left: -30px;
+            height: 35px;
+            top: -200px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bolder;
+            font-style: italic;
+            border: 2px dashed white;
+        }
+
+        #selectedCardsModal a:nth-of-type(5)::after {
+            content: "5";
+            width: 35px;
+            background-color: #000;
+            display: inline-block;
+            position: relative;
+            left: -30px;
+            height: 35px;
+            top: -200px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bolder;
+            font-style: italic;
+            border: 2px dashed white;
+        }
+
+        ::backdrop{
+            background-color: #000000b1;
+        }
+
+        #toolbox{
+            position: absolute;
+            right: 0px;
+            top: 50px;
+            width: auto;
+            height: auto;
+            background-color: gainsboro;
+            z-index: 10;
+            display: grid;
+            border-radius: 10px;
+        }
+
+        .btnToolbox{
+            width: 40px;
+            height: 60px;
+            background-color: black;
+            color: whitesmoke;
+            margin: 5px;
+            border-radius: 10px;
+        }
+
+        dialog img.group-mayor{
+            box-shadow: -0px -0px 20px 10px rgba(255, 0, 217, 0.6);
+        }
+
+        dialog img.group-wands{
+            box-shadow: -0px -0px 20px 10px rgba(255, 1, 1, 0.6); /*Fire*/
+        }
+
+        dialog img.group-cups{
+            box-shadow: -0px -0px 20px 10px rgba(86, 1, 255, 0.6); /*Water*/
+        }
+
+        dialog img.group-swords{
+            box-shadow: -0px -0px 20px 10px rgba(1, 234, 255, 0.6); /*Air*/
+        }
+
+        dialog img.group-coins{
+            box-shadow: -0px -0px 20px 10px rgba(255, 128, 1, 0.6); /*Earth*/
+        }
+
+        /* Estilos básicos para el Dialog (Reemplaza con tus clases de Tailwind si aplicas) */
+        #tarotProModal {
+            border: none;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            max-width: 800px; /* Ancho ideal para entorno de escritorio */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dialog-title-brand {
+            font-size: 2.2rem;
+            border-bottom: 2px solid #e53e3e; /* Línea roja */
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .feature-card {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            text-align: justify;
+            border-left: 4px solid #333; /* Énfasis visual */
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            text-align: left;
+            color: #000;
+        }
+
+        .btn-close-modal {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-close-modal:hover {
+            background-color: #e53e3e;
+        }
+
+
+
+        /* ************************************************************** */
+        /* 1. Definición de la animación de deslizamiento */
+        @keyframes brillo-animacion {
+            0% {
+                /* Comienza completamente fuera del contenedor por la izquierda */
+                transform: translateX(-180%);
+            }
+            100% {
+                /* Termina completamente fuera del contenedor por la derecha */
+                transform: translateX(180%);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <nav class="fixed top-0 left-0 w-full bg-gray-200 text-black shadow-lg rounded-b-md z-50 text-xs">
+        <div class="flex items-center">
+            <h2 class="p-2 text-md font-bold">TAROT<span class="text-red-500">PRO</span></h2>
+            <div class="relative group">
+                <button
+                    class=" px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
+                    aria-expanded="false"
+                    aria-controls="menu-archivo"
+                    onclick="document.getElementById('menu-archivo').classList.toggle('hidden');"
+                >
+                    <i class="fa fa-file mr-2"></i> Archivo
+                </button>
+                
+                <div 
+                    id="menu-archivo"
+                    class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 text-gray-900 shadow-xl hidden group-hover:block"
+                    role="menu"
+                    aria-orientation="vertical" 
+                >
+                    <a id="btnShuffleCards" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-star mr-3 w-4"></i> Nueva Lectura
+                    </a>
+                    <hr>
+                    <a id="btnShowHand" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-eye mr-3 w-4"></i> Ver Mano
+                    </a>
+                    <hr>
+                    <p class="text-gray-400 italic mt-2 mb-1 text-xs text-center">Experto</p>
+                    <hr>
+                    <a id="btnShuffleOnce" href="javascript:void(0);" disabled class="disabled flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-circle-o-notch mr-3 w-4"></i> Barajar Cartas
+                    </a>
+                    <hr>
+                    <a id="btnCenterOnce" href="javascript:void(0);" disabled class="disabled flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-circle mr-3 w-4"></i> Centrar Mazo
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button
+                    class="px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
+                    aria-expanded="false"
+                    aria-controls="menu-edicion"
+                    onclick="document.getElementById('menu-edicion').classList.toggle('hidden');"
+                >
+                    <i class="fa fa-pencil mr-2"></i> Edición
+                </button>
+                
+                <div 
+                    id="menu-edicion"
+                    class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 text-gray-900 shadow-xl hidden group-hover:block"
+                    role="menu"
+                    aria-orientation="vertical"
+                   
+                >
+                    <a id="btnNextArcana" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-refresh mr-3 w-4"></i> Cambiar Arcana
+                    </a>
+                    <hr>
+                    <a id="btnSelectDeck" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-clone mr-3 w-4"></i> Cambiar Mazo
+                    </a>
+                    <hr>
+                    <a id="btnSelectCardback" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-cube mr-3 w-4"></i> Cambiar Cubierta
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button
+                    class="px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
+                    aria-expanded="false"
+                    aria-controls="menu-ayuda"
+                    onclick="document.getElementById('menu-ayuda').classList.toggle('hidden');"
+                >
+                    <i class="fa fa-question-circle mr-2"></i> Ayuda
+                </button>
+                
+                <div 
+                    id="menu-ayuda"
+                    class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 text-gray-900 shadow-xl hidden group-hover:block"
+                    role="menu"
+                    aria-orientation="vertical"
+                >
+                    <a href="./docs.html" target="_blank" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-book mr-3 w-4"></i> Documentación
+                    </a>
+                    <hr>
+                    <a id="btnHelp" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-info-circle mr-3 w-4"></i> Acerca de TaroT
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button
+                    class="px-2 py-2 hover:bg-gray-400 hover:text-white transition text-red-500 font-bold duration-150 ease-in-out focus:outline-none"
+                    aria-expanded="false"
+                    aria-controls="menu-ayuda"
+                    onclick="document.getElementById('menu-ayuda').classList.toggle('hidden');"
+                >
+                    <i class="fa fa-user mr-2"></i> Asesoria
+                </button>
+                
+                <div 
+                    id="menu-ayuda"
+                    class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 text-gray-900 shadow-xl hidden group-hover:block"
+                    role="menu"
+                    aria-orientation="vertical"
+                >
+                    <a href="https://wa.me/573102857213" target="_blank" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-whatsapp mr-3 w-4"></i>Contactar Tarotista
+                    </a>
+                    <hr>
+                    <a onclick="alert('Proximamente...!')" href="javascript:void(0);" class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-reply-all mr-3 w-4"></i> ¡Te Contactamos!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <dialog id="selectedCardsModal" closedby="any" class="rounded-2xl p-7 bg-transparent text-center"></dialog>
+
+    <dialog id="actualDeckSelectModal" closedby="any" class="rounded-2xl p-7 pl-10 pr-10 border border-gray-100 text-center">
+        <h2 class="text-3xl mb-3 italic">✨ Cambiar Mazo de Tarot</h2>
+        <hr><br>
+        <label for="actualDeckSelect"><b>Estilos:</b></label>
+        <select id="actualDeckSelect" name="actualDeckSelect" required class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm appearance-none">
+            <option value="" disabled selected>-- Selecciona un Mazo --</option>
+            <option value="0">Rider Waite</option>
+            <option value="1">Sun & Moon</option>
+            <option value="2">White Numen</option>
+            <option value="3">Sacred Art</option>
+            <option value="4">Omegaland</option>
+            <option value="5">Napo</option>
+            <option value="6">Golden Wheel</option>
+            <option value="7">Golden Thread</option>
+            <option value="8">Fablemakers</option>
+        </select>
+        <br><hr><br>
+        <img id="actualDeckSelectPreview" src="" alt="">
+    </dialog>
+
+    <dialog id="cardbackSelectModal" closedby="any" class="rounded-2xl p-7 pl-10 pr-10 border border-gray-100 text-center">
+        <h2 class="text-3xl mb-3 italic">✨ Cambiar Cubierta del Tarot</h2>
+        <hr><br>
+        <label for="cardbackSelect"><b>Estilos:</b></label>
+        <select id="cardbackSelect" name="cardbackSelect" required class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm appearance-none">
+            <option value="" disabled selected>-- Selecciona una Cubierta --</option>
+            <option value="1">Estilo 1</option>
+            <option value="2">Estilo 2</option>
+            <option value="3">Estilo 3</option>
+            <option value="4">Estilo 4</option>
+            <option value="5">Estilo 5</option>
+            <option value="6">Estilo 6</option>
+            <option value="7">Estilo 7</option>
+            <option value="8">Estilo 8</option>
+            <option value="9">Estilo 9</option>
+            <option value="10">Estilo 10</option>
+            <option value="11">Estilo 11</option>
+        </select>
+        <br><hr><br>
+        <img id="cardbackSelectPreview" src="" alt="">
+    </dialog>
+
+    <div class="main-container">
+        <div id="bluredScreen" data-arcana="0"></div>
+
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-0" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-1" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-2" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-3" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-4" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-5" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-6" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-7" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-8" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-9" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-10" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-11" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-12" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-13" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-14" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-15" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-16" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-17" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-18" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-19" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-20" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="mayor" data-element="neutral" data-rotated="0" id="cover-21" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-22" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-23" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-24" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-25" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-26" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-27" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-28" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-29" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-30" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-31" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-32" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-33" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-34" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="wands" data-element="fire" data-rotated="0" id="cover-35" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-36" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-37" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-38" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-39" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-40" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-41" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-42" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-43" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-44" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-45" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-46" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-47" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-48" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="cups" data-element="water" data-rotated="0" id="cover-49" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-50" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-51" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-52" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-53" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-54" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-55" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-56" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-57" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-58" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-59" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-60" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-61" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-62" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="swords" data-element="air" data-rotated="0" id="cover-63" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-64" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-65" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-66" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-67" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-68" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-69" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-70" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-71" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-72" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-73" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-74" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-75" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-76" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+        <div data-deckgroup="coins" data-element="earth" data-rotated="0" id="cover-77" class="card fixed"><button  class="btnSelect"><i class="fa fa-check"></i></button></div>
+    </div>
+
+    <dialog id="tarotProModal" class="tarot-dialog-advanced" closedby="any">
+        
+        <div class="dialog-container">
+
+            <header class="dialog-header">
+                <h2 class="p-2 text-md font-bold dialog-title-brand">
+                    TAROT<span class="text-red-500">PRO</span>
+                </h2>
+                <h1 class="text-sm text-gray-400 dialog-subtitle mb-1"><i>Asistente Profesional: Elevando la Práctica del Tarot Avanzado</i></h1>
+                <br>
+            </header>
+
+            <section class="features-grid">
+                
+                <div class="feature-card">
+                    <h3>🖥️ Interfaz Profesional</h3>
+                    <p>Elige diseños de fondo, tipo de baraja y visualización de mazo adaptados a las necesidades específicas de cada cliente. Manten la presentación en pantalla seria y profesional, elimina elementos distractores y asegura un entorno de consulta formal. </p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>👁️ Ayudas Visuales</h3>
+                    <p>Optimiza el flujo de la lectura con ayudas visuales dinámicas que rastrean el orden de selección de las cartas y resaltan sus tipos de Elemento (Fuego, Agua, Aire, Tierra). Mantén la atención del consultante con un diseño minimalista y enfocado en la disposición de la tirada.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔬 Identificación de Cartas</h3>
+                    <p>La herramienta identifica y muestra automáticamente las Correspondencias Astrológicas, la Numerología inherente, la Esfera Cabalística y las Referencias Alquímicas clave para cada arcano, proporcionando datos esenciales sin interpretación.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📚 Libertad</h3>
+                    <p><b>TAROTPRO</b> opera bajo el principio de neutralidad absoluta. No ofrece ningún tipo de lectura predefinida de las cartas. Su única función es proporcionar una interfaz limpia y las facultades técnicas necesarias para que el lector profesional desarrolle su sesión sin interferencias.</p>
+                </div>
+
+            </section>
+
+            <footer class="dialog-footer mt-4">
+                <button id="closeTarotProModal" class="btn-close-modal"
+                    onclick="document.getElementById('tarotProModal').close();"
+                >
+                    Ingresar
+                </button>
+                <p class="mt-4 text-sm text-gray-600">
+                    Diseñado con ❤️ por <br> <b><i>Juan David Sanchez Leal</i></b> (@jdsljuan)
+                </p>
+            </footer>
+
+        </div>
+    </dialog>
+    
+    <script src="./tarotdecks/run.js"></script>
+    <script>
+        window.onload = () => {
+            //Inicia el Engine
+            DECKENGINE.initEngine();
+        };
+    </script>
+</body>
+</html>
