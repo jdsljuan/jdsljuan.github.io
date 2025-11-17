@@ -80,6 +80,9 @@ let DECKENGINE = {
         // DEL MENU
         document.getElementById('btnShuffleCards').addEventListener('click', ()=>{ DECKENGINE.shuffleCards(); });
         document.getElementById('btnShowHand').addEventListener('click', ()=>{ DECKENGINE.showSelectedCards(); });
+        document.getElementById('btnShuffleOnce').addEventListener('click', ()=>{ DECKENGINE.disperseCards(); });
+        document.getElementById('btnCenterOnce').addEventListener('click', ()=>{ DECKENGINE.centerCards(); });
+        document.getElementById('btnClearHand').addEventListener('click', ()=>{ DECKENGINE.clearHand(); });
         
         document.getElementById('btnNextArcana').addEventListener('click', ()=>{ DECKENGINE.nextArcana(); });
         document.getElementById('btnSelectDeck').addEventListener('click', ()=>{ 
@@ -111,7 +114,7 @@ let DECKENGINE = {
         element.style.top  = '-200px';
         let imgNumber = element.id.toString().split('-')[1];
         let imgElement = document.createElement('img'); 
-        imgElement.src = this.deckSets[this.getActualDeck()].imageURI+'/'+imgNumber+'.jpg'
+        imgElement.src = '.'+this.deckSets[this.getActualDeck()].imageURI+'/'+imgNumber+'.jpg'
         imgElement.style.transform = 'rotate('+(180*parseInt(element.dataset.rotated))+'deg)';
         imgElement.classList.add('group-'+element.dataset.deckgroup)
         let spanElement = document.createElement('a'); 
@@ -150,6 +153,9 @@ let DECKENGINE = {
             }
         }
     },
+    clearHand : function() {
+        document.getElementById(this.modalId).innerHTML = '';
+    },
     //----------------------------------------------------------
 
     // Deck Manage
@@ -161,7 +167,7 @@ let DECKENGINE = {
     },
     setActualDeck : function(selectedDeck = 0){
         localStorage.setItem('ACTUAL_DECK', selectedDeck);
-        document.getElementById('actualDeckSelectPreview').src = DECKENGINE.deckSets[selectedDeck].imageURI+'/0.jpg'
+        document.getElementById('actualDeckSelectPreview').src = '.'+DECKENGINE.deckSets[selectedDeck].imageURI+'/0.jpg'
         this.actualDeck = selectedDeck;
         return this.actualDeck;
     },
@@ -211,8 +217,8 @@ let DECKENGINE = {
         document.getElementById(this.modalId).innerHTML = '';
     },
     centerCards : function(){
-        const w_half = (window.innerWidth/2)-50;
-        const h_half = (window.innerHeight/2)-50;
+        const w_half = (window.innerWidth/2)-100;
+        const h_half = (window.innerHeight/2)-100;
         let cards = document.getElementsByClassName(this.className);
         for (let j = 0; j < cards.length; j++) {
             cards.item(j).style.left = w_half+(Math.floor(Math.random()*100))+'px';
