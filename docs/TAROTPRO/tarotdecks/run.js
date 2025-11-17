@@ -110,48 +110,52 @@ let DECKENGINE = {
         document.getElementById(this.modalId).showModal();
     },
     selectCard : function(element){
-        element.style.left = '-200px';
-        element.style.top  = '-200px';
-        let imgNumber = element.id.toString().split('-')[1];
-        let imgElement = document.createElement('img'); 
-        imgElement.src = '.'+this.deckSets[this.getActualDeck()].imageURI+'/'+imgNumber+'.jpg'
-        imgElement.style.transform = 'rotate('+(180*parseInt(element.dataset.rotated))+'deg)';
-        imgElement.classList.add('group-'+element.dataset.deckgroup)
-        let spanElement = document.createElement('a'); 
-        spanElement.target = '_blank';
-        spanElement.href = './docs.html?card='+imgNumber;
-        spanElement.appendChild(imgElement)
-        document.getElementById(this.modalId).appendChild(spanElement)
+        requestAnimationFrame(()=>{
+            element.style.left = '-200px';
+            element.style.top  = '-200px';
+            let imgNumber = element.id.toString().split('-')[1];
+            let imgElement = document.createElement('img'); 
+            imgElement.src = '.'+this.deckSets[this.getActualDeck()].imageURI+'/'+imgNumber+'.jpg'
+            imgElement.style.transform = 'rotate('+(180*parseInt(element.dataset.rotated))+'deg)';
+            imgElement.classList.add('group-'+element.dataset.deckgroup)
+            let spanElement = document.createElement('a'); 
+            spanElement.target = '_blank';
+            spanElement.href = './docs.html?card='+imgNumber;
+            spanElement.appendChild(imgElement)
+            document.getElementById(this.modalId).appendChild(spanElement)
+        });
     },
-    activeCard : function(element) {
-        let cards = document.getElementsByClassName(this.className);
-        if(element === null){
-            for (let j = 0; j < cards.length; j++) {
-                cards.item(j).classList.remove('active', 'inactive');
+    activeCard : async function(element) {
+        requestAnimationFrame(()=>{
+            let cards = document.getElementsByClassName(this.className);
+            if(element === null){
+                for (let j = 0; j < cards.length; j++) {
+                    cards.item(j).classList.remove('active', 'inactive');
+                }
+                return null;
             }
-            return null;
-        }
-        if(element === undefined){
-            for (let j = 0; j < cards.length; j++) {
-                cards.item(j).classList.add('inactive'); 
-                cards.item(j).classList.remove('active');
-            }
-            return undefined;
-        }
-        let fstValueA = element.classList.contains('active');
-        let fstValueI = element.classList.contains('inactive');
-        for (let j = 0; j < cards.length; j++) {
-            if(fstValueA || fstValueI){
-                cards.item(j).classList.remove('active', 'inactive');
-            }else{
-                if(element === cards.item(j)){ 
-                    cards.item(j).classList.add('active'); 
-                    cards.item(j).classList.remove('inactive');
-                }else{
+            if(element === undefined){
+                for (let j = 0; j < cards.length; j++) {
                     cards.item(j).classList.add('inactive'); 
+                    cards.item(j).classList.remove('active');
+                }
+                return undefined;
+            }
+            let fstValueA = element.classList.contains('active');
+            let fstValueI = element.classList.contains('inactive');
+            for (let j = 0; j < cards.length; j++) {
+                if(fstValueA || fstValueI){
+                    cards.item(j).classList.remove('active', 'inactive');
+                }else{
+                    if(element === cards.item(j)){ 
+                        cards.item(j).classList.add('active'); 
+                        cards.item(j).classList.remove('inactive');
+                    }else{
+                        cards.item(j).classList.add('inactive'); 
+                    }
                 }
             }
-        }
+        })
     },
     clearHand : function() {
         document.getElementById(this.modalId).innerHTML = '';
@@ -217,27 +221,32 @@ let DECKENGINE = {
         document.getElementById(this.modalId).innerHTML = '';
     },
     centerCards : function(){
-        const w_half = (window.innerWidth/2)-100;
-        const h_half = (window.innerHeight/2)-100;
-        let cards = document.getElementsByClassName(this.className);
-        for (let j = 0; j < cards.length; j++) {
-            cards.item(j).style.left = w_half+(Math.floor(Math.random()*100))+'px';
-            cards.item(j).style.top = h_half+(Math.floor(Math.random()*100))+'px';
-        }
+        requestAnimationFrame(()=>{
+            const w_half = (window.innerWidth/2)-100;
+            const h_half = (window.innerHeight/2)-100;
+            let cards = document.getElementsByClassName(this.className);
+            for (let j = 0; j < cards.length; j++) {
+                cards.item(j).style.left = w_half+(Math.floor(Math.random()*100))+'px';
+                cards.item(j).style.top = h_half+(Math.floor(Math.random()*100))+'px';
+            }
+        });
+
     },
     disperseCards : function () {
-        const w_max = window.innerWidth-200;
-        const h_max = window.innerHeight-250;
-        let cards = document.getElementsByClassName(this.className);
-        for (let j = 0; j < cards.length; j++) {
-            cards.item(j).style.left = 50+(Math.floor(Math.random()*w_max))+'px';
-            cards.item(j).style.top = 50+(Math.floor(Math.random()*h_max))+'px';
-            let rotated = Math.round(Math.random());
-            let zindex = Math.round(Math.random()*10); zindex = zindex < 3 ? 3 : zindex;
-            //cards.item(j).style.transform = 'rotate('+(180*rotated)+'deg)';
-            cards.item(j).dataset.rotated = rotated;
-            cards.item(j).style.zIndex = zindex;
-        }
+        requestAnimationFrame(()=>{
+            const w_max = window.innerWidth-200;
+            const h_max = window.innerHeight-250;
+            let cards = document.getElementsByClassName(this.className);
+            for (let j = 0; j < cards.length; j++) {
+                cards.item(j).style.left = 50+(Math.floor(Math.random()*w_max))+'px';
+                cards.item(j).style.top = 50+(Math.floor(Math.random()*h_max))+'px';
+                let rotated = Math.round(Math.random());
+                let zindex = Math.round(Math.random()*10); zindex = zindex < 3 ? 3 : zindex;
+                //cards.item(j).style.transform = 'rotate('+(180*rotated)+'deg)';
+                cards.item(j).dataset.rotated = rotated;
+                cards.item(j).style.zIndex = zindex;
+            }
+        });
     },
     //----------------------------------------------------------
 
