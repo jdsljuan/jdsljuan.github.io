@@ -366,7 +366,7 @@
                     class=" px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
                     aria-expanded="false"
                     aria-controls="menu-archivo"
-                    onclick="document.getElementById('menu-archivo').classList.toggle('hidden');"
+                    onclick="//document.getElementById('menu-archivo').classList.toggle('hidden');"
                 >
                     <i class="fa fa-file mr-2"></i> Archivo
                 </button>
@@ -387,12 +387,16 @@
                     <hr>
                     <p class="text-gray-400 italic mt-2 mb-1 text-xs text-center">Experto</p>
                     <hr>
-                    <a id="btnShuffleOnce" href="javascript:void(0);" disabled class="disabled flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                    <a id="btnShuffleOnce" href="javascript:void(0);"  class="flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
                         <i class="fa fa-circle-o-notch mr-3 w-4"></i> Barajar Cartas
                     </a>
                     <hr>
-                    <a id="btnCenterOnce" href="javascript:void(0);" disabled class="disabled flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                    <a id="btnCenterOnce" href="javascript:void(0);"  class=" flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
                         <i class="fa fa-circle mr-3 w-4"></i> Centrar Mazo
+                    </a>
+                    <hr>
+                    <a id="btnClearHand" href="javascript:void(0);"  class=" flex items-center px-4 py-2 hover:bg-gray-500 hover:text-white transition duration-150 ease-in-out" role="menuitem">
+                        <i class="fa fa-trash-o mr-3 w-4"></i> Limpiar Mano
                     </a>
                 </div>
             </div>
@@ -402,7 +406,7 @@
                     class="px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
                     aria-expanded="false"
                     aria-controls="menu-edicion"
-                    onclick="document.getElementById('menu-edicion').classList.toggle('hidden');"
+                    onclick="//document.getElementById('menu-edicion').classList.toggle('hidden');"
                 >
                     <i class="fa fa-pencil mr-2"></i> Edición
                 </button>
@@ -433,7 +437,7 @@
                     class="px-2 py-2 hover:bg-gray-400 hover:text-white transition duration-150 ease-in-out focus:outline-none"
                     aria-expanded="false"
                     aria-controls="menu-ayuda"
-                    onclick="document.getElementById('menu-ayuda').classList.toggle('hidden');"
+                    onclick="//document.getElementById('menu-ayuda').classList.toggle('hidden');"
                 >
                     <i class="fa fa-question-circle mr-2"></i> Ayuda
                 </button>
@@ -458,14 +462,14 @@
                 <button
                     class="px-2 py-2 hover:bg-gray-400 hover:text-white transition text-red-500 font-bold duration-150 ease-in-out focus:outline-none"
                     aria-expanded="false"
-                    aria-controls="menu-ayuda"
-                    onclick="document.getElementById('menu-ayuda').classList.toggle('hidden');"
+                    aria-controls="menu-asesoria"
+                    onclick="//document.getElementById('menu-asesoria').classList.toggle('hidden');"
                 >
                     <i class="fa fa-user mr-2"></i> Asesoria
                 </button>
                 
                 <div 
-                    id="menu-ayuda"
+                    id="menu-asesoria"
                     class="absolute left-0 mt-0 w-48 bg-white border border-gray-200 text-gray-900 shadow-xl hidden group-hover:block"
                     role="menu"
                     aria-orientation="vertical"
