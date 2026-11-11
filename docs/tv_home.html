@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inicio · Mi TV</title>
+<style>
+  * { box-sizing: border-box; }
+
+  :root {
+    --radius: 20px;
+    --ring: 0 0 0 3px #fff, 0 0 42px rgba(120, 170, 255, .38);
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Pantalla ---------- */
+  .screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    padding: 34px clamp(18px, 4vw, 64px) 34px;
+    background:
+      radial-gradient(1100px 560px at 50% -12%, rgba(74, 118, 190, .30), transparent 70%),
+      radial-gradient(900px 520px at 92% 112%, rgba(126, 62, 168, .20), transparent 70%),
+      #05070c;
+  }
+
+  /* ---------- Barra superior ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; }
+
+  .brand .logo {
+    width: 40px; height: 40px;
+    border-radius: 11px;
+    background: linear-gradient(150deg, #ffffff, #b9c6d8);
+    color: #0a0d13;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -.5px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 22px rgba(255, 255, 255, .16);
+  }
+
+  .brand h1 { margin: 0; font-size: 21px; font-weight: 600; letter-spacing: .2px; }
+  .brand p  { margin: 2px 0 0; font-size: 12px; color: #8b93a3; }
+
+  .tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  .clock {
+    font-size: 14px;
+    color: #9aa3b4;
+    font-variant-numeric: tabular-nums;
+    margin-right: 6px;
+  }
+
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 17px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s, transform .15s;
+  }
+  .icon-btn:hover  { background: rgba(255, 255, 255, .17); }
+  .icon-btn:active { transform: scale(.96); }
+  .icon-btn.active {
+    background: #fff;
+    color: #0a0d13;
+    border-color: #fff;
+    font-weight: 600;
+  }
+
+  /* ---------- Rejilla ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
+    gap: 26px;
+    align-content: start;
+    padding: 8px 2px 50px;
+  }
+
+  /* ---------- Tarjeta ---------- */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 16 / 10;
+    padding: 15px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(150deg, var(--c1) 0%, var(--c2) 100%);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .5),
+                inset 0 1px 0 rgba(255, 255, 255, .18);
+    transition: transform .3s cubic-bezier(.16, .84, .3, 1), box-shadow .3s;
+    will-change: transform;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* brillo diagonal */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(115deg, rgba(255, 255, 255, .24) 0%, rgba(255, 255, 255, 0) 44%);
+  }
+  /* oscurecido inferior para el texto */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgba(0, 0, 0, .48), transparent 62%);
+  }
+
+  .card:hover,
+  .card.focused {
+    transform: scale(1.09);
+    box-shadow: 0 26px 52px rgba(0, 0, 0, .72), var(--ring);
+    z-index: 10;
+  }
+  .card:active { transform: scale(1.03); }
+
+  .card-icon {
+    position: relative;
+    width: 46px; height: 46px;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+  }
+
+  .card-icon .letter {
+    font-size: 21px;
+    font-weight: 700;
+    color: #101318;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .card-icon img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background: #fff;
+    object-fit: contain;
+  }
+
+  .card-meta { margin-top: auto; }
+
+  .card-title {
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 7px rgba(0, 0, 0, .45);
+  }
+
+  .card-url {
+    margin-top: 2px;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, .72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ---------- Insignias (modo edición) ---------- */
+  .edit-badge, .del-badge { display: none; }
+
+  body.editing .card {
+    outline: 2px dashed rgba(255, 255, 255, .55);
+    outline-offset: 3px;
+  }
+
+  body.editing .edit-badge {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 9px; right: 9px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .95);
+    color: #101318;
+    font-size: 13px;
+    z-index: 3;
+  }
+
+  body.editing .del-badge {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 9px; left: 9px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 60, 60, .95);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 4;
+  }
+  body.editing .del-badge:hover { background: #ff2f2f; transform: scale(1.12); }
+
+  /* ---------- Tarjeta "Añadir" ---------- */
+  .card-add {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius);
+    border: 2px dashed rgba(255, 255, 255, .25);
+    background: rgba(255, 255, 255, .04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, .58);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform .3s cubic-bezier(.16, .84, .3, 1), background .25s,
+                color .25s, border-color .25s, box-shadow .3s;
+  }
+  .card-add .plus { font-size: 30px; line-height: 1; font-weight: 300; }
+
+  .card-add:hover,
+  .card-add.focused {
+    transform: scale(1.09);
+    background: rgba(255, 255, 255, .11);
+    border-color: #fff;
+    color: #fff;
+    box-shadow: 0 26px 52px rgba(0, 0, 0, .72), var(--ring);
+    z-index: 10;
+  }
+
+  /* ---------- Pie ---------- */
+  .hint {
+    margin-top: auto;
+    padding-top: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #5c6577;
+  }
+
+  /* ---------- Modal ---------- */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, .68);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+  .overlay.open { display: grid; animation: fade .18s ease; }
+
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+
+  .dialog {
+    width: min(440px, 100%);
+    padding: 26px;
+    border-radius: 22px;
+    background: linear-gradient(160deg, #1c2331, #10141c);
+    border: 1px solid rgba(255, 255, 255, .12);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, .75);
+    animation: pop .24s cubic-bezier(.2, .9, .3, 1.2);
+  }
+
+  @keyframes pop {
+    from { transform: scale(.94); opacity: 0 }
+    to   { transform: scale(1);   opacity: 1 }
+  }
+
+  .dialog h2 { margin: 0 0 18px; font-size: 19px; font-weight: 600; }
+
+  .field { display: block; margin-bottom: 14px; }
+
+  .field > span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: .8px;
+    color: #98a1b2;
+    font-weight: 600;
+  }
+
+  .field input[type="text"],
+  .field input[type="url"],
+  .field input:not([type]) {
+    width: 100%;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+  }
+  .field input::placeholder { color: #5f6879; }
+
+  .field input:focus {
+    border-color: #5b9dff;
+    background: rgba(91, 157, 255, .10);
+    box-shadow: 0 0 0 3px rgba(91, 157, 255, .20);
+  }
+
+  .field input[type="color"] {
+    height: 44px;
+    padding: 4px;
+    cursor: pointer;
+  }
+  .field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  .field input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 8px;
+  }
+
+  .dialog-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .spacer { flex: 1; }
+
+  .btn {
+    border: none;
+    border-radius: 11px;
+    padding: 11px 18px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .12s;
+  }
+  .btn:active { transform: scale(.96); }
+
+  .btn.primary { background: #2f7cf6; color: #fff; }
+  .btn.primary:hover { background: #4a8dff; }
+
+  .btn.ghost { background: rgba(255, 255, 255, .10); color: #fff; }
+  .btn.ghost:hover { background: rgba(255, 255, 255, .19); }
+
+  .btn.danger { background: rgba(255, 70, 70, .16); color: #ff8585; }
+  .btn.danger:hover { background: rgba(255, 70, 70, .30); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 16px; }
+    .card { padding: 12px; border-radius: 16px; }
+    .card-icon { width: 38px; height: 38px; border-radius: 10px; }
+    .card-title { font-size: 13px; }
+    .card-url { display: none; }
+    .brand p { display: none; }
+    .clock { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">tv</div>
+      <div>
+        <h1>Inicio</h1>
+        <p>Mi colección de enlaces</p>
+      </div>
+    </div>
+
+    <div class="tools">
+      <span class="clock" id="clock"></span>
+      <button class="icon-btn" id="btnReset" title="Volver a los enlaces de ejemplo">↺ Restablecer</button>
+      <button class="icon-btn" id="btnEdit"><span class="label">Editar</span></button>
+    </div>
+  </header>
+
+  <main class="grid" id="grid" aria-label="Aplicaciones"></main>
+
+  <footer class="hint">
+    Usa las flechas del teclado para navegar · Enter para abrir · «Editar» permite modificar, añadir o borrar enlaces
+  </footer>
+</div>
+
+<!-- Modal de alta / edición -->
+<div class="overlay" id="overlay">
+  <form class="dialog" id="dialog" autocomplete="off" novalidate>
+    <h2 id="dialogTitle">Nuevo enlace</h2>
+
+    <label class="field">
+      <span>NOMBRE</span>
+      <input id="fName" type="text" maxlength="40" placeholder="Ej. YouTube">
+    </label>
+
+    <label class="field">
+      <span>URL</span>
+      <input id="fUrl" type="text" placeholder="https://www.ejemplo.com">
+    </label>
+
+    <label class="field">
+      <span>COLOR</span>
+      <input id="fColor" type="color" value="#4285F4">
+    </label>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn danger" id="btnDelete" hidden>Eliminar</button>
+      <div class="spacer"></div>
+      <button type="button" class="btn ghost" id="btnCancel">Cancelar</button>
+      <button type="submit" class="btn primary">Guardar</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================
+     CONFIGURACIÓN
+     ========================================================= */
+  const STORAGE_KEY = 'appletv-inicio-links-v1';
+
+  const PALETTE = [
+    '#4285F4', '#EA4335', '#34A853', '#F9AB00', '#7B61FF', '#00ACC1',
+    '#FF6D00', '#D81B60', '#3949AB', '#00897B', '#8E24AA', '#00838F'
+  ];
+
+  const DEFAULTS = [
+    { name: 'Google',        url: 'https://www.google.com',      color: '#4285F4' },
+    { name: 'Gmail',         url: 'https://mail.google.com',     color: '#D93025' },
+    { name: 'YouTube',       url: 'https://www.youtube.com',     color: '#FF0000' },
+    { name: 'Google Maps',   url: 'https://maps.google.com',     color: '#1A9C4B' },
+    { name: 'Google Drive',  url: 'https://drive.google.com',    color: '#E8A200' },
+    { name: 'Google Fotos',  url: 'https://photos.google.com',   color: '#7B61FF' },
+    { name: 'Calendar',      url: 'https://calendar.google.com', color: '#1A73E8' },
+    { name: 'Noticias',      url: 'https://news.google.com',     color: '#E8710A' },
+    { name: 'Translate',     url: 'https://translate.google.com',color: '#00A3A3' },
+    { name: 'Google Play',   url: 'https://play.google.com',     color: '#00A050' },
+    { name: 'Google Meet',   url: 'https://meet.google.com',     color: '#00897B' },
+    { name: 'Google Earth',  url: 'https://earth.google.com',    color: '#2E7D32' }
+  ];
+
+  /* =========================================================
+     REFERENCIAS DEL DOM
+     ========================================================= */
+  const grid        = document.getElementById('grid');
+  const overlay     = document.getElementById('overlay');
+  const dialog      = document.getElementById('dialog');
+  const dialogTitle = document.getElementById('dialogTitle');
+  const fName       = document.getElementById('fName');
+  const fUrl        = document.getElementById('fUrl');
+  const fColor      = document.getElementById('fColor');
+  const btnDelete   = document.getElementById('btnDelete');
+  const btnCancel   = document.getElementById('btnCancel');
+  const btnEdit     = document.getElementById('btnEdit');
+  const btnReset    = document.getElementById('btnReset');
+  const clockEl     = document.getElementById('clock');
+
+  /* =========================================================
+     ESTADO
+     ========================================================= */
+  let links     = [];
+  let editMode  = false;
+  let editingId = null;
+  let focusIdx  = 0;
+
+  /* =========================================================
+     UTILIDADES
+     ========================================================= */
+  const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-3);
+
+  function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+  /** Oscurece (o aclara) un color hex. pct negativo = más oscuro. */
+  function shade(hex, pct) {
+    let h = String(hex || '#4285F4').replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    if (h.length !== 6 || /[^0-9a-f]/i.test(h)) h = '4285F4';
+
+    let r = parseInt(h.slice(0, 2), 16);
+    let g = parseInt(h.slice(2, 4), 16);
+    let b = parseInt(h.slice(4, 6), 16);
+
+    r = clamp(Math.round(r + (r * pct) / 100), 0, 255);
+    g = clamp(Math.round(g + (g * pct) / 100), 0, 255);
+    b = clamp(Math.round(b + (b * pct) / 100), 0, 255);
+
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
+  function normalizeUrl(raw) {
+    let u = String(raw || '').trim();
+    if (!u) return '';
+    if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) u = 'https://' + u;
+    return u;
+  }
+
+  function hostOf(u) {
+    try { return new URL(u).hostname.replace(/^www\./, ''); }
+    catch (e) { return String(u).replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0]; }
+  }
+
+  function faviconUrl(u) {
+    return 'https://www.google.com/s2/favicons?sz=128&domain=' + encodeURIComponent(hostOf(u));
+  }
+
+  function autoColor(seed) {
+    let h = 0;
+    for (const ch of String(seed)) h = (h * 31 + ch.charCodeAt(0)) % 99991;
+    return PALETTE[h % PALETTE.length];
+  }
+
+  /* =========================================================
+     PERSISTENCIA
+     ========================================================= */
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
+    } catch (e) {
+      console.warn('No se pudo guardar en localStorage:', e);
+    }
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (Array.isArray(data)) {
+          return data
+            .filter(l => l && l.name && l.url)
+            .map(l => ({
+              id: l.id || uid(),
+              name: String(l.name).slice(0, 40),
+              url: normalizeUrl(l.url),
+              color: /^#[0-9a-f]{6}$/i.test(l.color) ? l.color : autoColor(l.name)
+            }));
+        }
+      }
+    } catch (e) { /* almacenamiento no disponible o JSON corrupto */ }
+
+    const seeded = DEFAULTS.map(d => ({ id: uid(), ...d }));
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded)); } catch (e) {}
+    return seeded;
+  }
+
+  /* =========================================================
+     RENDER
+     ========================================================= */
+  function cardList() {
+    return Array.from(grid.querySelectorAll('.card, .card-add'));
+  }
+
+  function setFocus(i) {
+    const list = cardList();
+    if (!list.length) return;
+    focusIdx = clamp(i, 0, list.length - 1);
+    list.forEach((el, idx) => el.classList.toggle('focused', idx === focusIdx));
+  }
+
+  function scrollToFocus() {
+    const el = cardList()[focusIdx];
+    if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function buildCard(link) {
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = link.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.dataset.id = link.id;
+    a.style.setProperty('--c1', link.color);
+    a.style.setProperty('--c2', shade(link.color, -55));
+    a.setAttribute('aria-label', link.name);
+
+    /* --- icono --- */
+    const icon = document.createElement('div');
+    icon.className = 'card-icon';
+
+    const letter = document.createElement('span');
+    letter.className = 'letter';
+    letter.textContent = (link.name.trim()[0] || '?').toUpperCase();
+
+    const img = document.createElement('img');
+    img.alt = '';
+    img.loading = 'lazy';
+    img.addEventListener('error', () => img.remove());
+    img.src = faviconUrl(link.url);
+
+    icon.append(letter, img);
+
+    /* --- textos --- */
+    const meta = document.createElement('div');
+    meta.className = 'card-meta';
+
+    const title = document.createElement('div');
+    title.className = 'card-title';
+    title.textContent = link.name;
+
+    const url = document.createElement('div');
+    url.className = 'card-url';
+    url.textContent = hostOf(link.url);
+
+    meta.append(title, url);
+
+    /* --- insignias --- */
+    const pencil = document.createElement('div');
+    pencil.className = 'edit-badge';
+    pencil.textContent = '✎';
+
+    const del = document.createElement('div');
+    del.className = 'del-badge';
+    del.textContent = '×';
+    del.title = 'Eliminar enlace';
+    del.setAttribute('role', 'button');
+    del.addEventListener('click', ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      removeLink(link.id);
+    });
+
+    a.append(icon, meta, pencil, del);
+
+    /* --- interacción --- */
+    a.addEventListener('click', ev => {
+      if (editMode) {
+        ev.preventDefault();
+        openDialog(link);
+      }
+    });
+
+    a.addEventListener('mouseenter', () => {
+      const idx = cardList().indexOf(a);
+      if (idx >= 0) setFocus(idx);
+    });
+
+    return a;
+  }
+
+  function buildAddCard() {
+    const d = document.createElement('div');
+    d.className = 'card-add';
+    d.setAttribute('role', 'button');
+    d.tabIndex = -1;
+
+    const plus = document.createElement('span');
+    plus.className = 'plus';
+    plus.textContent = '+';
+
+    const label = document.createElement('span');
+    label.textContent = 'Añadir enlace';
+
+    d.append(plus, label);
+
+    d.addEventListener('click', () => openDialog(null));
+    d.addEventListener('mouseenter', () => {
+      const idx = cardList().indexOf(d);
+      if (idx >= 0) setFocus(idx);
+    });
+
+    return d;
+  }
+
+  function render() {
+    grid.innerHTML = '';
+    links.forEach(l => grid.appendChild(buildCard(l)));
+    grid.appendChild(buildAddCard());
+    setFocus(focusIdx);
+  }
+
+  /* =========================================================
+     MODAL
+     ========================================================= */
+  function openDialog(link) {
+    editingId = link ? link.id : null;
+    dialogTitle.textContent = link ? 'Editar enlace' : 'Nuevo enlace';
+
+    fName.value  = link ? link.name : '';
+    fUrl.value   = link ? link.url : '';
+    fColor.value = link ? link.color : PALETTE[Math.floor(Math.random() * PALETTE.length)];
+
+    btnDelete.hidden = !link;
+
+    overlay.classList.add('open');
+    setTimeout(() => fName.focus(), 60);
+  }
+
+  function closeDialog() {
+    overlay.classList.remove('open');
+    editingId = null;
+  }
+
+  function removeLink(id) {
+    const link = links.find(l => l.id === id);
+    if (!link) return;
+    if (!confirm('¿Eliminar el enlace «' + link.name + '»?')) return;
+
+    links = links.filter(l => l.id !== id);
+    save();
+    closeDialog();
+    render();
+  }
+
+  /* =========================================================
+     EVENTOS DEL MODAL
+     ========================================================= */
+  dialog.addEventListener('submit', ev => {
+    ev.preventDefault();
+
+    const name = fName.value.trim();
+    const rawUrl = fUrl.value.trim();
+
+    if (!name) { fName.focus(); return; }
+    if (!rawUrl) { fUrl.focus(); return; }
+
+    const url   = normalizeUrl(rawUrl);
+    const color = fColor.value;
+
+    if (editingId) {
+      const link = links.find(l => l.id === editingId);
+      if (link) { link.name = name; link.url = url; link.color = color; }
+    } else {
+      links.push({ id: uid(), name, url, color });
+      focusIdx = links.length - 1; // enfocar la tarjeta recién creada
+    }
+
+    save();
+    closeDialog();
+    render();
+  });
+
+  btnCancel.addEventListener('click', closeDialog);
+
+  btnDelete.addEventListener('click', () => {
+    if (editingId) removeLink(editingId);
+  });
+
+  overlay.addEventListener('click', ev => {
+    if (ev.target === overlay) closeDialog();
+  });
+
+  /* =========================================================
+     MODO EDICIÓN / RESTABLECER
+     ========================================================= */
+  btnEdit.addEventListener('click', () => {
+    editMode = !editMode;
+    document.body.classList.toggle('editing', editMode);
+    btnEdit.classList.toggle('active', editMode);
+    btnEdit.querySelector('.label').textContent = editMode ? 'Listo' : 'Editar';
+  });
+
+  btnReset.addEventListener('click', () => {
+    if (!confirm('¿Restablecer los enlaces de ejemplo? Se perderán tus cambios.')) return;
+    links = DEFAULTS.map(d => ({ id: uid(), ...d }));
+    focusIdx = 0;
+    save();
+    render();
+  });
+
+  /* =========================================================
+     NAVEGACIÓN CON TECLADO (estilo Apple TV)
+     ========================================================= */
+  function columnCount(list) {
+    if (!list.length) return 1;
+    const top = list[0].offsetTop;
+    let n = 0;
+    for (const el of list) {
+      if (el.offsetTop === top) n++;
+      else break;
+    }
+    return Math.max(n, 1);
+  }
+
+  document.addEventListener('keydown', ev => {
+    if (overlay.classList.contains('open')) {
+      if (ev.key === 'Escape') { ev.preventDefault(); closeDialog(); }
+      return;
+    }
+
+    const list = cardList();
+    if (!list.length) return;
+
+    const cols = columnCount(list);
+
+    switch (ev.key) {
+      case 'ArrowRight':
+        ev.preventDefault(); setFocus(focusIdx + 1); scrollToFocus(); break;
+      case 'ArrowLeft':
+        ev.preventDefault(); setFocus(focusIdx - 1); scrollToFocus(); break;
+      case 'ArrowDown':
+        ev.preventDefault(); setFocus(focusIdx + cols); scrollToFocus(); break;
+      case 'ArrowUp':
+        ev.preventDefault(); setFocus(focusIdx - cols); scrollToFocus(); break;
+      case 'Enter':
+      case ' ': {
+        const el = list[focusIdx];
+        if (el) { ev.preventDefault(); el.click(); }
+        break;
+      }
+      case 'e':
+      case 'E':
+        if (!ev.metaKey && !ev.ctrlKey && !ev.altKey) btnEdit.click();
+        break;
+    }
+  });
+
+  /* =========================================================
+     RELOJ
+     ========================================================= */
+  function startClock() {
+    const tick = () => {
+      const d = new Date();
+      const fecha = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+      const hora  = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      clockEl.textContent = fecha + ' · ' + hora;
+    };
+    tick();
+    setInterval(tick, 15000);
+  }
+
+  /* =========================================================
+     INICIO
+     ========================================================= */
+  links = load();
+  render();
+  startClock();
+})();
+</script>
+</body>
+</html>
